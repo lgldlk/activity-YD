@@ -36,7 +36,7 @@
         </div>
         <div class="item_add">新建项目</div>
       </div>
-      <div class="item" v-for="item in mainList" :key="item.id">
+      <div class="item" v-for="(item,index) in mainList" :key="item.id">
         <!--初始化项目 -->
         <div class="item_img">
           <img class="img" v-if="!item.titlePage" src="@/assets/logo.png" alt />
@@ -64,7 +64,7 @@
             <span @click="showObject(item.name)">查看项目</span>
           </a-popover>
           <span @click="gotoObject(item._id)">编辑项目</span>
-          <a-popconfirm title="确定删除项目吗" @confirm="deleteObj(item)" okText="确定" cancelText="取消">
+          <a-popconfirm title="确定删除项目吗" @confirm="deleteObj(item,index)" okText="确定" cancelText="取消">
             <span>删除项目</span>
           </a-popconfirm>
         </div>
@@ -170,6 +170,7 @@ export default Vue.extend({
             e.time = parseTime(e.time);
           });
           this.mainList = e.data.data;
+          this.mainList.reverse();
         })
         .catch(err => {
           console.log("错误", err);
@@ -197,14 +198,14 @@ export default Vue.extend({
           height: this.$store.state.core.commHeight, // 页面高度默认667
           background: "rgba(255, 255, 255, 1)", // 页面背景色默认白色
           defaultLeft: `created(){
-    // 页面开始生命周期
-}
-mounted(){
-    // 页面挂载生命周期
-}
-destroyed(){
-    // 页面卸载生命周期
-}` // 注入生命周期
+          // 页面开始生命周期
+            }
+            mounted(){
+                // 页面挂载生命周期
+            }
+            destroyed(){
+                // 页面卸载生命周期
+            }` // 注入生命周期
         };
         setObject(data).then(res => {
           this.$router.push({
@@ -225,20 +226,20 @@ destroyed(){
     showObject(name) {
       this.onShowUrlCode = mobileUrl + name;
     },
-    deleteObj(data) {
+    deleteObj(data,index) {
       if (data.isAuth) {
-        (this.$refs.authModal as any).open(data);
+        (this.$refs.authModal as any).open(data,index);
       } else {
         deleteObj(data._id, "").then(result => {
           this.$message.success(result.data.data);
-          this.getObject();
+          this.mainList.splice(index,1);
         });
       }
     },
-    authSuccess(data) {
+    authSuccess(data,index) {
       deleteObj(data._id, data.password).then(result => {
         this.$message.success(result.data.data);
-        this.getObject();
+        this.mainList.splice(index,1);
       });
     }
   }
@@ -281,6 +282,7 @@ destroyed(){
   .main_list {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     margin: 0px 4%;
     margin-top: 8px;
     margin-bottom: 230px;
@@ -290,12 +292,6 @@ destroyed(){
       .item_img {
         width: 100%;
         text-align: center;
-        // height: 200px;
-
-        // line-height: 200px;
-        // .img {
-        //   height: 180px;
-        // }
       }
       .base_img {
         // height: 300px;
@@ -309,9 +305,7 @@ destroyed(){
       .item_disp {
         padding-left: 22px;
         padding-right: 1em;
-        // padding-right: 28px;
         border-top: 1px solid #e8e8ea;
-        // padding-top: 10px;
         color: black;
         white-space: pre-wrap;
         vertical-align: middle;
@@ -324,7 +318,6 @@ destroyed(){
           }
         }
         .disp_con {
-          // color: #8d8d8d;
           display: -webkit-box;
           word-break: break-all;
           -webkit-box-orient: vertical;
@@ -335,8 +328,6 @@ destroyed(){
           margin-bottom: 5px;
         }
         .time_con {
-          // color: #8d8d8d;
-          // margin-bottom: 5px;
         }
       }
       .item_add {
@@ -368,7 +359,6 @@ destroyed(){
   }
   .add {
     color: currentColor;
-    // margin-top: -10px;
     position: relative;
     writing-mode: vertical-lr;
     margin: auto;

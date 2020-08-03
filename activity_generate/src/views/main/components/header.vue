@@ -64,6 +64,8 @@ import { mobileUrl } from "@/config/index";
 import html2canvas from "html2canvas";
 import { base64ToBlob, BlobToImgFile } from "@/utils/index";
 import { upTitleImg } from "@/api/index";
+import { cloneDeep } from "lodash";
+import { baseComplate } from "@/utils/baseReact";
 
 export default {
   components: {

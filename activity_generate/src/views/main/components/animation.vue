@@ -1,17 +1,7 @@
-<!--
- * @Author: your name
- * @Date: 2020-03-10 08:30:24
- * @LastEditTime: 2020-03-10 09:40:41
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /activity_generate/src/views/main/components/animation.vue
- -->
-
 <template>
   <a-drawer title="请选择动画" placement="top" height="400" :closable="false" @close="onClose" :visible="show">
         <div class="animation-show" >
               <a-button type="primary" 
-              
               class=" show-btn animated "
               :class="btnAnimation"
               >效果浏览</a-button>
@@ -89,8 +79,8 @@ export default Vue.extend({
 }
 .show-btn{
   margin: 0 20px;
-    padding: 0px 20px;
-      -webkit-animation-duration: 5s !important;
+  padding: 0px 20px;
+  -webkit-animation-duration: 5s !important;
   animation-duration: 5s !important;
 
 }

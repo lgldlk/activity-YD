@@ -40,8 +40,10 @@ import {
   Tooltip,
   Drawer,
   Switch,
+  Card,
 } from 'ant-design-vue'
 Vue.use(Button)
+Vue.use(Card)
 Vue.use(Tabs)
 Vue.use(Input)
 Vue.use(InputNumber)

@@ -34,8 +34,17 @@
         </div>
         <p class="scale">{{ coreScale }}</p>
       </div>
+
       <!-- 左侧为操作栏 -->
       <div class="right_header">
+        <a-select default-value="dev" style="width: 120px" @change="coreModeChange" class="right_header_item">
+            <a-select-option value="dev">
+              开发模式
+            </a-select-option>
+            <a-select-option value="prod">
+              预览模式
+            </a-select-option>
+          </a-select>
         <a-button @click="saveObject(3)" type="primary" icon="book" class="right_header_item">保存为模板</a-button>
         <!-- <a-button @click="saveObject(2)" type="primary" icon="cloud" class="right_header_item">发布</a-button> -->
         <a-button
@@ -102,7 +111,8 @@ export default {
     },
     copyTemplate() {
       return this.$store.state.setting.copyTemplate;
-    }
+    },
+
   },
   watch: {
     activeTemplate() {
@@ -156,6 +166,9 @@ export default {
   methods: {
     gotoHome() {
       this.$router.push({ name: "home" });
+    },
+    coreModeChange(value) {
+      this.$store.commit("setting/changeCoreMode",value);
     },
     userSetting(index) {
       if (index == 0) {
@@ -319,6 +332,8 @@ export default {
       transform: translate(-50%, -50%);
       border-right: 1px solid #f6f6f6;
       display: flex;
+      align-items: center;
+
       .setting_item {
         width: 100%;
         height: 50px;

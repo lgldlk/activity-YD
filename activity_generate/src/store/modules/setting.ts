@@ -3,7 +3,7 @@ import { message } from 'ant-design-vue'
 interface setting {
   copyTemplate: any[] // 复制暂时存储区
   coreinfo: {
-    // 右侧菜单
+    // 上方菜单
     icon: object
     openIcon?: object
     text: string
@@ -11,6 +11,7 @@ interface setting {
   }[]
   scale: number // 放大/缩小
   backgroundLine: boolean
+  coreMode:string
 }
 
 const Setting: Module<setting, any> = {
@@ -71,12 +72,12 @@ const Setting: Module<setting, any> = {
       }
     ],
     scale: 1,
-    backgroundLine: true
+    backgroundLine: true,
+    coreMode:'dev'
   },
   mutations: {
     set_copy(state, data) {
       console.log(data);
-      
       state.copyTemplate = data
     },
     set_coreinfoItem(state, { index, status }) {
@@ -93,6 +94,11 @@ const Setting: Module<setting, any> = {
     },
     toggle_backgroundLine(state) {
       state.backgroundLine = !state.backgroundLine
+    },
+    changeCoreMode(state,modeType){
+      if(modeType=="dev"||modeType=='prod'){
+        state.coreMode=modeType;
+      }
     }
   },
   actions: {

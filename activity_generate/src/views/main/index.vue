@@ -6,7 +6,7 @@
       <left />
       <!-- 中控台 -->
       <div class="index_center" @click="cancelActive">
-        <div class="index_center_header" v-if="scale == 1">
+        <!-- <div class="index_center_header" v-if="scale == 1">
           <div
             :class="mode == 'dev'?'active':'unactive'"
             class="header_dev"
@@ -17,16 +17,16 @@
             class="header_prod"
             @click="toggleMode('prod')"
           >预览模式</div>
-        </div>
+        </div> -->
         <!-- 开发模式 -->
         <core
-          v-if="mode == 'dev'"
+          v-if="coreMode == 'dev'"
           :style="{ transform: `scale(${scale},${scale})` }"
           class="core"
           ref="core"
         />
         <!-- 测试查看模式 -->
-        <show-core v-if="mode == 'prod'"></show-core>
+        <show-core v-if="coreMode == 'prod'"></show-core>
       </div>
       <coverage class='coverage'></coverage>
       <!-- 右侧菜单栏 -->
@@ -59,7 +59,6 @@ export default {
     this.$nextTick(() => {
       initMouse(this.core);
       initKeyDown(this.core);
-      
     });
     let objectId = this.$route.params.objectId;
     this.$store.commit("core/set_objectId", objectId);
@@ -87,6 +86,9 @@ export default {
     },
     core() {
       return this.$store.state.core;
+    },
+    coreMode(){
+      return this.$store.state.setting.coreMode;
     }
   },
   methods: {
@@ -101,10 +103,10 @@ export default {
       initKeyDown(this.core);
       this.$store.commit("core/clear_template");
     },
-    toggleMode(mode) {
-      this.mode = mode;
-      this.$store.commit("core/clear_template");
-    },
+    // toggleMode(mode) {
+    //   this.mode = mode;
+    //   this.$store.commit("core/clear_template");
+    // },
     // 放大缩小
     coreSetting(type) {
       if (type == "cancel") {

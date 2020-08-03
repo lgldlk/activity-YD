@@ -6,18 +6,6 @@
       <left />
       <!-- 中控台 -->
       <div class="index_center" @click="cancelActive">
-        <!-- <div class="index_center_header" v-if="scale == 1">
-          <div
-            :class="mode == 'dev'?'active':'unactive'"
-            class="header_dev"
-            @click="toggleMode('dev')"
-          >开发模式</div>
-          <div
-            :class="mode == 'prod'?'active':'unactive'"
-            class="header_prod"
-            @click="toggleMode('prod')"
-          >预览模式</div>
-        </div> -->
         <!-- 开发模式 -->
         <core
           v-if="coreMode == 'dev'"
@@ -103,10 +91,6 @@ export default {
       initKeyDown(this.core);
       this.$store.commit("core/clear_template");
     },
-    // toggleMode(mode) {
-    //   this.mode = mode;
-    //   this.$store.commit("core/clear_template");
-    // },
     // 放大缩小
     coreSetting(type) {
       if (type == "cancel") {

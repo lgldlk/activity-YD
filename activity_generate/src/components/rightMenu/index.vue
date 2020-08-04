@@ -67,7 +67,7 @@ export default {
     // 删除
     deleteItem() {
       this.$store.commit("core/deleteCompLate", this.id);
-      this.menuShow = false;
+      this.$store.commit("setting/closeRightMenu");
     },
     // 保存组件为模板
     saveItem() {},

@@ -7,31 +7,18 @@
  * @FilePath: /activity_generate/src/views/main/center/core.vue
  -->
 <template>
-  <div
-    class="core"
-    @dragenter="dragenter"
-    @drop="drop"
-    @dragover="dragover"
-    :style="{
+  <div class="core" @drop="drop" @dragover="dragover" :style="{
       height: `${commHeight}px`,
       background: background
-    }"
-  >
+    }">
     <canvas id="canvas" v-show="backgroundLine"></canvas>
     <auxiliary-line></auxiliary-line>
-    <component
-      v-for="(item, index) in template"
-      :key="index"
-      :is="item.name"
-      :id="item.activityId"
-      :css="item.css"
-      :option="item.option"
-      :absolute="true"
-    ></component>
+    <rightMenu></rightMenu>
+    <component v-for="(item, index) in template" :key="'comp'+index" :is="item.name" :id="item.activityId" :css="item.css" :option="item.option" :absolute="true"></component>
   </div>
 </template>
 
-<script lang="ts">
+<script >
 // 组件源
 import Vue from "vue";
 import baseButtom from "@/template/dev/baseButtom.vue";
@@ -42,6 +29,7 @@ import baseDiv from "@/template/dev/baseDiv.vue";
 import baseSwiper from "@/template/dev/baseSwiper.vue";
 import baseEditor from "@/template/dev/baseEditor.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
+import rightMenu from '@/components/rightMenu/index.vue'
 import {
   baseButtom as ButtomData,
   baseImg as ImgData,
@@ -59,10 +47,11 @@ export default Vue.extend({
     baseSwiper,
     auxiliaryLine,
     baseDiv,
-    baseEditor
+    baseEditor,
+    rightMenu
   },
   mounted() {
-    (this as any).init();
+    (this ).init();
   },
   computed: {
     backgroundLine() {
@@ -72,7 +61,7 @@ export default Vue.extend({
       return this.$store.state.core.template;
     },
     commHeight() {
-      (this as any).init();
+      (this).init();
       return this.$store.state.core.commHeight;
     },
     background() {
@@ -82,13 +71,13 @@ export default Vue.extend({
   methods: {
     init() {
       this.$nextTick(() => {
-        let back: any = document.querySelector("#canvas");
-        let core: any = document.querySelector(".core");
+        let back= document.querySelector("#canvas");
+        let core = document.querySelector(".core");
         back.width = core.clientWidth;
         back.height = core.clientHeight;
         var context = back.getContext("2d");
         let height = 1;
-        while (height <= (this as any).commHeight) {
+        while (height <= (this ).commHeight) {
           context.moveTo(0, height);
           context.lineTo(back.width, height);
           context.strokeStyle = "rgb(168, 168, 168)";
@@ -98,16 +87,19 @@ export default Vue.extend({
           context.beginPath();
           height = height + 20;
         }
+        this.$store.commit("setting/setCoreCanvasXY",{
+          x:back.getBoundingClientRect().x,
+          y:back.getBoundingClientRect().y
+        });
       });
     },
     //
-    dragenter(e) {},
+   // dragenter(e) {},
     // 拖拽放下事件
     drop(e) {
       const index = e.dataTransfer.getData("compIndex");
-      
       if(index.trim()==''){return;}
-      let data: any;
+      let data;
       if (index == 0) {
         data = DivData(this.$store.state.core);
       } else if (index == 1) {

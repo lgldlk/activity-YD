@@ -12,6 +12,16 @@ interface setting {
   scale: number // 放大/缩小
   backgroundLine: boolean
   coreMode:string
+  rMenuShow:{
+    chooseId:string,
+    openX:number,
+    openY:number,
+    isShow:boolean,
+  },
+  coreCanvas:{
+    x:number,
+    y:number
+  }
 }
 
 const Setting: Module<setting, any> = {
@@ -73,7 +83,17 @@ const Setting: Module<setting, any> = {
     ],
     scale: 1,
     backgroundLine: true,
-    coreMode:'dev'
+    coreMode:'dev',
+    rMenuShow:{
+      chooseId:'',
+      openX:0,
+      openY:0,
+      isShow:false,
+    },
+    coreCanvas:{
+      x:0,
+      y:0
+    }
   },
   mutations: {
     set_copy(state, data) {
@@ -99,6 +119,21 @@ const Setting: Module<setting, any> = {
       if(modeType=="dev"||modeType=='prod'){
         state.coreMode=modeType;
       }
+    },
+    closeRightMenu(state){
+      state.rMenuShow.openX=0;
+      state.rMenuShow.openY=0;
+      state.rMenuShow.isShow=false;
+    },
+    openRightMenu(state,{chooseId,openX,openY}){
+      state.rMenuShow.chooseId=chooseId;
+      state.rMenuShow.openX=openX-state.coreCanvas.x;
+      state.rMenuShow.openY=openY-state.coreCanvas.y;
+      state.rMenuShow.isShow=true;
+    },
+    setCoreCanvasXY(state,{x,y}){
+      state.coreCanvas.x=x;
+      state.coreCanvas.y=y;
     }
   },
   actions: {

@@ -23,10 +23,6 @@ import { commHeight, commWidth } from "@/config/index";
 export default {
   data() {
     return {
-      menuShow: false, // 是否显示
-      id: "", // 组件id
-      x: 0, // 横坐标位置
-      y: 0, // 竖坐标位置
       isLoad: false
     };
   },
@@ -36,6 +32,18 @@ export default {
     },
     templates() {
       return this.$store.state.core.template;
+    },
+    id(){
+      return this.$store.state.setting.rMenuShow.chooseId;
+    },
+    x(){
+      return this.$store.state.setting.rMenuShow.openX;
+    },
+    y(){
+      return this.$store.state.setting.rMenuShow.openY;
+    },
+    menuShow(){
+      return this.$store.state.setting.rMenuShow.isShow;
     }
   },
   watch: {
@@ -45,7 +53,6 @@ export default {
   },
   methods: {
     open(id, x, y) {
-      console.log(id);
       this.menuShow = true;
       this.id = id;
       this.x = x + 10;
@@ -93,7 +100,7 @@ export default {
 .right_menu {
   position: absolute;
   width: 80px;
-  z-index: 99999;
+  z-index: 999;
   padding: 5px 0;
   border-radius: 4px;
   background-color: white;

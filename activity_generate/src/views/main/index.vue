@@ -84,6 +84,7 @@ export default {
     cancelActive(e) {
       if (e.target.getAttribute("class") == "index_center") {
         this.$store.commit("core/clear_template");
+        this.$store.commit("setting/closeRightMenu");
       }
     },
     init() {

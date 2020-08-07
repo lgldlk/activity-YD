@@ -232,35 +232,35 @@ export function baseSwiper(store: any): baseNode {
   }
 }
 
-/**
- * 轮播图vuex数据映射关系
- * @param store
- */
-export function baseEditor(store: any): baseNode {
-  let dynamic = store.template.length * 10
-  return {
-    activityId: guid(),
-    editStatus: false,
-    name: 'base-editor',
-    css: {
-      top: 10 + dynamic,
-      left: 10 + dynamic,
-      width: 350,
-      height: 100,
-      zIndex: store.template.length + 1,
-    },
-    option: {
-      html: '请输入文字',
-    },
-    animation: {
-      animationName: '',
-      animationDuration: 1000, // 动画时间
-      animationDelay: 0, // 延迟时间
-      animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'both', // 动画停留最后一帧
-    },
-  }
-}
+// /**
+//  * editor编辑vuex数据映射关系
+//  * @param store
+//  */
+// export function baseEditor(store: any): baseNode {
+//   let dynamic = store.template.length * 10
+//   return {
+//     activityId: guid(),
+//     editStatus: false,
+//     name: 'base-editor',
+//     css: {
+//       top: 10 + dynamic,
+//       left: 10 + dynamic,
+//       width: 350,
+//       height: 100,
+//       zIndex: store.template.length + 1,
+//     },
+//     option: {
+//       html: '请输入文字',
+//     },
+//     animation: {
+//       animationName: '',
+//       animationDuration: 1000, // 动画时间
+//       animationDelay: 0, // 延迟时间
+//       animationIterationCount: 1, // 动画执行次数
+//       animationFillMode: 'both', // 动画停留最后一帧
+//     },
+//   }
+// }
 
 /**
  * 将后台插件数据转换为页面数据

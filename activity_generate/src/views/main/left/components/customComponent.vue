@@ -47,7 +47,6 @@ import baseImg from "@/template/dev/baseImg.vue";
 import baseText from "@/template/dev/baseText.vue";
 import baseInput from "@/template/dev/baseInput.vue";
 import baseDiv from "@/template/dev/baseDiv.vue";
-import baseEditor from "@/template/dev/baseEditor.vue";
 import { baseComplate } from "@/utils/baseReact";
 import { cloneDeep } from "lodash";
 export default {
@@ -57,7 +56,6 @@ export default {
     baseText,
     baseInput,
     baseDiv,
-    baseEditor
   },
   mounted() {
     this.$store.dispatch("complate/getSingList");

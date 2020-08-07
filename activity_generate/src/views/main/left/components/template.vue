@@ -13,7 +13,7 @@
         <a-popover placement="right">
           <template slot="content">
             <div class="show_open_page">
-              <img class="show_img" :src="item.titlePage" alt />
+              <img class="show_img" :src="imageStaticUrl+item.titlePage" alt />
               <div class="template_info">
                 <div class="info_item">
                   <div class="info_left">模板名称:</div>
@@ -36,7 +36,7 @@
             <a-icon class="delete_icon" type="close-circle" />
           </a-popconfirm>
 
-          <img class="item_img" :src="item.titlePage" alt />
+          <img class="item_img" :src="imageStaticUrl+item.titlePage" alt />
         </a-popover>
       </div>
     </div>
@@ -46,13 +46,20 @@
 <script lang="ts">
 import Vue from "vue";
 import { getTemplateDataById } from "@/api/index";
+import { imageStaticUrl } from "@/config/index";
 export default Vue.extend({
   mounted() {
     this.$store.dispatch("complate/getAllTemplate");
+    console.log(this.templateList);
   },
   computed: {
     templateList() {
-      return this.$store.state.complate.template;
+      return (this as any).$store.state.complate.template;
+    }
+  },
+  data(){
+    return{
+      imageStaticUrl:imageStaticUrl,
     }
   },
   methods: {
@@ -65,7 +72,7 @@ export default Vue.extend({
       });
     },
     deleteTemplate(item) {
-      this.$store.dispatch("complate/deleteTemplate", item.templateId);
+      this.$store.dispatch("complate/deleteTemplate", item._id);
     }
   }
 });

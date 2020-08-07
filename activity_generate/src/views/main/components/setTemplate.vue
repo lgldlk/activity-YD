@@ -18,7 +18,7 @@
   >
     <div class="set_template">
       <div class="template_img">
-        <img :src="templateImg" alt />
+        <img :src="imageStaticUrl+templateImg" alt />
       </div>
       <div class="success_modal">
         <a-form>
@@ -37,13 +37,15 @@
 <script lang="ts">
 // 发布项目成功弹窗
 import Vue from "vue";
+import { imageStaticUrl } from "@/config/index";
 export default Vue.extend({
   data() {
     return {
       succModal: false,
       templateImg: "", // 模板缩略图
       tempName: "", // 模板名称
-      author: "" // 作者名称
+      author: "", // 作者名称
+      imageStaticUrl:imageStaticUrl
     };
   },
   methods: {

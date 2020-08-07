@@ -27,7 +27,6 @@ import baseText from "@/template/dev/baseText.vue";
 import baseInput from "@/template/dev/baseInput.vue";
 import baseDiv from "@/template/dev/baseDiv.vue";
 import baseSwiper from "@/template/dev/baseSwiper.vue";
-import baseEditor from "@/template/dev/baseEditor.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
 import rightMenu from '@/components/rightMenu/index.vue'
 import {
@@ -47,7 +46,6 @@ export default Vue.extend({
     baseSwiper,
     auxiliaryLine,
     baseDiv,
-    baseEditor,
     rightMenu
   },
   mounted() {

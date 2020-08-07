@@ -48,21 +48,21 @@ export default {
   },
   watch: {
     activeTemplate() {
-      // this.menuShow = false;
+      this.$store.commit("setting/closeRightMenu");
     }
   },
   methods: {
-    open(id, x, y) {
-      this.menuShow = true;
-      this.id = id;
-      this.x = x + 10;
-      this.y = y + 10;
-    },
-    close() {
-      this.menuShow = false;
-      this.x = 0;
-      this.y = 0;
-    },
+    // open(id, x, y) {
+    //   this.menuShow = true;
+    //   this.id = id;
+    //   this.x = x + 10;
+    //   this.y = y + 10;
+    // },
+    // close() {
+    //   this.menuShow = false;
+    //   this.x = 0;
+    //   this.y = 0;
+    // },
     clickRight() {},
     // 删除
     deleteItem() {
@@ -85,7 +85,7 @@ export default {
         }
         activeData.compName = this.$refs["saveInput"].stateValue;
         this.$store.dispatch("complate/setSingList", activeData).then(res => {
-          this.menuShow = false;
+          this.$store.commit("setting/closeRightMenu");
           this.$message.success(res.data.data);
         });
       } else {

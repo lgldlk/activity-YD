@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script >
 // 组件源
 import Vue from "vue";
 import axios from "axios";
@@ -25,7 +25,6 @@ import baseText from "@/template/prod/showText.vue";
 import baseInput from "@/template/prod/showInput.vue";
 import baseDiv from "@/template/prod/showDiv.vue";
 import baseSwiper from "@/template/prod/showSwiper.vue";
-import baseEditor from "@/template/prod/showEditor.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
 export default Vue.extend({
   components: {
@@ -36,17 +35,17 @@ export default Vue.extend({
     auxiliaryLine,
     baseSwiper,
     baseDiv,
-    baseEditor
+    
   },
   mounted() {
-    (this as any).init();
+    (this ).init();
   },
   computed: {
     template() {
       return this.$store.state.core.template;
     },
     commHeight() {
-      (this as any).init();
+      (this ).init();
       return this.$store.state.core.commHeight;
     },
     background() {

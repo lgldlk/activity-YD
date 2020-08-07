@@ -120,7 +120,7 @@
       <div class="active_item" v-if="showSwiper(core)">
         <div class="active_list_left">图片:</div>
         <div class="active_list_right">
-          <img class="swiper_img" :src="core.option.item[swiperItem].img" @click="toggleImg" alt />
+          <img class="swiper_img" :src="core.option.item[swiperItem].img||''" @click="toggleImg" alt />
         </div>
       </div>
       <div class="active_item" v-if="showSwiper(core)">
@@ -161,11 +161,6 @@
           />
         </div>
       </div>
-      <div class="active_item" v-if="showEditor(core)">
-        <div class="active_list_right">
-          <quill-editor :value="core.option.html" @changeHtml="changeHtml"></quill-editor>
-        </div>
-      </div>
     </div>
     <!-- 无组件 -->
     <div v-if="coreType == 3" class="attr_showtext">当前无可操作组件</div>
@@ -177,12 +172,11 @@
 import Vue from "vue";
 import vuedraggable from "vuedraggable";
 import imgUpload from "@/components/imgUpload";
-import quillEditor from "@/components/Editor";
 export default {
   components: {
     vuedraggable,
     imgUpload,
-    quillEditor
+    
   },
   data() {
     return {
@@ -224,10 +218,6 @@ export default {
     }
   },
   methods: {
-    changeHtml(node) {
-      console.log('变化');
-      this.core.option.html = node;
-    },
     // 是否显示文本
     showText(core) {
       if (
@@ -297,21 +287,31 @@ export default {
         return false;
       }
     },
-    // 判断是否显示富文本特有属性
-    showEditor(core) {
-      if (core.name == "base-editor") {
-        return true;
-      } else {
-        return false;
-      }
-    },
+    // // 判断是否显示富文本特有属性
+    // showEditor(core) {
+    //   if (core.name == "base-editor") {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // },
     // 增加轮播图
     addSwiper() {
       this.$store.commit("core/add_swiper");
+      this.swiperItem=this.core.option.item.length-1;
     },
     // 减去轮播图
     lessSwiper() {
+      if(this.core.option.item.length==1){
+        this.$message.error(`至少剩余一张图片`);
+        return ;
+      }
+      if(this.core.option.item.length-1==this.swiperItem){
+        this.swiperItem=this.swiperItem-1;
+      }
+
       this.$store.commit("core/less_swiper");
+      
     },
     changeSwiper(index) {
       this.swiperItem = index;

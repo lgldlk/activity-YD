@@ -36,6 +36,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
    // 最后一步是setup()。它依次接受（1）装入Swagger的路径，（2）应用程序实例, （3）描述Nest应用程序的文档。
   SwaggerModule.setup('/api', app, document);
-   await app.listen(3000);
+   await app.listen(818);
 }
 bootstrap();

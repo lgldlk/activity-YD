@@ -86,8 +86,11 @@ export function saveActivity(data: any) {
  */
 export function getActivity(id: number) {
   return request({
-    url: `/getActivity/${id}`,
+    url: `/getActivity`,
     method: 'post',
+    data:{
+      id
+    }
   })
 }
 
@@ -284,6 +287,7 @@ export function getTemplateDataById(templateId: string) {
  * @param id 模板id
  */
 export function deleteTemplate(id: string) {
+  console.log(id);
   return request({
     url: '/deleteTemplate',
     method: 'POST',

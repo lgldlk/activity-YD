@@ -75,7 +75,6 @@ const complate: Module<Complate, any> = {
     // 删除模板
     deleteTemplate({ dispatch }, id) {
       deleteTemplate(id).then(res => {
-        console.log(res)
         dispatch('getAllTemplate')
       })
     }

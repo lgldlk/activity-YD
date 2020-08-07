@@ -10,9 +10,9 @@ export class  Act_Data{
     activityId:string
     @Column()
     name:string
-    @Column()
+    @Column('text')
     css:string
-    @Column()
+    @Column('text')
     option:string
     @Column()
     animation:string

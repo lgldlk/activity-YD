@@ -131,7 +131,7 @@ export class Act_proController {
   @Post('saveSingleComplate')
   async saveSingleComplate(@Body() body){
     let result={}
-    await  this.actProSer.saveSingleComplate(body).then(e=>{
+    await  this.actProSer.saveSingleComplate(body.complate).then(e=>{
       result={
         data:'保存成功',
         code:200
@@ -194,7 +194,14 @@ export class Act_proController {
   }
   @Get('getTemplate')
   async getTemplate(){
-   return await this.actProSer.allTemplate();
+    let result={};
+    await this.actProSer.allTemplate().then(e=>{
+      result={
+        data:e,
+        code:200
+      }
+    });
+    return result;
   }
   @Post('setTemplate')
   async setTemplate(@Body() body){
@@ -215,7 +222,7 @@ export class Act_proController {
   @Post('deleteTemplate')
   async deleteTemplate(@Body() body){
     let result={}
-    await this.actProSer.delPro(body).then(e=>{
+    await this.actProSer.delTemplate(body).then(e=>{
       result={
         data:e,
         code:200

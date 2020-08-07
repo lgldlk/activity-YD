@@ -9,11 +9,11 @@ export class  comData{
     compName:string
     @Column()
     name:string
-    @Column()
+    @Column('text')
     css:string
     @Column()
     animation:string
-    @Column()
+    @Column('text')
     option:string
 }
 /*

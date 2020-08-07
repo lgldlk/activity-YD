@@ -124,7 +124,7 @@
 
 <script lang="ts">
 import { getObject, setObject, deleteObj } from "@/api/index";
-import { commHeight, mobileUrl } from "@/config/index";
+import { commHeight, mobileUrl ,imageStaticUrl} from "@/config/index";
 import { parseTime } from "@/utils/index";
 import authModal from "@/components/authModal/index.vue";
 import Vue from "vue";
@@ -170,6 +170,9 @@ export default Vue.extend({
             e.time = parseTime(e.time);
           });
           this.mainList = e.data.data;
+          this.mainList.map((item:any)=>{
+            item.titlePage=imageStaticUrl+item.titlePage;
+          });
           this.mainList.reverse();
         })
         .catch(err => {
@@ -227,7 +230,7 @@ export default Vue.extend({
       this.onShowUrlCode = mobileUrl + name;
     },
     deleteObj(data,index) {
-      if (data.isAuth) {
+      if (data.password.trim()=='1') {
         (this.$refs.authModal as any).open(data,index);
       } else {
         deleteObj(data._id, "").then(result => {
@@ -282,7 +285,7 @@ export default Vue.extend({
   .main_list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    // justify-content: space-between;
     margin: 0px 4%;
     margin-top: 8px;
     margin-bottom: 230px;

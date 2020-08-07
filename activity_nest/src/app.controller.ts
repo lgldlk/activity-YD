@@ -18,9 +18,13 @@ export class AppController {
     const writeImage = createWriteStream(join(__dirname, '..', '/public/image', fileName))
     await writeImage.write(file.buffer)
     this.imageSer.addImage(fileName, 1);
+    return {
+      data:fileName,
+      code:200
+    }
   }
   @Post('uptitleimage')
-  @UseInterceptors(FileInterceptor('data')) // file对应HTML表单的name属性
+  @UseInterceptors(FileInterceptor('image')) // file对应HTML表单的name属性
   async uptitleimage(
     @UploadedFile() file,
     @Body() body) {
@@ -28,14 +32,26 @@ export class AppController {
     const writeImage = createWriteStream(join(__dirname, '..', '/public/image', fileName))
     await writeImage.write(file.buffer)
     this.imageSer.addImage(fileName, 2);
+    return {
+      data:fileName,
+      code:200
+    }
   }
   @Get('getImage')
   async getImage() {
-    return await this.imageSer.allImage(1);
+    let result={
+      data: await this.imageSer.allImage(1),
+      code:200
+    }
+    return result;
   }
   @Get('getDefaultImg')
   async getDefaultImg() {
-    return await this.imageSer.allImage(3);
+    let result={
+      data: await this.imageSer.allImage(3),
+      code:200
+    }
+    return result;
   }
   ran(m) {
     m = m > 13 ? 13 : m;

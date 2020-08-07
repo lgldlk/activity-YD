@@ -35,21 +35,21 @@
       <div class="img_con">
         <div class="img_list" v-if="Menukey.includes('1')">
           <img
-            @click="addBaseImg(item)"
+            @click="addBaseImg(item.imageName)"
             class
-            v-for="item in userImage"
-            :key="item"
-            :src="item"
+            v-for="(item,index) in userImage"
+            :key="'ima'+index"
+            :src="item.imageName"
             alt
           />
         </div>
         <div class="img_list" v-if="Menukey.includes('2')">
           <img
-            @click="addBaseImg(item)"
+            @click="addBaseImg(item.imageName)"
             class
-            v-for="item in baseImage"
-            :key="item"
-            :src="item"
+            v-for="(item,index) in baseImage"
+            :key="'defu'+index"
+            :src="item.imageName"
             alt
           />
         </div>
@@ -62,7 +62,8 @@
 import Vue from "vue";
 import { getUPloadImage, getDefaultImg } from "@/api/index";
 import { baseImg } from "@/utils/baseReact";
-import { imageUpUrl } from "@/config/index";
+import { imageUpUrl,imageStaticUrl } from "@/config/index";
+
 export default Vue.extend({
   data() {
     return {
@@ -84,10 +85,16 @@ export default Vue.extend({
   methods: {
     init() {
       getUPloadImage().then(res => {
-        console.log(res);
+        
+        res.data.data.map(e=>{
+          e.imageName=imageStaticUrl+e.imageName;
+        })
         this.userImage = res.data.data;
       });
       getDefaultImg().then(res => {
+        res.data.data.map(e=>{
+          e.imageName=imageStaticUrl+e.imageName;
+        })
         this.baseImage = res.data.data;
       });
     },

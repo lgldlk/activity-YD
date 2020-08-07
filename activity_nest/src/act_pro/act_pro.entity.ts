@@ -21,7 +21,7 @@ export class  actPro{
     background:string
     @Column()
     password:string
-    @Column()
+    @Column('longtext')
     defaultLeft:string
     @Column()
     time:Number

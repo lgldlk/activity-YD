@@ -46,7 +46,7 @@ export class Act_proService {
   async allTemplate(){//所有模板
     let proList=await this.act_ProDao.find({ where: { proType: "2"} });
     proList=modJson(proList);
-    return proList
+    return Promise.resolve(proList);
   }
   async addTemplate(data){
     const ActivityList = await this.act_ProDao.find({
@@ -97,15 +97,28 @@ export class Act_proService {
       return tmp;
   }
 
-
-  async delPro(data){//删除项目或模板
+  
+  async delTemplate(data){//删除模板
+    let {id}=data;
+    let objectData=await this.act_ProDao.findOne({_id:id});
+    if(objectData!=null){
+      let tmp=await this.act_ProDao.find({where:{_id:id},relations:['doms']});
+      tmp=modJson(tmp);
+      await  this.act_DataDao.remove(tmp[0].doms);
+     await this.act_ProDao.delete({_id:id});
+       return Promise.resolve("删除成功");
+    }else{
+      return Promise.reject('此模板也被删除')
+    }
+  }
+  async delPro(data){//删除项目
     let {id,password}=data;
     let objectData=await this.act_ProDao.findOne({_id:id});
     if(objectData.password.trim()==''||objectData.password==password){
       let tmp=await this.act_ProDao.find({where:{_id:id},relations:['doms']});
       tmp=modJson(tmp);
       await  this.act_DataDao.remove(tmp[0].doms);
-      await this.act_ProDao.delete({_id:id});
+     await this.act_ProDao.delete({_id:id});
        return Promise.resolve("删除成功");
     }else{
       return Promise.reject('密码错误')
@@ -167,6 +180,11 @@ export class Act_proService {
       temp.option=JSON.parse(temp.option);
       temp.animation=JSON.parse(temp.animation);
     });
+    if (result[0].password.trim()!="") {
+      result[0].password = "1"
+    } else {
+      result[0].password = "0"
+    }
     return Promise.resolve(result[0]);
   }
   async setActivityData(data) {
@@ -189,7 +207,7 @@ export class Act_proService {
     if (objectData.password.trim()=='' || objectData.password == password) {
       // 更新项目数据
       await this.act_ProDao.update(
-        { _id: parentId },
+        {_id:parentId },
         {
           height: commHeight,
           background,
@@ -200,23 +218,26 @@ export class Act_proService {
           defaultLeft,
         }
       )
-      // 遍历数据将对象转为文本
+      //遍历数据将对象转为文本
       const newData = []
       let tmp=await this.act_ProDao.find({where:{_id:parentId},relations:['doms']});
       tmp=modJson(tmp);
       await this.act_DataDao.remove(tmp[0].doms);
       await template.map(async (temp) => {
+        
         temp.css=JSON.stringify(temp.css);
         temp.option=JSON.stringify(temp.option);
         temp.animation=JSON.stringify(temp.animation);
-        temp.pro=tmp;
+        temp.pro=tmp[0];
         newData.push({
           ...temp,
         })
         return true
       })
+      // console.log(newData);
       // 更新项目组件数据
-       await this.act_DataDao.save(newData);
+       this.act_DataDao.save(newData);
+
       return Promise.resolve(parentRouterName);
     } else {
       return Promise.reject('密码错误不允许修改')
@@ -235,23 +256,24 @@ export class Act_proService {
     data.css=JSON.stringify(data.css);
     data.option=JSON.stringify(data.option);
     data.animation=JSON.stringify(data.animation);
-    return await this.com_DataDao.save(data)
+     await this.com_DataDao.save(data)
+     return Promise.resolve('组件保存成功');
   }
 
   async getComplate(){
-    let result=await this.com_DataDao.find();
+    let result:any=await this.com_DataDao.find();
     result=modJson(result);
-    result.map((temp)=>{
+    await result.map((temp)=>{
       temp.css=JSON.parse(temp.css);
       temp.option=JSON.parse(temp.option);
       temp.animation=JSON.parse(temp.animation);
     })
-    return result;
+    return Promise.resolve(result);
   }
-  async updateSingComp({id,name}){
+  async updateSingComp({id,compName}){
     return await this.com_DataDao.update(
       { _id: id },
-      { compName: name }
+      { compName: compName }
     )
   }
   async deletesingComp({id}) {

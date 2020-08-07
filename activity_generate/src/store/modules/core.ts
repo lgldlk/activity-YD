@@ -67,7 +67,12 @@ const core: Module<CoreInter, any> = {
     },
     // 保存项目是否需要验证
     set_objectAuth(state, type) {
-      state.objectAuth = type
+      if(type.trim()=='1'){
+        state.objectAuth=true
+      }else{
+        state.objectAuth = false
+      }
+      
     },
     // 保存当前项目id
     set_objectId(state, id) {
@@ -520,11 +525,13 @@ const core: Module<CoreInter, any> = {
     getActivity({ commit }, data) {
       return new Promise((resolve, reject) => {
         getActivity(data.id).then((e) => {
+          console.log(e);
           if (e.data.code !== 200) {
             reject(e.data.data)
           } else {
-            let template: any[] = []
-            e.data.data.data.map((e) => {
+            let template: any[] = [];
+            console.log(e);
+            e.data.data.doms.map((e) => {
               template.push({ ...e, editStatus: false })
             })
             commit('update_template', template)
@@ -533,7 +540,7 @@ const core: Module<CoreInter, any> = {
             commit('set_objectName', e.data.data.textName)
             commit('set_parentRouterName', e.data.data.name)
             commit('set_parentDisp', e.data.data.disp)
-            commit('set_objectAuth', e.data.data.isAuth)
+            commit('set_objectAuth', e.data.data.password)
             commit('updateDefaultLeft', e.data.data.defaultLeft)
             resolve('数据查询完成')
           }

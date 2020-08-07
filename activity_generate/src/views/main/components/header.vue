@@ -248,7 +248,7 @@ export default {
       if (type == 3) {
         // 保存模板
         this.getThumbnail().then(res => {
-          this.$refs.setTemplate.openModal(res.data.data.data);
+          this.$refs.setTemplate.openModal(res.data.data);
         });
       } else {
         if (this.objectAuth) {
@@ -268,7 +268,7 @@ export default {
         // 保存当前页面的配置
         return this.$store
           .dispatch("core/saveObject", {
-            titlePage: res.data.data.data,
+            titlePage: res.data.data,
             pass
           })
           .then(data => {

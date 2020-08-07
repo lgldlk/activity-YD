@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { modJson } from './util';
 
+
 @Injectable()
 export class Act_proService {
    constructor(@InjectRepository(Act_Data)
@@ -16,9 +17,54 @@ export class Act_proService {
   @InjectRepository(comData)
   private readonly com_DataDao:Repository<comData>,
   ){
-
-
   }
+   /**
+   * 移动端获取数据 包括组件数据 以及页面高度
+   * @param {string} name 项目路由名称
+   */
+  async getMobileData(name) {
+    let proList=await this.act_ProDao.find({ where: { proType: "1",name:name} ,relations:['doms']});
+    proList=modJson(proList);
+    if(proList.length>.0){
+      let result:any=proList[0];
+      result.doms.map((temp)=>{
+        temp.css=JSON.parse(temp.css);
+        temp.option=JSON.parse(temp.option);
+        temp.animation=JSON.parse(temp.animation);
+      });
+      return Promise.resolve({
+        objHeight: result.height,
+        background: result.background,
+        textName: result.textName,
+        datas:result.doms
+      });
+    }
+    return Promise.reject('无此项目，请检查项目名');
+  }
+
+
+  async allTemplate(){//所有模板
+    let proList=await this.act_ProDao.find({ where: { proType: "2"} });
+    proList=modJson(proList);
+    return proList
+  }
+  async addTemplate(data){
+    const ActivityList = await this.act_ProDao.find({
+      name: data.name,
+      proType:"2",
+    })
+
+    if (ActivityList.length > 0) {
+      return Promise.reject('当前项目已经存在')
+    }
+      let tmp= await this.act_ProDao.insert({
+          ...data,
+          proType:"2",
+          time: new Date().getTime(),
+      })
+      return Promise.resolve('模板创建完成')
+  }
+
   async AllPro(){//所有项目
     let proList=await this.act_ProDao.find({ where: { proType: "1"} });
     proList=modJson(proList);
@@ -31,9 +77,11 @@ export class Act_proService {
     })
     return proList
   }
+
   async addPro(data){
     const ActivityList = await this.act_ProDao.find({
       name: data.name,
+      proType:"1",
     })
 
     if (ActivityList.length > 0) {
@@ -49,16 +97,15 @@ export class Act_proService {
       return tmp;
   }
 
-  async delPro(data){//删除项目
+
+  async delPro(data){//删除项目或模板
     let {id,password}=data;
     let objectData=await this.act_ProDao.findOne({_id:id});
     if(objectData.password.trim()==''||objectData.password==password){
+      let tmp=await this.act_ProDao.find({where:{_id:id},relations:['doms']});
+      tmp=modJson(tmp);
+      await  this.act_DataDao.remove(tmp[0].doms);
       await this.act_ProDao.delete({_id:id});
-        /*
-
-            对应dom数据库删除等会再做
-
-        */
        return Promise.resolve("删除成功");
     }else{
       return Promise.reject('密码错误')
@@ -78,10 +125,6 @@ export class Act_proService {
               return Promise.reject('密码错误');
           }
       }
-  async addAct_Data(aData:any){
-
-
-  }
   async getAct_Data(){
     let tmp=await this.act_DataDao.find();
     //tmp.content=JSON.parse(tmp.content);
@@ -113,13 +156,18 @@ export class Act_proService {
 
 
 
-  async findSById(proId){
+  async findSById(proId){//根据ID获取项目或模板
     let result=await this.act_ProDao.find({where:{_id:proId},relations:['doms']});
     result=modJson(result);
     if(result.length<0){
       return Promise.reject('无此项目');
     }
-    return Promise.resolve(result);
+    result[0].doms.map((temp)=>{
+      temp.css=JSON.parse(temp.css);
+      temp.option=JSON.parse(temp.option);
+      temp.animation=JSON.parse(temp.animation);
+    });
+    return Promise.resolve(result[0]);
   }
   async setActivityData(data) {
     const {
@@ -154,22 +202,61 @@ export class Act_proService {
       )
       // 遍历数据将对象转为文本
       const newData = []
-      template.map((temp) => {
+      let tmp=await this.act_ProDao.find({where:{_id:parentId},relations:['doms']});
+      tmp=modJson(tmp);
+      await this.act_DataDao.remove(tmp[0].doms);
+      await template.map(async (temp) => {
         temp.css=JSON.stringify(temp.css);
         temp.option=JSON.stringify(temp.option);
-
+        temp.animation=JSON.stringify(temp.animation);
+        temp.pro=tmp;
         newData.push({
           ...temp,
         })
         return true
       })
       // 更新项目组件数据
-      return await this.ctx.model.ActivityData.create(newData).then(
-        () => parentRouterName // 将项目名称返回出去
-      )
+       await this.act_DataDao.save(newData);
+      return Promise.resolve(parentRouterName);
     } else {
-      return Promise.reject(new Error('密码错误不允许修改'))
+      return Promise.reject('密码错误不允许修改')
     }
   }
+  async saveSingleComplate(data){
+    if (data.compName == '') {
+      return Promise.reject('请填写组件保存名')
+    }
+    let isexist = await this.com_DataDao.find({
+      compName: data.compName
+    })
+    if (isexist.length > 0) {
+      return Promise.reject('该组件名已经存在')
+    }
+    data.css=JSON.stringify(data.css);
+    data.option=JSON.stringify(data.option);
+    data.animation=JSON.stringify(data.animation);
+    return await this.com_DataDao.save(data)
+  }
 
+  async getComplate(){
+    let result=await this.com_DataDao.find();
+    result=modJson(result);
+    result.map((temp)=>{
+      temp.css=JSON.parse(temp.css);
+      temp.option=JSON.parse(temp.option);
+      temp.animation=JSON.parse(temp.animation);
+    })
+    return result;
+  }
+  async updateSingComp({id,name}){
+    return await this.com_DataDao.update(
+      { _id: id },
+      { compName: name }
+    )
+  }
+  async deletesingComp({id}) {
+    return await this.com_DataDao.delete({
+      _id: id
+    })
+  }
 }

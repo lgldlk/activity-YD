@@ -10,6 +10,25 @@ export class Act_proController {
   // try1(){
   //   return this.actProSer.trya();
   // }
+  @Post('getMobileData')
+  async getMobileData(@Body() body){
+    let result={};
+    await this.actProSer.getMobileData(body.name).then(
+      e=>{
+        result={
+        data:e,
+        code:200
+        }
+      }
+    ).catch(err=>{
+      result={
+        data:err,
+        code:500
+      }
+    });
+    return result;
+  }
+
   @Post('setObject')//新建项目
  async addActObject(@Body() body){
     let result={};
@@ -93,4 +112,136 @@ export class Act_proController {
     return result;
   }
   
+  @Post('saveActivity')
+  async saveActivity(@Body() body){
+    let result={}
+    await this.actProSer.setActivityData(body).then(e=>{
+      result={
+        data:e,
+        code:200
+      }
+    }).catch(err=>{
+      result={
+        data:String(err),
+        code:500
+      }}
+    );
+    return result;
+  }
+  @Post('saveSingleComplate')
+  async saveSingleComplate(@Body() body){
+    let result={}
+    await  this.actProSer.saveSingleComplate(body).then(e=>{
+      result={
+        data:'保存成功',
+        code:200
+      }
+    }).catch(err=>{
+      result={
+        data:err,
+        code:500
+      }
+    });
+    return result;
+  }
+  @Get('getSingleComplate')
+  async getSingleComplate(){
+    let result={}
+    await  this.actProSer.getComplate().then(e=>{
+      result={
+        data:e,
+        code:200
+      }
+    }).catch(err=>{
+      result={
+        data:err,
+        code:500
+      }
+    });
+    return result;
+  }
+  @Post('updateSingComp')
+  async updateSingComp(@Body() body){
+    let result={}
+    await  this.actProSer.updateSingComp(body).then(e=>{
+      result={
+        data:'修改成功',
+        code:200
+      }
+    }).catch(err=>{
+      result={
+        data:err,
+        code:500
+      }
+    });
+    return result;
+  }
+  @Post('deleteSingComp')
+  async deleteSingComp(@Body() body){
+    let result={}
+    await  this.actProSer.deletesingComp(body).then(e=>{
+      result={
+        data:'修改成功',
+        code:200
+      }
+    }).catch(err=>{
+      result={
+        data:err,
+        code:500
+      }
+    });
+    return result;
+  }
+  @Get('getTemplate')
+  async getTemplate(){
+   return await this.actProSer.allTemplate();
+  }
+  @Post('setTemplate')
+  async setTemplate(@Body() body){
+    let result={}
+    await this.actProSer.addTemplate(body).then(e=>{
+      result={
+        data:e,
+        code:200
+      }
+    }).catch(err=>{
+      result={
+        data:err,
+        code:500
+      }
+    })
+    return result;
+  }
+  @Post('deleteTemplate')
+  async deleteTemplate(@Body() body){
+    let result={}
+    await this.actProSer.delPro(body).then(e=>{
+      result={
+        data:e,
+        code:200
+      }
+    }).catch(err=>{
+      result={
+        data:err,
+        code:500
+      }
+    })
+    return result;
+  }
+  @Post('getTemplateDataById')
+  async getTemplateDataById(@Body() body){
+    let result={}
+    await this.actProSer.findSById(body.id).then(e=>{
+      result={
+        data:e,
+        code:200
+      }
+    }).catch(err=>{
+      result={
+        data:err,
+        code:500
+      }
+    })
+    return result;
+  }
 }

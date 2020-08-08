@@ -3,6 +3,7 @@ import { commHeight, commWidth } from '../../config/index'
 import { Module } from 'vuex'
 import { message } from 'ant-design-vue'
 import { guid } from '@/utils/utils'
+import { getBaseCovName} from '@/utils/baseReact'
 interface CoreInter {
   commWidth: number // 页面宽度
   commHeight: number // 页面高度
@@ -24,7 +25,17 @@ interface CoreInter {
   marking: {
     x: any[] // x对齐标线
     y: any[] // y对齐标线
-  }
+  },
+  coverageCache:{
+    includeCache:string[],
+    'base-input':number,
+     "base-div" :number,
+     "base-swiper" :number,
+     "base-text" :number,
+    "base-img":number,
+    'base-buttom':number
+  },
+  maxZIndex:number,
 }
 
 const core: Module<CoreInter, any> = {
@@ -51,6 +62,16 @@ const core: Module<CoreInter, any> = {
       x: [], // x对齐标线
       y: [], // y对齐标线
     },
+    coverageCache:{
+      includeCache:[],
+      'base-input':0,
+       "base-div" :0,
+       "base-swiper" :0,
+       "base-text" :0,
+      "base-img":0,
+      'base-buttom':0
+    },
+    maxZIndex:0
   },
   mutations: {
     // 保存当前项目名
@@ -85,6 +106,11 @@ const core: Module<CoreInter, any> = {
     // 增加元素
     set_tempLate(state, template) {
       // 增加页面上的元素
+      if(template.covName.trim()==''){
+        template.covName=getBaseCovName(template.name)+(state.coverageCache[template.name]+1);
+      }
+      state.coverageCache[template.name]++;
+      state.coverageCache.includeCache.push(template.activityId);
       state.template.push(template)
     },
     // 更新当前是否处于鼠标按下状态
@@ -135,6 +161,28 @@ const core: Module<CoreInter, any> = {
             message.warning('元素层级不可小于0')
           } else {
             item.css.zIndex = item.css.zIndex + num
+          }
+        }
+      })
+      state.template = list
+    },
+    set_CompZindex(state,{actId,num}) {
+      let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
+      list.map((item) => {
+        if(item.css.zIndex>num){
+          item.css.zIndex++;
+        }
+        if(item.css.zIndex>=state.maxZIndex){
+          state.maxZIndex=item.css.zIndex;
+        }
+        if (actId==(item.activityId)) {
+          if (num <= 0) {
+            list.map((item)=>{
+              item.css.zIndex++;
+            });
+            item.css.zIndex=0;
+          } else {
+            item.css.zIndex = num;
           }
         }
       })
@@ -511,7 +559,43 @@ const core: Module<CoreInter, any> = {
         x: [],
         y: [],
       }
+      state.maxZIndex=0
+      state.coverageCache={
+        includeCache:[],
+        'base-input':0,
+         "base-div" :0,
+         "base-swiper" :0,
+         "base-text" :0,
+        "base-img":0,
+        'base-buttom':0
+      }
     },
+    initCovName(state){//初始化图层信息
+      state.template.forEach((item:any,i)=>{
+        if(item.css.zIndex>=state.maxZIndex){
+          state.maxZIndex=item.css.zIndex;
+        }
+        if(state.coverageCache.includeCache.includes(item.activityId)){
+          return;
+        }
+        if(item.covName.trim()==''){
+          item.covName=getBaseCovName(item.name)+(state.coverageCache[item.name]+1);
+        }
+        state.coverageCache[item.name]++;
+        state.coverageCache.includeCache.push(item.activityId);
+      })
+    },
+    switchTemplateShow(state,domId){//切换元素是否可见
+      state.template.map((res: any) => {
+        if (res.activityId == domId) {
+          res.isShow=!res.isShow;
+        }
+      })
+    },
+    addMaxZindex(state){//让maxZIndex永远保持最大
+      state.maxZIndex++;
+    },
+    
   },
   actions: {
     // 保存当前项目数据

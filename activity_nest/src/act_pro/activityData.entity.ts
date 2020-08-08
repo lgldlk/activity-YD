@@ -10,12 +10,16 @@ export class  Act_Data{
     activityId:string
     @Column()
     name:string
+    @Column()
+    covName:string //图层用户定义的名字
     @Column('text')
     css:string
     @Column('text')
     option:string
     @Column()
     animation:string
+    @Column()
+    isShow:boolean
     @ManyToOne(type => actPro, pro => pro.doms)
     pro: actPro;
 }

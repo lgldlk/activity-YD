@@ -10,6 +10,7 @@
       :css="{...item.css,...item.animation}"
       :option="item.option"
       :ref="item.name == 'base-input' ? item.option.inputName : item.id"
+      v-show="item.isShow"
       @submitForm="submitForm"
     ></component>
   </div>

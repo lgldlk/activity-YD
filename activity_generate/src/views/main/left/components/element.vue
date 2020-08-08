@@ -72,6 +72,8 @@ export default Vue.extend({
   },
   methods: {
     setComponent(index) {
+      this.$store.commit(
+            "core/addMaxZindex");
       if (index == 0) {
         this.$store.commit(
           "core/set_tempLate",

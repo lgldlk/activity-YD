@@ -10,7 +10,7 @@ export class Act_proController {
   // try1(){
   //   return this.actProSer.trya();
   // }
-  @Post('getMobileData')
+  @Post('getMobileTemp')
   async getMobileData(@Body() body){
     let result={};
     await this.actProSer.getMobileData(body.name).then(

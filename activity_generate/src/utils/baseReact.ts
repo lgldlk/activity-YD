@@ -4,10 +4,13 @@ interface baseNode {
   activityId: String
   editStatus: false
   name: String
+  covName:String
   option?: Object
   css: Object
-  animation: Object
+  animation: Object,
+  isShow:boolean,
 }
+
 
 /**
  * 按钮的vuex数据映射关系
@@ -18,15 +21,17 @@ export function baseDiv(store: any): baseNode {
     activityId: guid(),
     editStatus: false,
     name: 'base-div',
+    isShow:true,
     option: {
       colorType: false, // 1 普通模式 2 高级模式
     },
+    covName:'',
     css: {
       top: 10 + dynamic,
       left: 10 + dynamic,
       width: 100,
       height: 100,
-      zIndex: store.template.length + 1,
+      zIndex: store.maxZIndex,
       background: 'rgba(242, 242, 242, 1)',
       borderColor: 'rgba(0, 0, 0, 1)',
       borderStyle: 'solid',
@@ -52,6 +57,8 @@ export function baseButtom(store: any): baseNode {
     activityId: guid(),
     editStatus: false,
     name: 'base-buttom',
+    covName:'',
+    isShow:true,
     option: {
       text: '按钮',
       btnType: 0, // 0 无事件 1 外部链接 2 提交表单 3
@@ -68,7 +75,7 @@ export function baseButtom(store: any): baseNode {
       left: 10 + dynamic,
       width: 100,
       height: 50,
-      zIndex: store.template.length + 1,
+      zIndex: store.maxZIndex,
       background: 'rgba(241, 241, 241, 1)',
       color: 'rgba(0, 0, 0, 1)',
       fontSize: 18,
@@ -96,15 +103,17 @@ export function baseImg(store: any, img: string): baseNode {
     activityId: guid(),
     editStatus: false,
     name: 'base-img',
+    covName:'',
     option: {
       text: img,
     },
+    isShow:true,
     css: {
       top: 10 + dynamic,
       left: 10 + dynamic,
       width: 100,
       height: 50,
-      zIndex: store.template.length + 1,
+      zIndex: store.maxZIndex,
     },
     animation: {
       animationName: '',
@@ -125,16 +134,18 @@ export function baseText(store: any): baseNode {
     activityId: guid(),
     editStatus: false,
     name: 'base-text',
+    covName:'',
     option: {
       text: '请修改此处的文字',
       colorType: false, // 1 普通模式 2 高级模式
     },
+    isShow:true,
     css: {
       top: 10 + dynamic,
       left: 10 + dynamic,
       width: 300,
       height: 33,
-      zIndex: store.template.length + 1,
+      zIndex: store.maxZIndex,
       background: 'rgba(255, 255, 255, 0)',
       border: 'none',
       color: 'rgba(0, 0, 0, 1)',
@@ -163,6 +174,8 @@ export function baseInput(store: any): baseNode {
     activityId: guid(),
     editStatus: false,
     name: 'base-input',
+    isShow:true,
+    covName:'',
     option: {
       text: '',
       inputName: `default${store.template.length}`,
@@ -175,7 +188,7 @@ export function baseInput(store: any): baseNode {
       left: 10 + dynamic,
       width: 150,
       height: 30,
-      zIndex: store.template.length + 1,
+      zIndex: store.maxZIndex,
       background: 'rgba(255, 255, 255, 1)',
       color: 'rgba(0, 0, 0, 1)',
       borderColor: 'rgba(0, 0, 0, 1)',
@@ -206,12 +219,14 @@ export function baseSwiper(store: any): baseNode {
     activityId: guid(),
     editStatus: false,
     name: 'base-swiper',
+    covName:'',
+    isShow:true,
     css: {
       top: 10 + dynamic,
       left: 10 + dynamic,
       width: 350,
       height: 100,
-      zIndex: store.template.length + 1,
+      zIndex: store.maxZIndex,
     },
     option: {
       autoplay: '2000', // 轮播间隔
@@ -272,14 +287,33 @@ export function baseComplate(store: any, data: any): baseNode {
   // 重置css位置
   data.css.top = 10 + dynamic
   data.css.left = 10 + dynamic
-  data.css.zIndex = store.template.length + 1
+  data.css.zIndex = store.maxZIndex
   let compData: any = {
     activityId: guid(),
     editStatus: false,
     name: data.name,
+    isShow:data.isShow,
     css: data.css,
     animation: data.animation,
     option: data.option,
   }
   return compData
 }
+
+export function getBaseCovName(baseName:string):string{
+  if(baseName=='base-input'){
+    return "输入框";
+  }else if(baseName=='base-div'){
+    return "块级元素";
+  }else if(baseName=='base-swiper'){
+    return "轮播图";
+  }else if(baseName=='base-text'){
+    return "文本";
+  }else if(baseName=='base-img'){
+    return "图片";
+  }else if(baseName=='base-buttom'){
+    return "按钮";
+  }
+  return '元素'
+}
+

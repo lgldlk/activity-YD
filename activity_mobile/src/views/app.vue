@@ -9,6 +9,7 @@
       :css="{...item.css,...item.animation}"
       :animation="item.animation"
       :option="item.option"
+      v-if="item.isShow"
       :text="item.text"
       :ref="item.name == 'base-input' ? item.option.inputName : item.id"
       @form="form"
@@ -24,7 +25,6 @@ import baseText from "../template/baseText";
 import baseInput from "../template/baseInput";
 import baseDiv from "../template/baseDiv";
 import baseSwiper from "../template/baseSwiper";
-import baseEditor from "../template/baseEditor";
 import { isSoftKeyboard } from "../utils/index";
 import app from "../store/modules/app";
 import axios from "axios";
@@ -36,7 +36,6 @@ export default {
     baseInput,
     baseDiv,
     baseSwiper,
-    baseEditor
   },
   mounted() {
     this.init();
@@ -97,6 +96,7 @@ export default {
     init() {
       let name = this.$route.params.name;
       getTemplate(name).then(e => {
+        console.log(e);
         if (e.data.code == 200) {
           this.template = e.data.data.datas;
           this.height = e.data.data.objHeight;

@@ -189,6 +189,8 @@ export default {
       } else if (index == 3) {
         this.copyTemplate.map(data => {
           this.$store.commit(
+            "core/addMaxZindex");
+          this.$store.commit(
             "core/set_tempLate",
             cloneDeep(baseComplate(this.$store.state.core, data))
           );

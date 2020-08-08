@@ -14,7 +14,9 @@
     <canvas id="canvas" v-show="backgroundLine"></canvas>
     <auxiliary-line></auxiliary-line>
     <rightMenu></rightMenu>
-    <component v-for="(item, index) in template" :key="'comp'+index" :is="item.name" :id="item.activityId" :css="item.css" :option="item.option" :absolute="true"></component>
+    <component v-for="(item, index) in template" :key="'comp'+index" :is="item.name" :id="item.activityId" :css="item.css" :option="item.option" 
+      v-show="item.isShow"
+    :absolute="true"></component>
   </div>
 </template>
 
@@ -98,6 +100,8 @@ export default Vue.extend({
       const index = e.dataTransfer.getData("compIndex");
       if(index.trim()==''){return;}
       let data;
+      this.$store.commit(
+            "core/addMaxZindex");
       if (index == 0) {
         data = DivData(this.$store.state.core);
       } else if (index == 1) {

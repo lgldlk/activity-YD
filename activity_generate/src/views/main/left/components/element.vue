@@ -123,7 +123,10 @@ export default Vue.extend({
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  align-items: center;
+  align-items: baseline;
+  // background-color: #efeeee;
+  // height: 100vh;
+  padding-bottom: 50px;
   .item {
     user-select: none;
     cursor: pointer;
@@ -132,13 +135,19 @@ export default Vue.extend({
     margin-bottom: 10px;
     margin-left: 20px;
     border-radius: 5px;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(255, 255, 255);
+     box-shadow:
+     18px 18px 30px rgba(97, 97, 97, 0.1),
+    -18px -18px 30px rgba(255, 255, 255, 1);
+    border-radius: 20px;
     width: 110px;
     text-align: center;
-    border: 1px dashed rgb(175, 175, 175);
     &:hover {
-      border: 1px solid #1890ff;
-      background: rgb(227, 227, 227);
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1),
+      0px 0px 0px rgba(255, 255, 255, 0.8),
+      inset 18px 18px 30px rgba(0, 0, 0, 0.1),
+      inset -18px -18px 30px rgba(255, 255, 255, 1);
+      transition: box-shadow .2s ease-out;
     }
     .item_img {
       width: 20px;

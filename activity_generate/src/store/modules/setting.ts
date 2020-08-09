@@ -17,6 +17,7 @@ interface setting {
     openX:number,
     openY:number,
     isShow:boolean,
+    scollTop:number
   },
   coreCanvas:{
     x:number,
@@ -89,6 +90,7 @@ const Setting: Module<setting, any> = {
       openX:0,
       openY:0,
       isShow:false,
+      scollTop:0
     },
     coreCanvas:{
       x:0,
@@ -128,12 +130,18 @@ const Setting: Module<setting, any> = {
     openRightMenu(state,{chooseId,openX,openY}){
       state.rMenuShow.chooseId=chooseId;
       state.rMenuShow.openX=openX-state.coreCanvas.x;
-      state.rMenuShow.openY=openY-state.coreCanvas.y;
+        state.rMenuShow.openY=state.rMenuShow.scollTop+openY-state.coreCanvas.y;
       state.rMenuShow.isShow=true;
     },
     setCoreCanvasXY(state,{x,y}){
-      state.coreCanvas.x=x;
-      state.coreCanvas.y=y;
+      if(state.coreCanvas.x==0&&state.coreCanvas.y==0){//只有初始化时才会进行赋值
+        state.coreCanvas.x=x;
+        state.coreCanvas.y=y;
+      }
+
+    },
+    setScollTop(state,scollT){
+      state.rMenuShow.scollTop=scollT;
     }
   },
   actions: {

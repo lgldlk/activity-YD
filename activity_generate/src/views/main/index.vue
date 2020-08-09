@@ -57,6 +57,8 @@ export default {
       .catch(err => {
         this.$message.error(err);
       });
+      let innerCenter=document.querySelector('.index_center');
+      innerCenter.addEventListener('scroll', this.handleScroll, true);
   },
 
   data() {
@@ -85,6 +87,9 @@ export default {
         this.$store.commit("core/clear_template");
         this.$store.commit("setting/closeRightMenu");
       }
+    },
+     handleScroll (e) {
+      this.$store.commit("setting/setScollTop",e.target.scrollTop);
     },
     init() {
       initMouse(this.core);

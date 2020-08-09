@@ -20,8 +20,8 @@
         <div v-show="editNameDomId!=element.activityId" class="coverName" @dblclick="editCoverName(element.activityId)">
        {{element.covName}}
        </div>
-        <input @click.stop="" @blur="changeCoverName(element.covName)" class="coverName" v-model="element.covName"  v-show="editNameDomId==element.activityId" />
-       <div class="delElement">
+        <input @click.stop=""  @input="changeCoverName($event,element.activityId)"  class="coverName" v-model="element.covName"  v-show="editNameDomId==element.activityId" />
+       <div class="delElement"  @click.stop="delTemplate(element.activityId)">
        <a-icon type="close" />
        </div>
        </div>
@@ -108,8 +108,12 @@ export default {
       editCancel(){
         this.editNameDomId='';
       },
-      changeCoverName(e){
-        console.log(e);
+       changeCoverName(event,id) {
+        this.$store.commit("core/changeCoverName", {covName:event.target.value,id});
+      },
+      delTemplate(id){
+      this.$store.commit("core/deleteCompLate", id);
+      this.$store.commit("setting/closeRightMenu");
       }
   },
 }
@@ -136,7 +140,7 @@ export default {
   border-top:none ;
 }
 .activeCells{
-  background-color: skyblue;
+  background-color: #ccc;
 }
 .switchShow{
   display: inline-block;

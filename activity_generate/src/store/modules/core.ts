@@ -595,7 +595,13 @@ const core: Module<CoreInter, any> = {
     addMaxZindex(state){//让maxZIndex永远保持最大
       state.maxZIndex++;
     },
-    
+    changeCoverName(state,{covName,id}){
+      state.template.map((res: any) => {
+        if (res.activityId == id) {
+          res.covName=covName;
+        }
+      })
+    }
   },
   actions: {
     // 保存当前项目数据

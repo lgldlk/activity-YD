@@ -44,20 +44,7 @@
         </div>
       </div>
       <div class="attr_item">
-        <div class="attr_list_left">层级:</div>
-        <div class="attr_list_right">
-          <a-slider
-            class="attr_slider"
-            v-model="core.css.zIndex"
-            :tipFormatter="formatter"
-            :min="1"
-            :max="100"
-          ></a-slider>
-          <a-input-number class="attr_mintextarea" placeholder="请输入文字" v-model="core.css.zIndex" />
-        </div>
-      </div>
-      <div class="attr_item">
-        <div class="attr_list_left">高度:</div>
+        <div class="attr_list_left">长度:</div>
         <div class="attr_list_right">
           <a-input-number class="attr_mintextarea" placeholder="请输入高度" v-model="core.css.height" />
         </div>

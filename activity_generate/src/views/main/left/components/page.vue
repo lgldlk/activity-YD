@@ -13,6 +13,7 @@
         <div class="page_form_item">
           <div class="item_left">页面高度:</div>
           <div class="item_right">
+            <div class="attr_item">
             <a-slider
               :value="sliderHight"
               :tipFormatter="formatter"
@@ -20,7 +21,18 @@
               :step="0.1"
               :min="1"
               :max="5"
+              class='attr_slider'
             ></a-slider>
+            <a-input-number 
+            class="attr_mintextarea" 
+            placeholder="请输入高度" 
+            :value="sliderHight.toFixed(1)" 
+            :step="0.1"
+              :min="1"
+              :max="5"
+              :precision="1"
+            @change="sliderChange"/>
+            </div>
           </div>
         </div>
         <div class="page_form_item">
@@ -97,8 +109,10 @@ export default {
     };
   },
   computed: {
-    sliderHight() {
+    sliderHight:{
+      get(){
       return Number(this.$store.state.core.commHeight / commHeight);
+      }
     },
     background: {
       get() {
@@ -146,6 +160,10 @@ export default {
       return `${value}屏`;
     },
     sliderChange(value) {
+      console.log(value);
+      // if(value<1){
+      //   return;
+      // }
       this.$store.commit(
         "core/updateCommHeigth",
         (Number(value) * commHeight).toFixed(0)
@@ -192,6 +210,17 @@ export default {
           font-size: 12px;
         }
       }
+    }
+    .attr_item{
+       display: flex;
+       align-items: center;
+    }
+    .attr_slider {
+      width: 100px;
+    }
+    .attr_mintextarea {
+      margin-left: 2px;
+      width: 64px;
     }
   }
 }

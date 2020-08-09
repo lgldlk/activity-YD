@@ -121,7 +121,7 @@ export default {
 
 <style scoped>
 .coverage{
-  overflow-y: auto;
+  width: 100%;
   height: calc(100vh - 120px);
 }
 .item{

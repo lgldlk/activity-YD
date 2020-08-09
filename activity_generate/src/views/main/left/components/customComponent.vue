@@ -16,12 +16,10 @@
               <a-icon type="close-circle" class="icon" @click.stop="deleteCompName(item._id)" />
             </div>
             <div v-if="isEditid == item._id" class="item_icon">
-              <a-button-group>
+              <!-- <a-button-group> -->
                 <a-button class="icon_btn" type="primary" @click.stop="updateNewName">确认</a-button>
                 <a-button class="icon_btn" type="danger" @click.stop="cancelEdit">取消</a-button>
-              </a-button-group>
-              <a-icon type="check-circle" />
-              <a-icon type="close-circle" />
+              <!-- </a-button-group> -->
             </div>
           </div>
           <div class="item_main">
@@ -76,7 +74,7 @@ export default {
       if (this.isEditid == 0) {
         this.$store.commit(
           "core/set_tempLate",
-          cloneDeep(baseComplate(this.$store.state.core, data))
+          cloneDeep(baseComplate(this.$store.state.core,{ ...data,isShow:true}))
         );
       }
     },

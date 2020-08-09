@@ -294,6 +294,7 @@ export function baseComplate(store: any, data: any): baseNode {
     name: data.name,
     isShow:data.isShow,
     css: data.css,
+    covName:'',
     animation: data.animation,
     option: data.option,
   }

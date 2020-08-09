@@ -154,7 +154,6 @@ export default {
       }
     },
     copyTemplate() {
-      console.log(this.copyTemplate);
       if (this.copyTemplate.length) {
         this.$store.commit("setting/set_coreinfoItem", {
           index: 3,

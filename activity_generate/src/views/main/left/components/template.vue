@@ -50,7 +50,6 @@ import { imageStaticUrl } from "@/config/index";
 export default Vue.extend({
   mounted() {
     this.$store.dispatch("complate/getAllTemplate");
-    console.log(this.templateList);
   },
   computed: {
     templateList() {

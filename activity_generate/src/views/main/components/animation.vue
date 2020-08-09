@@ -77,11 +77,11 @@ export default Vue.extend({
   justify-content: center;
   align-items: center;
 }
-.show-btn{
+.show-btn , .show-btn{
   margin: 0 20px;
   padding: 0px 20px;
   -webkit-animation-duration: 5s !important;
   animation-duration: 5s !important;
-
+  animation-iteration-count: infinite !important;
 }
 </style>

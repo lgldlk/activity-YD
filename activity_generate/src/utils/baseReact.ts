@@ -178,7 +178,7 @@ export function baseInput(store: any): baseNode {
     covName:'',
     option: {
       text: '',
-      inputName: `default${store.template.length}`,
+      formName: `发送请求的key值${store.template.length}`,
       placeholder: '',
       colorType: false, // 1 普通模式 2 高级模式
     },
@@ -247,6 +247,39 @@ export function baseSwiper(store: any): baseNode {
   }
 }
 
+
+export function baseRadio(store: any): baseNode {
+  let dynamic = store.template.length * 10
+  return {
+    activityId: guid(),
+    editStatus: false,
+    name: 'base-radio',
+    covName:'',
+    isShow:true,
+    css: {
+      top: 10 + dynamic,
+      left: 10 + dynamic,
+      zIndex: store.maxZIndex,
+      fontSize: 12,
+      color: 'rgba(0, 0, 0, 1)',
+      width:0,
+      height:0
+    },
+    option: {
+      text:'内容',
+      formName:`发送请求的key值${store.template.length}`,
+      itemValue:'选中对应值',
+    },
+    animation: {
+      animationName: '',
+      animationDuration: 1000, // 动画时间
+      animationDelay: 0, // 延迟时间
+      animationIterationCount: 1, // 动画执行次数
+      animationFillMode: 'both', // 动画停留最后一帧
+    },
+  }
+}
+
 // /**
 //  * editor编辑vuex数据映射关系
 //  * @param store
@@ -301,20 +334,17 @@ export function baseComplate(store: any, data: any): baseNode {
   return compData
 }
 
+const domMapName = {                                                                        
+  'base-input': "输入框",
+  'base-div': "块级元素",
+  'base-swiper': "轮播图",
+  'base-text':"文本",
+  'base-img':"图片",
+  'base-buttom':"按钮",
+  'base-radio':'单选框',
+
+}
 export function getBaseCovName(baseName:string):string{
-  if(baseName=='base-input'){
-    return "输入框";
-  }else if(baseName=='base-div'){
-    return "块级元素";
-  }else if(baseName=='base-swiper'){
-    return "轮播图";
-  }else if(baseName=='base-text'){
-    return "文本";
-  }else if(baseName=='base-img'){
-    return "图片";
-  }else if(baseName=='base-buttom'){
-    return "按钮";
-  }
-  return '元素'
+   return domMapName[baseName] ||'元素';
 }
 

@@ -9,7 +9,7 @@
       :is="item.name"
       :css="{...item.css,...item.animation}"
       :option="item.option"
-      :ref="item.name == 'base-input' ? item.option.inputName : item.id"
+      :ref="getRef(item)"
       v-show="item.isShow"
       @submitForm="submitForm"
     ></component>
@@ -26,7 +26,9 @@ import baseText from "@/template/prod/showText.vue";
 import baseInput from "@/template/prod/showInput.vue";
 import baseDiv from "@/template/prod/showDiv.vue";
 import baseSwiper from "@/template/prod/showSwiper.vue";
+import baseRadio from "@/template/prod/showRadio.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
+
 export default Vue.extend({
   components: {
     baseButtom,
@@ -36,7 +38,7 @@ export default Vue.extend({
     auxiliaryLine,
     baseSwiper,
     baseDiv,
-    
+    baseRadio
   },
   mounted() {
     (this ).init();
@@ -55,12 +57,26 @@ export default Vue.extend({
   },
   methods: {
     init() {},
+    refForm(){
+      
+    },
+    getRef(item){
+      if(item.name=='base-input'||item.name=='base-radio'){
+        return item.option.formName;
+      }
+      return item._id;
+    },
     submitForm(formList) {
       let { refInput, inputFromUrl, urlMethod } = formList;
       let formData = {};
+      console.log(refInput);
       refInput.map(e => {
-        formData[e] = this.$refs[e][0].$el.value;
+        console.log(this.$refs[e]);
+        console.log( this.$refs[e][0].$el.value);
+        //formData[e] = this.$refs[e][0].$el.value;
+
       });
+      return ;
       for (const key in formData) {
         if (formData[key] == "") {
           this.$message.warning("请完善表单");

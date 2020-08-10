@@ -43,6 +43,7 @@
           </a-popover>
         </div>
       </div>
+      <div v-if="showWidth(core)">
       <div class="attr_item">
         <div class="attr_list_left">长度:</div>
         <div class="attr_list_right">
@@ -54,6 +55,7 @@
         <div class="attr_list_right">
           <a-input-number class="attr_mintextarea" placeholder="请输入宽度" v-model="core.css.width" />
         </div>
+      </div>
       </div>
       <!-- 文本框 按钮 文本框 可以使用的属性 -->
       <div class="attr_item" v-if="showBackground(core)">
@@ -266,7 +268,8 @@ export default {
       if (
         core.name == "base-img" ||
         core.name == "base-swiper" ||
-        core.name == "base-editor"
+        core.name == "base-editor"||
+        core.name=="base-radio"
       ) {
         return false;
       } else {
@@ -278,7 +281,8 @@ export default {
       if (
         core.name == "base-img" ||
         core.name == "base-swiper" ||
-        core.name == "base-editor"
+        core.name == "base-editor"||
+        core.name=="base-radio"
       ) {
         return false;
       } else {
@@ -358,6 +362,13 @@ export default {
       } else {
         return false;
       }
+    },
+    //是否显示宽高
+    showWidth(core){
+      if(core.name=='base-radio'){
+        return false;
+      }
+      return true;
     },
     // 切换css属性
     toggleCssType() {

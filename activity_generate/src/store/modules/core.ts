@@ -33,7 +33,8 @@ interface CoreInter {
      "base-swiper" :number,
      "base-text" :number,
     "base-img":number,
-    'base-buttom':number
+    'base-buttom':number,
+    'base-radio':number
   },
   maxZIndex:number,
 }
@@ -69,7 +70,8 @@ const core: Module<CoreInter, any> = {
        "base-swiper" :0,
        "base-text" :0,
       "base-img":0,
-      'base-buttom':0
+      'base-buttom':0,
+      'base-radio':0
     },
     maxZIndex:0
   },
@@ -567,7 +569,8 @@ const core: Module<CoreInter, any> = {
          "base-swiper" :0,
          "base-text" :0,
         "base-img":0,
-        'base-buttom':0
+        'base-buttom':0,
+        'base-radio':0
       }
     },
     initCovName(state){//初始化图层信息

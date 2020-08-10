@@ -28,16 +28,19 @@ import baseImg from "@/template/dev/baseImg.vue";
 import baseText from "@/template/dev/baseText.vue";
 import baseInput from "@/template/dev/baseInput.vue";
 import baseDiv from "@/template/dev/baseDiv.vue";
+import baseRadio from '@/template/dev/baseRadio.vue';
 import baseSwiper from "@/template/dev/baseSwiper.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
-import rightMenu from '@/components/rightMenu/index.vue'
+import rightMenu from '@/components/rightMenu/index.vue';
+
 import {
   baseButtom as ButtomData,
   baseImg as ImgData,
   baseText as TextData,
   baseInput as InputData,
   baseDiv as DivData,
-  baseSwiper as SwiperData
+  baseSwiper as SwiperData,
+  baseRadio as RadioData
 } from "@/utils/baseReact";
 export default Vue.extend({
   components: {
@@ -48,7 +51,8 @@ export default Vue.extend({
     baseSwiper,
     auxiliaryLine,
     baseDiv,
-    rightMenu
+    rightMenu,
+    baseRadio
   },
   mounted() {
     (this ).init();
@@ -115,8 +119,7 @@ export default Vue.extend({
       } else if (index == 5) {
         data = SwiperData(this.$store.state.core);
       } else if (index == 6) {
-        this.$message.warn("组件升级中...");
-        return false;
+        data = RadioData(this.$store.state.core);
       } else if (index == 7) {
         this.$message.warn("组件升级中...");
         return false;

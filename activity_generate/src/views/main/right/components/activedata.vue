@@ -23,11 +23,33 @@
           />
         </div>
       </div>
-
+      <!-- 对应表单key值，对应选中值 -->
+      <div v-show="showFormMap(core)">
+        <div class="active_item" >
+          <div class="active_list_left">formKey值:</div>
+          <div class="active_list_right">
+            <a-input
+              class="active_textarea"
+              placeholder="请发起请求的key值"
+              v-model="core.option.formName"
+            />
+          </div>
+        </div>
+        <div class="active_item">
+          <div class="active_list_left">选中值:</div>
+          <div class="active_list_right">
+            <a-input
+              class="active_textarea"
+              placeholder="请发起请求的key值"
+              v-model="core.option.itemValue"
+            />
+          </div>
+        </div>
+      </div>
       <div class="active_item" v-if="showElementName(core)">
         <div class="active_list_left">名称:</div>
         <div class="active_list_right">
-          <a-input class="active_textarea" placeholder="请输入文字" v-model="core.option.inputName" />
+          <a-input class="active_textarea" placeholder="请输入文字" v-model="core.option.formName" />
         </div>
       </div>
       <!-- placeholder 只有文本框才有 -->
@@ -97,10 +119,10 @@
             @change="handleChange"
           >
             <a-select-option
-              v-for="inputItem in refInputList"
-              :key="inputItem.id"
-              :value="inputItem.option.inputName"
-            >{{ inputItem.option.inputName }}</a-select-option>
+              v-for="formItem in refFormList"
+              :key="formItem.id"
+              :value="formItem.option.formName"
+            >{{ formItem.option.formName }}</a-select-option>
           </a-select>
         </div>
       </div>
@@ -164,6 +186,8 @@
     </div>
     <!-- 无组件 -->
     <div v-if="coreType == 3" class="attr_showtext">当前无可操作组件</div>
+     <!-- 多选组件 -->
+    <div v-if="coreType == 2" class="attr_showtext">当前多选状态</div>
     <img-upload ref="imgUpload"></img-upload>
   </div>
 </template>
@@ -204,17 +228,18 @@ export default {
       let activeCore = this.$store.state.core.activeTemplate;
       if (activeCore.length == 1) {
         return 1;
-      } else if (activeCore.length == 2) {
+      } else if (activeCore.length>= 2) {
         return 2;
       } else if (activeCore.length == 0) {
         return 3;
       }
       return 3;
     },
-    refInputList() {
-      return this.$store.state.core.template.filter(
-        e => e.name == "base-input"
+    refFormList() {
+      let result=this.$store.state.core.template.filter(
+        e => (e.name == "base-input"||e.name=="base-radio")
       );
+      return result;
     }
   },
   methods: {
@@ -257,6 +282,13 @@ export default {
       if (core.name == "base-input") {
         return true;
       } else {
+        return false;
+      }
+    },
+    showFormMap(core){
+      if(core.name=="base-radio"){
+        return true;
+      }else{
         return false;
       }
     },

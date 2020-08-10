@@ -12,7 +12,6 @@
     class="baseComplate"
     type="text"
     :style="style"
-    :ref="option.inputName"
   />
 </template>
 

@@ -72,7 +72,7 @@ export default {
 .edit {
   position: absolute;
   outline: 2px rgb(24, 144, 255) solid;
-  z-index: 999 !important;
+  z-index: 99999 !important;
   .inline_btn {
     margin: 0px;
   }

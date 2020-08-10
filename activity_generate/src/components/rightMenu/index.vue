@@ -100,7 +100,7 @@ export default {
 .right_menu {
   position: absolute;
   width: 80px;
-  z-index: 999;
+  z-index: 100000;
   padding: 5px 0;
   border-radius: 4px;
   background-color: white;

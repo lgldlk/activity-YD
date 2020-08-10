@@ -5,7 +5,7 @@
       v-for="(item, index) in template"
       :key="index"
       :is="item.name"
-      :id="item.id"
+      :id="item._id.toString()"
       :css="{...item.css,...item.animation}"
       :animation="item.animation"
       :option="item.option"
@@ -58,7 +58,7 @@ export default {
     form(formList) {
       let { refInput, inputFromUrl, urlMethod } = formList;
       let formData = {};
-      refInput.map(e => (formData[e] = this.$refs[e][0].$el.value));
+      refInput.map(e => {formData[e] = this.$refs[e][0].$el.value;console.log(this.$refs[e]);});
       for (const key in formData) {
         if (formData[key] == "") {
           this.$Toast("请完善表单");

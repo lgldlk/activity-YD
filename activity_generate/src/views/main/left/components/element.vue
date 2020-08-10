@@ -1,7 +1,7 @@
 <template>
   <div class="component">
     <div
-      class="item animated pulse"
+      class="item  pulse"
       v-for="(item, index) in reactList"
       :key="item.name"
       @click="setComponent(index)"
@@ -152,6 +152,11 @@ export default Vue.extend({
     .item_img {
       width: 20px;
       height: 20px;
+      transition: width 0.2s ease-out;
+    }
+    &:hover  .item_img {
+       width: 18px;
+      height: 18px;
     }
     .item_name {
       margin: 0;

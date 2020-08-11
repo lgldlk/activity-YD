@@ -26,7 +26,7 @@
       <!-- 对应表单key值，对应选中值 -->
       <div v-show="showFormMap(core)">
         <div class="active_item" >
-          <div class="active_list_left">formKey值:</div>
+          <div class="active_list_left">名称:</div>
           <div class="active_list_right">
             <a-input
               class="active_textarea"

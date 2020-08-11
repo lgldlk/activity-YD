@@ -52,7 +52,7 @@
           type="primary"
           icon="qrcode"
           class="right_header_item"
-        >发布并预览</a-button>
+        >保存并预览</a-button>
       </div>
     </div>
     <!-- 发布预览框 -->

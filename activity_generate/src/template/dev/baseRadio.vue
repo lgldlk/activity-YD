@@ -13,7 +13,7 @@
       <label :style="style">
         <input disabled
          type="radio"
-         :name="option.formName" 
+         :name="option.formName"
          :value="option.itemValue" >
          {{option.text}}
          </label>
@@ -25,10 +25,10 @@
       :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
       <label :style="style">
-        <input 
+        <input
          type="radio"
          disabled
-         :name="option.formName" 
+         :name="option.formName"
          :value="option.itemValue"
          >
          {{option.text}}

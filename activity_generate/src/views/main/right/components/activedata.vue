@@ -239,7 +239,7 @@ export default {
       let buttonFormList=[];
       let result=this.$store.state.core.template.filter(
         e =>{
-          if ((e.name == "base-input"||e.name=="base-radio")&&!buttonFormList.includes(e.option.formName)){
+          if ((e.name == "base-input"||e.name=="base-radio"||e.name=="base-check")&&!buttonFormList.includes(e.option.formName)){
             buttonFormList.push(e.option.formName);
             return true;
           }

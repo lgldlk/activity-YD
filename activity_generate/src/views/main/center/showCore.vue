@@ -28,6 +28,7 @@ import baseInput from "@/template/prod/showInput.vue";
 import baseDiv from "@/template/prod/showDiv.vue";
 import baseSwiper from "@/template/prod/showSwiper.vue";
 import baseRadio from "@/template/prod/showRadio.vue";
+import baseCheck from "@/template/prod/showCheck.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
 
 export default Vue.extend({
@@ -39,7 +40,8 @@ export default Vue.extend({
     auxiliaryLine,
     baseSwiper,
     baseDiv,
-    baseRadio
+    baseRadio,
+    baseCheck
   },
   mounted() {
     (this ).init();
@@ -65,15 +67,25 @@ export default Vue.extend({
   methods: {
     init() {},
     refForm(){
-      
     },
     addFormCache(type,formName,value){
       if(type==1){
         this.radioCache[formName]=value;
+      }else if(type==2){
+        if(this.checkCache[formName]==undefined||this.checkCache[formName]==null){
+          this.checkCache[formName]=[value];
+        }else{
+          if(this.checkCache[formName].includes(value)){
+            this.checkCache[formName]
+            .splice(this.checkCache[formName].indexOf(value), 1);
+          }else{
+            this.checkCache[formName].push(value);
+          }
+        }
       }
     },
     getRef(item){
-      if(item.name=='base-input'||item.name=='base-radio'){
+      if(item.name=='base-input'||item.name=='base-radio'||item.name=="base-check"){
         return item.option.formName;
       }
       return item._id;
@@ -85,10 +97,10 @@ export default Vue.extend({
         if(this.$refs[e][0].option.domType=="base-input"){
           formData[e] = this.$refs[e][0].$el.value;
         }else if(this.$refs[e][0].option.domType=="base-radio"){
-          formData[e]=this.radioCache[e]|""
+          formData[e]=this.radioCache[e]||""
+        }else if(this.$refs[e][0].option.domType=="base-check"){
+          formData[e]=this.checkCache[e]||[];
         }
-        
-
       });
       // for (const key in formData) {
       //   if (formData[key] == "") {
@@ -113,11 +125,7 @@ export default Vue.extend({
       axios
         .request(request)
         .then(e => {
-          if (e.data.code == 200) {
-            this.$message.success(e.data.data);
-          } else {
-            this.$message.error("接口出现错误");
-          }
+            this.$message.success("发送成功");
         })
         .catch(err => {
           this.$message.error("网络出了小差.....");

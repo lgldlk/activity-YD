@@ -269,7 +269,8 @@ export default {
         core.name == "base-img" ||
         core.name == "base-swiper" ||
         core.name == "base-editor"||
-        core.name=="base-radio"
+        core.name=="base-radio"||
+        core.name=="base-check"
       ) {
         return false;
       } else {
@@ -282,7 +283,8 @@ export default {
         core.name == "base-img" ||
         core.name == "base-swiper" ||
         core.name == "base-editor"||
-        core.name=="base-radio"
+        core.name=="base-radio"||
+        core.name=="base-check"
       ) {
         return false;
       } else {
@@ -365,7 +367,7 @@ export default {
     },
     //是否显示宽高
     showWidth(core){
-      if(core.name=='base-radio'){
+      if(core.name=='base-radio'||core.name=="base-check"){
         return false;
       }
       return true;

@@ -293,7 +293,7 @@ export default {
       }
     },
     showFormMap(core){
-      if(core.name=="base-radio"){
+      if(core.name=="base-radio"||core.name=="base-check"){
         return true;
       }else{
         return false;

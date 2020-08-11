@@ -29,6 +29,7 @@ import baseText from "@/template/dev/baseText.vue";
 import baseInput from "@/template/dev/baseInput.vue";
 import baseDiv from "@/template/dev/baseDiv.vue";
 import baseRadio from '@/template/dev/baseRadio.vue';
+import baseCheck from '@/template/dev/baseCheck.vue';
 import baseSwiper from "@/template/dev/baseSwiper.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
 import rightMenu from '@/components/rightMenu/index.vue';
@@ -40,7 +41,8 @@ import {
   baseInput as InputData,
   baseDiv as DivData,
   baseSwiper as SwiperData,
-  baseRadio as RadioData
+  baseRadio as RadioData,
+  baseCheck as CheckData
 } from "@/utils/baseReact";
 export default Vue.extend({
   components: {
@@ -52,7 +54,8 @@ export default Vue.extend({
     auxiliaryLine,
     baseDiv,
     rightMenu,
-    baseRadio
+    baseRadio,
+    baseCheck
   },
   mounted() {
     (this ).init();
@@ -121,8 +124,7 @@ export default Vue.extend({
       } else if (index == 6) {
         data = RadioData(this.$store.state.core);
       } else if (index == 7) {
-        this.$message.warn("组件升级中...");
-        return false;
+        data = CheckData(this.$store.state.core);
       }
       if (e.target.getAttribute("id") == "canvas") {
         data.css.top = e.offsetY - data.css.height / 2;

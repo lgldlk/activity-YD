@@ -25,7 +25,8 @@ import {
   baseInput,
   baseDiv,
   baseSwiper,
-  baseRadio
+  baseRadio,
+  baseCheck
 } from "@/utils/baseReact";
 import imgUpload from "@/components/imgUpload/index.vue";
 import Vue from "vue";
@@ -111,7 +112,10 @@ export default Vue.extend({
           baseRadio(this.$store.state.core)
         );
       } else if (index == 7) {
-        this.$message.warn("组件升级中...");
+        this.$store.commit(
+          "core/set_tempLate",
+          baseCheck(this.$store.state.core)
+        );
       }
     },
     // 监听拖拽

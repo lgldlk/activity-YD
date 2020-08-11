@@ -280,6 +280,38 @@ export function baseRadio(store: any): baseNode {
   }
 }
 
+
+export function baseCheck(store: any): baseNode {
+  let dynamic = store.template.length * 10
+  return {
+    activityId: guid(),
+    editStatus: false,
+    name: 'base-check',
+    covName:'',
+    isShow:true,
+    css: {
+      top: 10 + dynamic,
+      left: 10 + dynamic,
+      zIndex: store.maxZIndex,
+      fontSize: 12,
+      color: 'rgba(0, 0, 0, 1)',
+      width:0,
+      height:0
+    },
+    option: {
+      text:'内容',
+      formName:'check名称相同的即为一组',
+      itemValue:'选中对应值',
+    },
+    animation: {
+      animationName: '',
+      animationDuration: 1000, // 动画时间
+      animationDelay: 0, // 延迟时间
+      animationIterationCount: 1, // 动画执行次数
+      animationFillMode: 'both', // 动画停留最后一帧
+    },
+  }
+}
 // /**
 //  * editor编辑vuex数据映射关系
 //  * @param store
@@ -342,7 +374,7 @@ const domMapName = {
   'base-img':"图片",
   'base-buttom':"按钮",
   'base-radio':'单选框',
-
+  'base-check':'复选框'
 }
 export function getBaseCovName(baseName:string):string{
    return domMapName[baseName] ||'元素';

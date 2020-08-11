@@ -34,7 +34,8 @@ interface CoreInter {
      "base-text" :number,
     "base-img":number,
     'base-buttom':number,
-    'base-radio':number
+    'base-radio':number,
+    'base-check':number,
   },
   maxZIndex:number,
 }
@@ -71,7 +72,8 @@ const core: Module<CoreInter, any> = {
        "base-text" :0,
       "base-img":0,
       'base-buttom':0,
-      'base-radio':0
+      'base-radio':0,
+      'base-check':0,
     },
     maxZIndex:0
   },
@@ -570,7 +572,8 @@ const core: Module<CoreInter, any> = {
          "base-text" :0,
         "base-img":0,
         'base-buttom':0,
-        'base-radio':0
+        'base-radio':0,
+        'base-check':0,
       }
     },
     initCovName(state){//初始化图层信息

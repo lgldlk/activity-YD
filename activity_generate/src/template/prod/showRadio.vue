@@ -15,11 +15,7 @@
 
 <script>
 import { handleStyle } from "@/utils/index";
-import edit from "@/components/edit/index";
 export default {
-  components: {
-    edit
-  },
   props: {
     id: {
       type: String

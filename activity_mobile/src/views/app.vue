@@ -27,6 +27,7 @@ import baseInput from "../template/baseInput";
 import baseDiv from "../template/baseDiv";
 import baseSwiper from "../template/baseSwiper";
 import baseRadio from '../template/baseRadio';
+import baseCheck from '../template/baseCheck'
 import { isSoftKeyboard } from "../utils/index";
 import app from "../store/modules/app";
 import axios from "axios";
@@ -38,7 +39,8 @@ export default {
     baseInput,
     baseDiv,
     baseSwiper,
-    baseRadio
+    baseRadio,
+    baseCheck
   },
   mounted() {
     this.init();
@@ -63,10 +65,21 @@ export default {
     addFormCache(type,formName,value){
       if(type==1){
         this.radioCache[formName]=value;
+      }else if(type==2){
+        if(this.checkCache[formName]==undefined||this.checkCache[formName]==null){
+          this.checkCache[formName]=[value];
+        }else{
+          if(this.checkCache[formName].includes(value)){
+            this.checkCache[formName]
+            .splice(this.checkCache[formName].indexOf(value), 1);
+          }else{
+            this.checkCache[formName].push(value);
+          }
+        }
       }
     },
     getRef(item){
-      if(item.name=='base-input'||item.name=='base-radio'){
+      if(item.name=='base-input'||item.name=='base-radio'||item.name=='base-check'){
         return item.option.formName;
       }
       return item._id;
@@ -78,12 +91,14 @@ export default {
         if(this.$refs[e][0].option.domType=="base-input"){
           formData[e] = this.$refs[e][0].$el.value;
         }else if(this.$refs[e][0].option.domType=="base-radio"){
-          formData[e]=this.radioCache[e]|""
+          formData[e]=this.radioCache[e]||""
+        }else if(this.$refs[e][0].option.domType=="base-check"){
+          formData[e]=this.checkCache[e]||[];
         }
       });
       // for (const key in formData) {
       //   if (formData[key] == "") {
-      //     this.$Toast("请完善表单");
+      //     this.$message.warning("请完善表单");
       //     return false;
       //   }
       // }
@@ -104,11 +119,7 @@ export default {
       axios
         .request(request)
         .then(e => {
-          if (e.data.code == 200) {
-            this.$Toast(e.data.data);
-          } else {
-            this.$Toast("接口出现错误");
-          }
+            this.$Toast("发送成功");
         })
         .catch(err => {
           this.$Toast("网络出了小差.....");

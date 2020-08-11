@@ -11,7 +11,7 @@
   <div  @mousedown="toggleEdit" @mouseenter="mouseenter" @mouseleave="mouseleave">
     <edit v-show="editStatus" :id="id" :styles="constyle">
       <label :style="style">
-        <input 
+        <input disabled
          type="radio"
          :name="option.formName" 
          :value="option.itemValue" >
@@ -27,6 +27,7 @@
       <label :style="style">
         <input 
          type="radio"
+         disabled
          :name="option.formName" 
          :value="option.itemValue"
          >

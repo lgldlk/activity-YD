@@ -53,6 +53,13 @@ export default {
           inputFromUrl: this.option.inputFromUrl,
           urlMethod: this.option.urlMethod
         });
+      }else if (this.option.btnType == 3) {
+        console.log("qq客服");
+        window.location.href =
+          "http://wpa.qq.com/msgrd?v=3&uin=2467230789&site=qq&menu=yes";
+      } else if (this.option.btnType == 4) {
+        console.log("电话客服");
+        location.href = "tel:10086";
       }
     }
   }

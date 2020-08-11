@@ -8,11 +8,12 @@
       :id="item._id.toString()"
       :css="{...item.css,...item.animation}"
       :animation="item.animation"
-      :option="item.option"
+      :option="{...item.option,'domType':item.name}"
       v-if="item.isShow"
       :text="item.text"
-      :ref="item.name == 'base-input' ? item.option.inputName : item.id"
+      :ref="getRef(item)"
       @form="form"
+      @addFormCache="addFormCache"
     ></component>
   </div>
 </template>
@@ -25,6 +26,7 @@ import baseText from "../template/baseText";
 import baseInput from "../template/baseInput";
 import baseDiv from "../template/baseDiv";
 import baseSwiper from "../template/baseSwiper";
+import baseRadio from '../template/baseRadio';
 import { isSoftKeyboard } from "../utils/index";
 import app from "../store/modules/app";
 import axios from "axios";
@@ -36,6 +38,7 @@ export default {
     baseInput,
     baseDiv,
     baseSwiper,
+    baseRadio
   },
   mounted() {
     this.init();
@@ -51,20 +54,39 @@ export default {
       template: [],
       height: 667,
       background: "white",
-      baseHeight: 6.67
+      baseHeight: 6.67,
+      radioCache:{},
+      checkCache:{},
     };
   },
   methods: {
+    addFormCache(type,formName,value){
+      if(type==1){
+        this.radioCache[formName]=value;
+      }
+    },
+    getRef(item){
+      if(item.name=='base-input'||item.name=='base-radio'){
+        return item.option.formName;
+      }
+      return item._id;
+    },
     form(formList) {
       let { refInput, inputFromUrl, urlMethod } = formList;
       let formData = {};
-      refInput.map(e => {formData[e] = this.$refs[e][0].$el.value;console.log(this.$refs[e]);});
-      for (const key in formData) {
-        if (formData[key] == "") {
-          this.$Toast("请完善表单");
-          return false;
+      refInput.map(e => {
+        if(this.$refs[e][0].option.domType=="base-input"){
+          formData[e] = this.$refs[e][0].$el.value;
+        }else if(this.$refs[e][0].option.domType=="base-radio"){
+          formData[e]=this.radioCache[e]|""
         }
-      }
+      });
+      // for (const key in formData) {
+      //   if (formData[key] == "") {
+      //     this.$Toast("请完善表单");
+      //     return false;
+      //   }
+      // }
       let request;
       if (urlMethod == "get") {
         request = {

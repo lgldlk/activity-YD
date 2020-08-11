@@ -263,7 +263,8 @@ export function baseRadio(store: any): baseNode {
       fontSize: 12,
       color: 'rgba(0, 0, 0, 1)',
       width:0,
-      height:0
+      height:0,
+      frameWidth:12,
     },
     option: {
       text:'内容',
@@ -296,7 +297,8 @@ export function baseCheck(store: any): baseNode {
       fontSize: 12,
       color: 'rgba(0, 0, 0, 1)',
       width:0,
-      height:0
+      height:0,
+      frameWidth:12,
     },
     option: {
       text:'内容',

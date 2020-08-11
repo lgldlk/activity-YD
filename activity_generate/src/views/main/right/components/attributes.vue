@@ -57,6 +57,15 @@
         </div>
       </div>
       </div>
+      <div v-if="showFrameWidth(core)">
+        <div class="attr_item">
+        <div class="attr_list_left">框宽:</div>
+            <div class="attr_list_right">
+              <a-input-number class="attr_mintextarea" placeholder="请输入高度" v-model="core.css.frameWidth" />
+            </div>
+            </div>
+      </div>
+
       <!-- 文本框 按钮 文本框 可以使用的属性 -->
       <div class="attr_item" v-if="showBackground(core)">
         <div class="attr_list_left">背景颜色:</div>
@@ -371,6 +380,12 @@ export default {
         return false;
       }
       return true;
+    },
+    showFrameWidth(core){
+      if(core.name=='base-radio'||core.name=="base-check"){
+        return true;
+      }
+      return false;
     },
     // 切换css属性
     toggleCssType() {

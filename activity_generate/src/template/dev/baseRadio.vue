@@ -10,12 +10,13 @@
   <!-- <div class="base_img" @mouseover="toggleEdit" > -->
   <div  @mousedown="toggleEdit" @mouseenter="mouseenter" @mouseleave="mouseleave">
     <edit v-show="editStatus" :id="id" :styles="constyle">
-      <label :style="style">
+      <label :style="style" class="base_radio">
         <input disabled
+          :style="frameRect"
          type="radio"
          :name="option.formName"
          :value="option.itemValue" >
-         {{option.text}}
+         <span>{{option.text}}</span>
          </label>
     </edit>
     <!-- 鼠标进入状态 -->
@@ -24,24 +25,27 @@
       :style="constyle"
       :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
-      <label :style="style">
+      <label :style="style" class="base_radio">
         <input
          type="radio"
          disabled
          :name="option.formName"
          :value="option.itemValue"
+         :style="frameRect"
          >
-         {{option.text}}
+        <span>{{option.text}}</span>
          </label>
     </div>
     <!-- 未选中状态 -->
     <label :style="style" v-show="!editStatus & !hoverStatus"
-      :class="absolute ? 'baseComplate' : ''">
+      :class="absolute ? 'baseComplate' : ''" 
+      class="base_radio">
     <input
       type="radio"
       :name="option.formName"
+      :style="frameRect"
          :value="option.itemValue">
-      {{option.text}}
+      <span>{{option.text}}</span>
       </label>
   </div>
 </template>
@@ -90,6 +94,12 @@ export default {
         zIndex: style.zIndex
       };
     },
+    frameRect(){
+      return{
+        width:this.css.frameWidth+'px',
+        height:this.css.frameWidth+'px',
+      }
+    },
     editStatus() {
       return this.$store.state.core.activeTemplate.includes(this.id);
     },
@@ -116,5 +126,21 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.base_radio {
+  margin-top: 1px;
+}
+.base_radio > input[type=radio] span {
+        vertical-align: middle;
+}
+.base_radio::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right:0;
+}
+.base_radio> input[type=radio] {
+        vertical-align: middle;
+}
 </style>

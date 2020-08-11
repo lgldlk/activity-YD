@@ -204,7 +204,7 @@ export default {
   },
   data() {
     return {
-      swiperItem: 0 // 轮播图临时变量
+      swiperItem: 0, // 轮播图临时变量
     };
   },
   computed: {
@@ -236,8 +236,15 @@ export default {
       return 3;
     },
     refFormList() {
+      let buttonFormList=[];
       let result=this.$store.state.core.template.filter(
-        e => (e.name == "base-input"||e.name=="base-radio")
+        e =>{
+          if ((e.name == "base-input"||e.name=="base-radio")&&!buttonFormList.includes(e.option.formName)){
+            buttonFormList.push(e.option.formName);
+            return true;
+          }
+          return false;
+        }
       );
       return result;
     }

@@ -178,7 +178,7 @@ export function baseInput(store: any): baseNode {
     covName:'',
     option: {
       text: '',
-      formName: `发送请求的key值${store.template.length}`,
+      formName: `input名称${store.template.length}`,
       placeholder: '',
       colorType: false, // 1 普通模式 2 高级模式
     },
@@ -267,7 +267,7 @@ export function baseRadio(store: any): baseNode {
     },
     option: {
       text:'内容',
-      formName:`发送请求的key值${store.template.length}`,
+      formName:'radio名称相同的即为一组',
       itemValue:'选中对应值',
     },
     animation: {

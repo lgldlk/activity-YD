@@ -2,11 +2,13 @@
   <!-- <div class="base_img" @mouseover="toggleEdit" > -->
     <label :style="style"
      class="baseComplate"
+      
       >
     <input
       type="radio"
       :name="option.formName"
-         :value="option.itemValue" >
+      @click="setRadioCache"
+         :value="option.itemValue">
       {{option.text}}
       </label>
 </template>
@@ -31,9 +33,9 @@ export default {
       default: () => {}
     },
   },
-  data(){
-    return{
-      isChoose:false,
+  methods:{
+    setRadioCache(){
+      this.$emit("addFormCache", 1,this.option.formName,this.option.itemValue);
     }
   },
   computed: {

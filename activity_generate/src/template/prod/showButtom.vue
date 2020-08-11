@@ -39,7 +39,6 @@ export default {
         location.href = this.option.link;
       } else if (this.option.btnType == 2) {
         // 提交表单
-        console.log("请求");
         this.$emit("submitForm", this.option);
       } else if (this.option.btnType == 3) {
         console.log("qq客服");

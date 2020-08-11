@@ -8,10 +8,11 @@
       :key="index"
       :is="item.name"
       :css="{...item.css,...item.animation}"
-      :option="item.option"
+      :option="{...item.option,'domType':item.name}"
       :ref="getRef(item)"
       v-show="item.isShow"
       @submitForm="submitForm"
+      @addFormCache="addFormCache"
     ></component>
   </div>
 </template>
@@ -55,10 +56,21 @@ export default Vue.extend({
       return this.$store.state.core.background;
     }
   },
+  data(){
+    return{
+      radioCache:{},
+      checkCache:{},
+    }
+  },
   methods: {
     init() {},
     refForm(){
       
+    },
+    addFormCache(type,formName,value){
+      if(type==1){
+        this.radioCache[formName]=value;
+      }
     },
     getRef(item){
       if(item.name=='base-input'||item.name=='base-radio'){
@@ -69,20 +81,21 @@ export default Vue.extend({
     submitForm(formList) {
       let { refInput, inputFromUrl, urlMethod } = formList;
       let formData = {};
-      console.log(refInput);
       refInput.map(e => {
-        console.log(this.$refs[e]);
-        console.log( this.$refs[e][0].$el.value);
-        //formData[e] = this.$refs[e][0].$el.value;
+        if(this.$refs[e][0].option.domType=="base-input"){
+          formData[e] = this.$refs[e][0].$el.value;
+        }else if(this.$refs[e][0].option.domType=="base-radio"){
+          formData[e]=this.radioCache[e]|""
+        }
+        
 
       });
-      return ;
-      for (const key in formData) {
-        if (formData[key] == "") {
-          this.$message.warning("请完善表单");
-          return false;
-        }
-      }
+      // for (const key in formData) {
+      //   if (formData[key] == "") {
+      //     this.$message.warning("请完善表单");
+      //     return false;
+      //   }
+      // }
       let request;
       if (urlMethod == "get") {
         request = {

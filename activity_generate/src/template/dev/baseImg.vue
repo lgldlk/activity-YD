@@ -9,6 +9,7 @@
         class="inline_img"
         :src="option.text"
         alt
+        draggable="false"
       />
     </edit>
     <!-- 鼠标进入状态 -->
@@ -24,6 +25,7 @@
         class="inline_img"
         :src="option.text"
         alt
+        draggable="false"
       />
     </div>
     <img
@@ -34,6 +36,7 @@
       @error="loadImg"
       alt
       :style="style"
+      draggable="false"
     />
   </div>
 </template>

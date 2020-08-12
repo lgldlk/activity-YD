@@ -1,13 +1,13 @@
 <template>
   <!-- <div class="base_img" @mouseover="toggleEdit" > -->
     <label :style="style"
-     class="baseComplate"
-      
+     class="baseComplate base_radio"
       >
     <input
       type="radio"
       :name="option.formName"
       @click="setRadioCache"
+      :style="frameRect"
          :value="option.itemValue">
       {{option.text}}
       </label>
@@ -45,6 +45,12 @@ export default {
         'fontSize':style['fontSize']
       };
     },
+    frameRect(){
+      return{
+        width:this.css.frameWidth+'px',
+        height:this.css.frameWidth+'px',
+      }
+    },
     constyle() {
       let style = handleStyle(this.css);
       return {
@@ -60,5 +66,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.base_radio {
+  margin-top: 1px;
+}
+.base_radio > input[type=radio] span {
+         vertical-align: middle;
+}
+.base_radio> input[type=radio] {
+        vertical-align: middle;
+         margin-top:-2px;
+        margin-bottom:1px;
+}
 </style>

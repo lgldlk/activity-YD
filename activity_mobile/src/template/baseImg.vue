@@ -1,10 +1,16 @@
 <template>
-  <img class="baseComplate" :class="animation.animationName" :src="option.text" alt :style="style" />
+  <img class="baseComplate" :class="animation.animationName" :src="imageStaticUrl+option.text" alt :style="style" />
 </template>
 
 <script>
 import { handleStyle } from "../utils/index";
+import {imageStaticUrl} from '@/utils/request'
 export default {
+  data(){
+      return{
+        imageStaticUrl:imageStaticUrl,
+      }
+  },
   props: {
     option: {
       type: Object

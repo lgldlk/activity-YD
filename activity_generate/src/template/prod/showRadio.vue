@@ -82,5 +82,7 @@ export default {
 }
 .base_radio> input[type=radio] {
         vertical-align: middle;
+         margin-top:-2px;
+        margin-bottom:1px;
 }
 </style>

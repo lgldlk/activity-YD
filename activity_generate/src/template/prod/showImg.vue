@@ -7,12 +7,18 @@
  * @FilePath: /activity_generate/src/template/prod/showImg.vue
  -->
 <template>
-  <img class="baseComplate" ondragstart="return false;" :src="option.text" :style="style" />
+  <img class="baseComplate" ondragstart="return false;" :src="imageStaticUrl+option.text" :style="style" />
 </template>
 
 <script>
 import { handleStyle } from "@/utils/index";
+import {imageStaticUrl } from "@/config/index";
 export default {
+  data(){
+    return{
+      imageStaticUrl:imageStaticUrl,
+    }
+  },
   props: {
     css: {
       type: Object,

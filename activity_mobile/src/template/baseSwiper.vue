@@ -16,7 +16,7 @@
     <van-swipe-item v-for="(item,index) in option.item" :key="index">
       <img
         :style="{width: style.width,height: style.height}"
-        :src="item.img"
+        :src="imageStaticUrl+item.img"
         alt
         @click="link(item.link)"
         @error="errorImg(index)"
@@ -27,7 +27,13 @@
 
 <script>
 import { handleStyle } from "../utils/index";
+import {imageStaticUrl} from '@/utils/request'
 export default {
+  data(){
+    return{
+      imageStaticUrl:imageStaticUrl
+    }
+  },
   props: {
     css: {
       type: Object,

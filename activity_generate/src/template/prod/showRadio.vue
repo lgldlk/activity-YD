@@ -1,14 +1,15 @@
 <template>
   <!-- <div class="base_img" @mouseover="toggleEdit" > -->
-    <label :style="style"
+    <label :style="{...style,...chooseColoe}"
      class="baseComplate base_radio"
       >
     <input
       type="radio"
       :style="frameRect"
       :name="option.formName"
-      @click="setRadioCache"
+      @click="setRadioCache" 
          :value="option.itemValue">
+         <div class="m-radio" :style="frameRect"></div>
       {{option.text}}
       </label>
 </template>
@@ -61,28 +62,46 @@ export default {
         zIndex: style.zIndex
       };
     },
+    chooseColoe(){
+      return{
+        '--frameBackGround':this.css.frameBackGround,
+        '--frameChooseGround':this.css.frameChooseGround,
+        '--showWidth':this.css.frameWidth/5*3+'px',
+      }
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
 .base_radio {
-  margin-top: 1px;
+  display: inline-block;
 }
 .base_radio > input[type=radio] span {
         vertical-align: middle;
 }
-.base_radio::before{
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right:0;
+.base_radio input[type="radio"] {
+    display: none;
 }
-.base_radio> input[type=radio] {
-        vertical-align: middle;
-         margin-top:-2px;
-        margin-bottom:1px;
+.m-radio {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: var(--frameBackGround);
+}
+.m-radio::after{
+  position: absolute;
+  content: '';
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--showWidth);
+  height: var(--showWidth);
+  border-radius: 50%;
+}
+.base_radio input[type="radio"]:checked+.m-radio::after {
+    background-color: var(--frameChooseGround);
 }
 </style>

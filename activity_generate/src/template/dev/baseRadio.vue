@@ -10,19 +10,20 @@
   <!-- <div class="base_img" @mouseover="toggleEdit" > -->
   <div  @mousedown="toggleEdit" @mouseenter="mouseenter" @mouseleave="mouseleave">
     <edit v-show="editStatus" :id="id" :styles="constyle">
-      <label :style="style" class="base_radio">
-        <input disabled
-          :style="frameRect"
+      <label :style="{...style,...chooseColoe}" class="base_radio">
+        <input
          type="radio"
+         disabled
          :name="option.formName"
          :value="option.itemValue" >
+         <div class="m-radio" :style="frameRect"></div>
          <span>{{option.text}}</span>
          </label>
     </edit>
     <!-- 鼠标进入状态 -->
     <div
       v-show="hoverStatus && !editStatus"
-      :style="constyle"
+      :style="{...style,...chooseColoe}"
       :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
       <label :style="style" class="base_radio">
@@ -31,20 +32,20 @@
          disabled
          :name="option.formName"
          :value="option.itemValue"
-         :style="frameRect"
          >
+         <div class="m-radio" :style="frameRect"></div>
         <span>{{option.text}}</span>
          </label>
     </div>
     <!-- 未选中状态 -->
-    <label :style="style" v-show="!editStatus & !hoverStatus"
-      :class="absolute ? 'baseComplate' : ''" 
+    <label :style="{...style,...chooseColoe}" v-show="!editStatus & !hoverStatus"
+      :class="absolute ? 'baseComplate' : ''"
       class="base_radio">
     <input
       type="radio"
       :name="option.formName"
-      :style="frameRect"
          :value="option.itemValue">
+         <div class="m-radio" :style="frameRect"></div>
       <span>{{option.text}}</span>
       </label>
   </div>
@@ -81,7 +82,7 @@ export default {
         left: style.left,
         zIndex: style.zIndex,
         color:style.color,
-        'fontSize':style['fontSize']
+        'fontSize':style['fontSize'],
       };
     },
     constyle() {
@@ -89,8 +90,6 @@ export default {
       return {
         top: style.top,
         left: style.left,
-        // width: style.width,
-        // height: style.height,
         zIndex: style.zIndex
       };
     },
@@ -98,6 +97,13 @@ export default {
       return{
         width:this.css.frameWidth+'px',
         height:this.css.frameWidth+'px',
+      }
+    },
+    chooseColoe(){
+      return{
+        '--frameBackGround':this.css.frameBackGround,
+        '--frameChooseGround':this.css.frameChooseGround,
+        '--showWidth':this.css.frameWidth/5*3+'px',
       }
     },
     editStatus() {
@@ -127,10 +133,13 @@ export default {
 
 <style lang="less" scoped>
 .base_radio {
-  margin-top: 1px;
+  display: inline-block;
 }
 .base_radio > input[type=radio] span {
         vertical-align: middle;
+}
+.base_radio input[type="radio"] {
+    display: none;
 }
 .base_radio::before{
   content: '';
@@ -140,9 +149,25 @@ export default {
   left: 0;
   right:0;
 }
-.base_radio> input[type=radio] {
-        vertical-align: middle;
-         margin-top:-2px;
-        margin-bottom:1px;
+.m-radio {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: var(--frameBackGround);
+}
+.m-radio::after{
+  position: absolute;
+  content: '';
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--showWidth);
+  height: var(--showWidth);
+  border-radius: 50%;
+}
+.base_radio input[type="radio"]:checked+.m-radio::after {
+    background-color: var(--frameChooseGround);
 }
 </style>

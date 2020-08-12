@@ -57,13 +57,39 @@
         </div>
       </div>
       </div>
-      <div v-if="showFrameWidth(core)">
+      <div v-if="showFrameSet(core)">
         <div class="attr_item">
-        <div class="attr_list_left">框宽:</div>
+          <div class="attr_list_left">框宽:</div>
+              <div class="attr_list_right">
+                <a-input-number class="attr_mintextarea" placeholder="请输入高度" v-model="core.css.frameWidth" />
+          </div>
+        </div>
+        <div class="attr_item" >
+          <div class="attr_list_left">框底颜色:</div>
             <div class="attr_list_right">
-              <a-input-number class="attr_mintextarea" placeholder="请输入高度" v-model="core.css.frameWidth" />
+              <el-color-picker v-if="!core.option.colorType" v-model="core.css.frameBackGround" show-alpha></el-color-picker>
+              <a-input
+                class="attr_list_right_input"
+                placeholder="请输入颜色代码值"
+                size="small"
+                v-else
+                v-model="core.css.frameBackGround"
+              ></a-input>
             </div>
-            </div>
+        </div>
+        <div class="attr_item" >
+        <div class="attr_list_left">选中颜色:</div>
+          <div class="attr_list_right">
+            <el-color-picker v-if="!core.option.colorType" v-model="core.css.frameChooseGround" show-alpha></el-color-picker>
+            <a-input
+              class="attr_list_right_input"
+              placeholder="请输入颜色代码值"
+              size="small"
+              v-else
+              v-model="core.css.frameChooseGround"
+            ></a-input>
+          </div>
+        </div>
       </div>
 
       <!-- 文本框 按钮 文本框 可以使用的属性 -->
@@ -381,7 +407,7 @@ export default {
       }
       return true;
     },
-    showFrameWidth(core){
+    showFrameSet(core){
       if(core.name=='base-radio'||core.name=="base-check"){
         return true;
       }

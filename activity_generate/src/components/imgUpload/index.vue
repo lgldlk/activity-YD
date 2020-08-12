@@ -39,7 +39,7 @@
             class
             v-for="(item,index) in userImage"
             :key="'ima'+index"
-            :src="item.imageName"
+            :src="imageStaticUrl+item.imageName"
             alt
           />
         </div>
@@ -49,7 +49,7 @@
             class
             v-for="(item,index) in baseImage"
             :key="'defu'+index"
-            :src="item.imageName"
+            :src="imageStaticUrl+item.imageName"
             alt
           />
         </div>
@@ -67,6 +67,7 @@ import { imageUpUrl,imageStaticUrl } from "@/config/index";
 export default Vue.extend({
   data() {
     return {
+      imageStaticUrl:imageStaticUrl,
       visible: false,
       Menukey: ["1"],
       userImage: [],
@@ -85,16 +86,9 @@ export default Vue.extend({
   methods: {
     init() {
       getUPloadImage().then(res => {
-        
-        res.data.data.map(e=>{
-          e.imageName=imageStaticUrl+e.imageName;
-        })
         this.userImage = res.data.data;
       });
       getDefaultImg().then(res => {
-        res.data.data.map(e=>{
-          e.imageName=imageStaticUrl+e.imageName;
-        })
         this.baseImage = res.data.data;
       });
     },

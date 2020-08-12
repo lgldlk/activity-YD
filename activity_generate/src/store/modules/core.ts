@@ -525,7 +525,7 @@ const core: Module<CoreInter, any> = {
       state.template.map((res: any) => {
         if (res.activityId == state.activeTemplate) {
           res.option.item.push({
-            img: require('@/assets/750-188.png'),
+            img: 'pleStatic.png',
             link: '',
           })
         }

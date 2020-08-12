@@ -1,7 +1,7 @@
 <template>
   <!-- <div class="base_img" @mouseover="toggleEdit" > -->
     <label :style="style"
-     class="baseComplate"
+     class="baseComplate base_check"
       >
     <input
       type="checkbox"

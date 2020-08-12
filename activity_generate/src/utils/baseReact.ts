@@ -232,7 +232,7 @@ export function baseSwiper(store: any): baseNode {
       autoplay: '2000', // 轮播间隔
       item: [
         {
-          img: require('@/assets/750-188.png'),
+          img: 'pleStatic.png',
           link: '',
         },
       ],

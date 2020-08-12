@@ -142,7 +142,7 @@
       <div class="active_item" v-if="showSwiper(core)">
         <div class="active_list_left">图片:</div>
         <div class="active_list_right">
-          <img class="swiper_img" :src="core.option.item[swiperItem].img||''" @click="toggleImg" alt />
+          <img class="swiper_img" :src="imageStaticUrl+core.option.item[swiperItem].img||''" @click="toggleImg" alt />
         </div>
       </div>
       <div class="active_item" v-if="showSwiper(core)">
@@ -196,6 +196,7 @@
 import Vue from "vue";
 import vuedraggable from "vuedraggable";
 import imgUpload from "@/components/imgUpload";
+import { imageStaticUrl } from "@/config/index";
 export default {
   components: {
     vuedraggable,
@@ -205,6 +206,7 @@ export default {
   data() {
     return {
       swiperItem: 0, // 轮播图临时变量
+      imageStaticUrl:imageStaticUrl,
     };
   },
   computed: {

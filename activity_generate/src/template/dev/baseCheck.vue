@@ -10,9 +10,11 @@
   <!-- <div class="base_img" @mouseover="toggleEdit" > -->
   <div  @mousedown="toggleEdit" @mouseenter="mouseenter" @mouseleave="mouseleave">
     <edit v-show="editStatus" :id="id" :styles="constyle">
-      <label :style="style" class="base_check">
-         <input type="checkbox" disabled :style="frameRect" :name="option.formName" 
-         :value="option.itemValue"><span>{{option.text}}</span>
+      <label :style="{...style,...chooseColoe}" class="base_check">
+         <input type="checkbox" disabled  :name="option.formName" 
+         :value="option.itemValue">
+         <div class="in_check" :style="frameRect"></div>
+         <span>{{option.text}}</span>
          </label>
     </edit>
     <!-- 鼠标进入状态 -->
@@ -21,16 +23,20 @@
       :style="constyle"
       :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
-      <label :style="style" class="base_check">
-        <input type="checkbox" disabled :style="frameRect"  :name="option.formName" 
-         :value="option.itemValue"><span>{{option.text}}</span>
+      <label :style="{...style,...chooseColoe}" class="base_check">
+        <input type="checkbox" disabled   :name="option.formName" 
+         :value="option.itemValue">
+         <div class="in_check" :style="frameRect"></div>
+         <span>{{option.text}}</span>
          </label>
     </div>
     <!-- 未选中状态 -->
-    <label :style="style" v-show="!editStatus & !hoverStatus"
+    <label :style="{...style,...chooseColoe}" v-show="!editStatus & !hoverStatus"
       :class="absolute ? 'baseComplate' : ''" class="base_check">
-    <input type="checkbox" :style="frameRect"  :name="option.formName" 
-         :value="option.itemValue"><span>{{option.text}}</span>
+    <input type="checkbox"   :name="option.formName" 
+         :value="option.itemValue">
+         <div class="in_check" :style="frameRect"></div>
+         <span>{{option.text}}</span>
       </label>
   </div>
 </template>
@@ -85,6 +91,13 @@ export default {
         height:this.css.frameWidth+'px',
       }
     },
+    chooseColoe(){
+      return{
+        '--frameBackGround':this.css.frameBackGround,
+        '--frameChooseGround':this.css.frameChooseGround,
+        '--showWidth':this.css.frameWidth+'px',
+      }
+    },
     editStatus() {
       return this.$store.state.core.activeTemplate.includes(this.id);
     },
@@ -112,20 +125,46 @@ export default {
 
 <style lang="less" scoped>
 .base_check {
-  margin-top: 1px;
+  display: inline-block;
 }
-.base_check > input[type=checkbox] span {
+.base_check > input[type=checkbox]~span {
         vertical-align: middle;
 }
+.base_check > input[type=checkbox]{
+  position: absolute;
+    clip:rect(0, 0, 0, 0);
+}
 .base_check::before{
-  content: '';
+  content: '\a0';
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right:0;
 }
-.base_check> input[type=checkbox] {
-        vertical-align: middle;
+.in_check{
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-right: 2px;
+  background-color: var(--frameBackGround);
+  border-radius: .2em;
+}
+.in_check::after{
+  position: absolute;
+  vertical-align: middle;
+  content: '\a0';
+  left:0px;
+  top: -1px;
+  width: var(--showWidth);
+  height: var(--showWidth);
+  line-height: var(--showWidth);
+  border-radius: .2em;
+}
+.base_check input[type="checkbox"]:checked+.in_check::after {
+    background-color: var(--frameChooseGround);
+    content:'\2713';
+    text-align: center;
 }
 </style>

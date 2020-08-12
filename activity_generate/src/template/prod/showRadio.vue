@@ -9,7 +9,7 @@
       :name="option.formName"
       @click="setRadioCache" 
          :value="option.itemValue">
-         <div class="m-radio" :style="frameRect"></div>
+         <div class="in_radio" :style="frameRect"></div>
       {{option.text}}
       </label>
 </template>
@@ -77,13 +77,14 @@ export default {
 .base_radio {
   display: inline-block;
 }
-.base_radio > input[type=radio] span {
+.base_radio > input[type=radio]~span {
         vertical-align: middle;
 }
 .base_radio input[type="radio"] {
-    display: none;
+    position: absolute;
+    clip:rect(0, 0, 0, 0);
 }
-.m-radio {
+.in_radio {
   display: inline-block;
   position: relative;
   vertical-align: middle;
@@ -91,7 +92,7 @@ export default {
   cursor: pointer;
   background-color: var(--frameBackGround);
 }
-.m-radio::after{
+.in_radio::after{
   position: absolute;
   content: '';
   left: 50%;
@@ -101,7 +102,7 @@ export default {
   height: var(--showWidth);
   border-radius: 50%;
 }
-.base_radio input[type="radio"]:checked+.m-radio::after {
+.base_radio input[type="radio"]:checked+.in_radio::after {
     background-color: var(--frameChooseGround);
 }
 </style>

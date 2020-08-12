@@ -16,7 +16,7 @@
          disabled
          :name="option.formName"
          :value="option.itemValue" >
-         <div class="m-radio" :style="frameRect"></div>
+         <div class="in_radio" :style="frameRect"></div>
          <span>{{option.text}}</span>
          </label>
     </edit>
@@ -33,7 +33,7 @@
          :name="option.formName"
          :value="option.itemValue"
          >
-         <div class="m-radio" :style="frameRect"></div>
+         <div class="in_radio" :style="frameRect"></div>
         <span>{{option.text}}</span>
          </label>
     </div>
@@ -45,7 +45,7 @@
       type="radio"
       :name="option.formName"
          :value="option.itemValue">
-         <div class="m-radio" :style="frameRect"></div>
+         <div class="in_radio" :style="frameRect"></div>
       <span>{{option.text}}</span>
       </label>
   </div>
@@ -135,11 +135,12 @@ export default {
 .base_radio {
   display: inline-block;
 }
-.base_radio > input[type=radio] span {
+.base_radio > input[type=radio]~span {
         vertical-align: middle;
 }
 .base_radio input[type="radio"] {
-    display: none;
+    position: absolute;
+    clip:rect(0, 0, 0, 0);
 }
 .base_radio::before{
   content: '';
@@ -149,15 +150,16 @@ export default {
   left: 0;
   right:0;
 }
-.m-radio {
+.in_radio {
   display: inline-block;
   position: relative;
   vertical-align: middle;
   border-radius: 50%;
   cursor: pointer;
+  margin-right: 2px;
   background-color: var(--frameBackGround);
 }
-.m-radio::after{
+.in_radio::after{
   position: absolute;
   content: '';
   left: 50%;
@@ -167,7 +169,7 @@ export default {
   height: var(--showWidth);
   border-radius: 50%;
 }
-.base_radio input[type="radio"]:checked+.m-radio::after {
+.base_radio input[type="radio"]:checked+.in_radio::after {
     background-color: var(--frameChooseGround);
 }
 </style>

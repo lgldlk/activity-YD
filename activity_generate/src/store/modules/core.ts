@@ -255,51 +255,100 @@ const core: Module<CoreInter, any> = {
     // 更新元素大小
     updateZoom(state, data) {
       let list = JSON.parse(JSON.stringify(state.template))
+      let i=0,leng=list.length;
       if (state.roundDown == 1) {
-        list.map((item) => {
+        for(i=0;i<leng;i++){
+          let item=list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = Number(item.css.left) + data.x
             item.css.top = Number(item.css.top) + data.y
             item.css.width = item.css.width - data.x
             item.css.height = item.css.height - data.y
+            if(item.css.width<=0){
+              item.css.width=0;
+            }
+            if(item.css.height<=0){
+              item.css.height=0;
+            }
+            break;
           }
-        })
+        }
       } else if (state.roundDown == 2) {
-        list.map((item) => {
+        for(i=0;i<leng;i++){
+          let item=list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = Number(item.css.top) + data.y
             item.css.height = item.css.height - data.y
+            if(item.css.width<=0){
+              item.css.width=0;
+            }
+            if(item.css.height<=0){
+              item.css.height=0;
+            }
+            break;
           }
-        })
+        }
       } else if (state.roundDown == 3) {
-        list.map((item) => {
+        for(i=0;i<leng;i++){
+          let item=list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = Number(item.css.top) + data.y
             item.css.width = Number(item.css.width) + data.x
             item.css.height = item.css.height - data.y
+            if(item.css.width<=0){
+              item.css.width=0;
+            }
+            if(item.css.height<=0){
+              item.css.height=0;
+            }
+            break;
           }
-        })
+        }
       } else if (state.roundDown == 4) {
-        list.map((item) => {
+        for(i=0;i<leng;i++){
+          let item=list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = Number(item.css.left) + data.x
             item.css.width = item.css.width - data.x
             item.css.height = Number(item.css.height) + data.y
+            if(item.css.width<=0){
+              item.css.width=0;
+            }
+            if(item.css.height<=0){
+              item.css.height=0;
+            }
+            break;
           }
-        })
+        }
       } else if (state.roundDown == 5) {
-        list.map((item) => {
+        for(i=0;i<leng;i++){
+          let item=list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.height = Number(item.css.height) + data.y
+            if(item.css.width<=0){
+              item.css.width=0;
+            }
+            if(item.css.height<=0){
+              item.css.height=0;
+            }
+            break;
           }
-        })
+        }
       } else if (state.roundDown == 6) {
-        list.map((item) => {
+        for(i=0;i<leng;i++){
+          let item=list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.width = Number(item.css.width) + data.x
             item.css.height = Number(item.css.height) + data.y
+            if(item.css.width<=0){
+              item.css.width=0;
+            }
+            if(item.css.height<=0){
+              item.css.height=0;
+            }
+            break;
           }
-        })
+        }
       }
       state.template = list
     },

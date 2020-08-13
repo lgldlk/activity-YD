@@ -85,9 +85,8 @@ export default {
       return item._id;
     },
     form(formList) {
-      let { refInput, inputFromUrl, urlMethod ,domId,formOne} = formList;
-      let formData = {};
-      let flyResult=getLocalStore('flyOne');
+      let { refInput, inputFromUrl, urlMethod ,domId,formOne,mustInput} = formList;
+      let formData = {},flyResult=getLocalStore('flyOne'),mustOver=true;
       if(flyResult==null||flyResult==undefined){
         flyResult=[];
       }else if(formOne&&flyResult.includes(domId)){
@@ -100,12 +99,28 @@ export default {
         }
         if(this.$refs[e][0].option.domType=="base-input"){
           formData[e] = this.$refs[e][0].$el.value;
+          if(mustInput.includes(e)&&formData[e].trim()==""){
+            mustOver=false;
+            return ;
+          }
         }else if(this.$refs[e][0].option.domType=="base-radio"){
           formData[e]=this.radioCache[e]||""
+          if(mustInput.includes(e)&&formData[e].trim()==""){
+            mustOver=false;
+            return ;
+          }
         }else if(this.$refs[e][0].option.domType=="base-check"){
           formData[e]=this.checkCache[e]||[];
+          if(mustInput.includes(e)&&JSON.stringify( formData[e]).trim()=="[]"){
+            mustOver=false;
+            return ;
+          }
         }
       });
+      if(mustOver==false){
+        this.$Toast("请完善必填表单");
+        return ;
+      }
       // for (const key in formData) {
       //   if (formData[key] == "") {
       //     this.$message.warning("请完善表单");

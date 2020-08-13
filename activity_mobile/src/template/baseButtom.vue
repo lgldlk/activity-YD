@@ -53,6 +53,7 @@ export default {
       } else if (this.option.btnType == 2) {
         this.$emit("form", {
           refInput: this.option.refInput,
+          mustInput:this.option.mustInput,
           inputFromUrl: this.option.inputFromUrl,
           urlMethod: this.option.urlMethod,
           domId:this.id,

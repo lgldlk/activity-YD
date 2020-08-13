@@ -128,6 +128,24 @@
           </div>
         </div>
         <div  class="active_item" >
+          <div class="active_list_left">必填表单:</div>
+          <div class="active_list_right">
+            <a-select
+              mode="tags"
+              v-model="core.option.mustInput"
+              placeholder="请选择需要提交的"
+              style="width: 200px"
+              @change="handleChange"
+            >
+              <a-select-option
+                v-for="formItem in core.option.refInput"
+                :key="formItem"
+                :value="formItem"
+              >{{ formItem }}</a-select-option>
+            </a-select>
+          </div>
+        </div>
+        <div  class="active_item" >
           <div class="active_list_left">单设备只能提交一次:</div>
           <div class="active_list_right">
             <a-switch v-model="core.option.formOne" />

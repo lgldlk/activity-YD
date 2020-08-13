@@ -42,6 +42,7 @@ import {
   baseDiv as DivData,
   baseSwiper as SwiperData,
   baseRadio as RadioData,
+  baseCircle as CircleData,
   baseCheck as CheckData
 } from "@/utils/baseReact";
 export default Vue.extend({
@@ -55,7 +56,7 @@ export default Vue.extend({
     baseDiv,
     rightMenu,
     baseRadio,
-    baseCheck
+    baseCheck,
   },
   mounted() {
     (this ).init();
@@ -111,19 +112,22 @@ export default Vue.extend({
             "core/addMaxZindex");
       if (index == 0) {
         data = DivData(this.$store.state.core);
-      } else if (index == 1) {
+      }else if (index == 1) {
+        data = CircleData(this.$store.state.core);
+      }
+      else if (index == 2) {
         data = ImgData(this.$store.state.core, require("@/assets/750-188.png"));
-      } else if (index == 2) {
-        data = TextData(this.$store.state.core);
       } else if (index == 3) {
-        data = ButtomData(this.$store.state.core);
+        data = TextData(this.$store.state.core);
       } else if (index == 4) {
-        data = InputData(this.$store.state.core);
+        data = ButtomData(this.$store.state.core);
       } else if (index == 5) {
-        data = SwiperData(this.$store.state.core);
+        data = InputData(this.$store.state.core);
       } else if (index == 6) {
-        data = RadioData(this.$store.state.core);
+        data = SwiperData(this.$store.state.core);
       } else if (index == 7) {
+        data = RadioData(this.$store.state.core);
+      } else if (index == 8) {
         data = CheckData(this.$store.state.core);
       }
       if (e.target.getAttribute("id") == "canvas") {

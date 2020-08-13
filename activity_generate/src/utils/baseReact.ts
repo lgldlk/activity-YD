@@ -36,7 +36,7 @@ export function baseDiv(store: any): baseNode {
       borderColor: 'rgba(0, 0, 0, 1)',
       borderStyle: 'solid',
       borderWidth: 0,
-      borderRadius: 20,
+      borderRadius: 0,
     },
     animation: {
       animationName: '',
@@ -48,6 +48,43 @@ export function baseDiv(store: any): baseNode {
   }
 }
 
+/**
+ * 圆形
+ * @param store 
+ */
+
+export function baseCircle(store: any): baseNode {
+  let dynamic = store.template.length * 10
+  return {
+    activityId: guid(),
+    editStatus: false,
+    name: 'base-div',
+    isShow:true,
+    option: {
+      colorType: false, // 1 普通模式 2 高级模式
+    },
+    covName:'',
+    css: {
+      top: 10 + dynamic,
+      left: 10 + dynamic,
+      width: 100,
+      height: 100,
+      zIndex: store.maxZIndex,
+      background: 'rgba(242, 242, 242, 1)',
+      borderColor: 'rgba(0, 0, 0, 1)',
+      borderStyle: 'solid',
+      borderWidth: 0,
+      borderRadius: 50,
+    },
+    animation: {
+      animationName: '',
+      animationDuration: 1000, // 动画时间
+      animationDelay: 0, // 延迟时间
+      animationIterationCount: 1, // 动画执行次数
+      animationFillMode: 'both', // 动画停留最后一帧
+    },
+  }
+}
 /**
  * 按钮的vuex数据映射关系
  */
@@ -63,6 +100,8 @@ export function baseButtom(store: any): baseNode {
       text: '按钮',
       btnType: 0, // 0 无事件 1 外部链接 2 提交表单 3
       refInput: [], // 提交的input表单
+      mustInput:[],//必填表单
+      formOne:false,//表单是否在一个设备上只能单次提交
       inputFromUrl: '', // 数据提交的地址
       urlMethod: 'get', // 提交格式
       QQNum: '', // qq客服
@@ -374,7 +413,7 @@ export function baseComplate(store: any, data: any): baseNode {
 
 const domMapName = {                                                                        
   'base-input': "输入框",
-  'base-div': "块级元素",
+  'base-div': "图形",
   'base-swiper': "轮播图",
   'base-text':"文本",
   'base-img':"图片",

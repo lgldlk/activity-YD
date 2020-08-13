@@ -26,7 +26,8 @@ import {
   baseDiv,
   baseSwiper,
   baseRadio,
-  baseCheck
+  baseCheck,
+  baseCircle
 } from "@/utils/baseReact";
 import imgUpload from "@/components/imgUpload/index.vue";
 import Vue from "vue";
@@ -38,8 +39,12 @@ export default Vue.extend({
     return {
       reactList: [
         {
-          name: "块级元素",
+          name: "方形",
           img: require("@/assets/div.png")
+        },
+        {
+          name: "圆形",
+          img: require("@/assets/cirle.png")
         },
         {
           name: "图片",
@@ -81,37 +86,42 @@ export default Vue.extend({
           "core/set_tempLate",
           baseDiv(this.$store.state.core)
         );
-      } else if (index == 1) {
+      }else if (index == 1) {
+        this.$store.commit(
+          "core/set_tempLate",
+          baseCircle(this.$store.state.core)
+        );
+      }else if (index == 2) {
         (this.$refs.imgUpload as any).open({
           type: "default",
           index: 0
         });
-      } else if (index == 2) {
+      } else if (index == 3) {
         this.$store.commit(
           "core/set_tempLate",
           baseText(this.$store.state.core)
         );
-      } else if (index == 3) {
+      } else if (index == 4) {
         this.$store.commit(
           "core/set_tempLate",
           baseButtom(this.$store.state.core)
         );
-      } else if (index == 4) {
+      } else if (index == 5) {
         this.$store.commit(
           "core/set_tempLate",
           baseInput(this.$store.state.core)
         );
-      } else if (index == 5) {
+      } else if (index == 6) {
         this.$store.commit(
           "core/set_tempLate",
           baseSwiper(this.$store.state.core)
         );
-      } else if (index == 6) {
+      } else if (index == 7) {
         this.$store.commit(
           "core/set_tempLate",
           baseRadio(this.$store.state.core)
         );
-      } else if (index == 7) {
+      } else if (index == 8) {
         this.$store.commit(
           "core/set_tempLate",
           baseCheck(this.$store.state.core)

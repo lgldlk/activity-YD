@@ -1,15 +1,15 @@
 <template>
   <!-- <div class="base_img" @mouseover="toggleEdit" > -->
-    <label :style="style"
+    <label :style="{...style,...chooseColoe}"
      class="baseComplate base_check"
       >
     <input
       type="checkbox"
       :name="option.formName"
       @click="setRadioCache"
-      :style="frameRect"
          :value="option.itemValue">
-      {{option.text}}
+      <div class="in_check" :style="frameRect"></div>
+         <span>{{option.text}}</span>
       </label>
 </template>
 
@@ -51,6 +51,13 @@ export default {
         height:this.css.frameWidth+'px',
       }
     },
+    chooseColoe(){
+      return{
+        '--frameBackGround':this.css.frameBackGround,
+        '--frameChooseGround':this.css.frameChooseGround,
+        '--showWidth':this.css.frameWidth+'px',
+      }
+    },
     constyle() {
       let style = handleStyle(this.css);
       return {
@@ -67,12 +74,38 @@ export default {
 
 <style  scoped>
 .base_check {
-  margin-top: 1px;
+  display: inline-block;
 }
-.base_check > input[type=checkbox] span {
+.base_check > input[type=checkbox]~span {
         vertical-align: middle;
 }
-.base_check> input[type=checkbox] {
-        vertical-align: middle;
+.base_check > input[type=checkbox]{
+  position: absolute;
+    clip:rect(0, 0, 0, 0);
+}
+.in_check{
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-right: 2px;
+  background-color: var(--frameBackGround);
+  border-radius: .2em;
+}
+.in_check::after{
+  position: absolute;
+  vertical-align: middle;
+  content: '';
+  left:0px;
+   top: 0px;
+  width: var(--showWidth);
+  height: var(--showWidth);
+  line-height: var(--showWidth);
+  border-radius: .2em;
+}
+.base_check input[type="checkbox"]:checked+.in_check::after {
+    background-color: var(--frameChooseGround);
+    content:'\2713';
+    text-align: center;
 }
 </style>

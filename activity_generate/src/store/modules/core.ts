@@ -97,7 +97,6 @@ const core: Module<CoreInter, any> = {
       }else{
         state.objectAuth = false
       }
-      
     },
     // 保存当前项目id
     set_objectId(state, id) {
@@ -125,7 +124,9 @@ const core: Module<CoreInter, any> = {
     toggle_temp_status(state, id) {
       let list = JSON.parse(JSON.stringify(state.template))
       let activeTemplate: any[] = []
-      list.map((item) => {
+      let i=0,leng=list.length;
+      for(i=0;i<leng;i++){
+        let item=list[i];
         if (item.activityId == id) {
           if (state.isLongDown) {
             // 多选状态
@@ -137,8 +138,9 @@ const core: Module<CoreInter, any> = {
             // 单选状态
             activeTemplate.push(id)
           }
+          break;
         }
-      })
+      }
       state.activeTemplate = activeTemplate
     },
     // 更新组件的鼠标活动状态
@@ -159,19 +161,23 @@ const core: Module<CoreInter, any> = {
     },
     update_CompZindex(state, num) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
-      list.map((item) => {
+      let i=0,leng=list.length;
+      for(i=0;i<leng;i++){
+        let item=list[i];
         if (state.activeTemplate.includes(item.activityId)) {
+          item.css.zIndex = item.css.zIndex + num
           if (item.css.zIndex <= 0) {
             message.warning('元素层级不可小于0')
-          } else {
-            item.css.zIndex = item.css.zIndex + num
+            return ;
           }
+          break;
         }
-      })
+      }
       state.template = list
     },
     set_CompZindex(state,{actId,num}) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
+      let i=0,leng=list.length;
       list.map((item) => {
         if(item.css.zIndex>num){
           item.css.zIndex++;
@@ -195,22 +201,28 @@ const core: Module<CoreInter, any> = {
     // 修改图片
     update_img(state, { imgurl }) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
-      list.map((item) => {
+      let i=0,leng=list.length;
+      for(i=0;i<leng;i++){
+        let item=list[i];
         if (state.activeTemplate.includes(item.activityId)) {
           item.option.text = imgurl
+          break;
         }
-      })
+      }
       state.template = list
     },
     // 更新元素位置
     updatePos(state, data) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
-      list.map((item) => {
+      let i=0,leng=list.length;
+      for(i=0;i<leng;i++){
+        let item=list[i];
         if (state.activeTemplate.includes(item.activityId)) {
           item.css.left = item.css.left + data.x
           item.css.top = item.css.top + data.y
+          break;
         }
-      })
+      }
       // 判断绝对值
       // 自动偏移到最近的上面
       // 判断是否存在辅助线
@@ -454,31 +466,40 @@ const core: Module<CoreInter, any> = {
     // 单组件快捷配置
     fastOnlySet(state, data) {
       let list = JSON.parse(JSON.stringify(state.template))
+      let i=0,leng=list.length;
       if (data.type == 1) {
-        list.map((item) => {
+        for(i=0;i<leng;i++){
+          let item=list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = (state.commWidth - item.css.width) / 2
+            break;
           }
-        })
+        }
       } else if (data.type == 2) {
-        list.map((item) => {
+        for(i=0;i<leng;i++){
+          let item=list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.width = state.commWidth
             item.css.left = 0
+            break;
           }
-        })
+        }
       } else if (data.type == 3) {
-        list.map((item) => {
+        for(i=0;i<leng;i++){
+          let item=list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = 0
+            break;
           }
-        })
+        }
       } else if (data.type == 4) {
-        list.map((item) => {
+        for(i=0;i<leng;i++){
+          let item=list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = state.commHeight - item.css.height
+            break;
           }
-        })
+        }
       }
       state.template = list
     },
@@ -563,38 +584,50 @@ const core: Module<CoreInter, any> = {
     },
     // 更新swiper的图片
     update_swiperimg(state, { index, imgurl }) {
-      state.template.map((res: any) => {
+      let i=0,leng=state.template.length;
+      for(i=0;i<leng;i++){
+        let res:any=state.template[i];
         if (res.activityId == state.activeTemplate) {
           res.option.item[index].img = imgurl
+          break;
         }
-      })
+      }
     },
     // 增加轮播图
     add_swiper(state) {
-      state.template.map((res: any) => {
+      let i=0,leng=state.template.length;
+      for(i=0;i<leng;i++){
+        let res:any=state.template[i];
         if (res.activityId == state.activeTemplate) {
           res.option.item.push({
             img: 'pleStatic.png',
             link: '',
           })
+          break;
         }
-      })
+      }
     },
     // 减少轮播图
     less_swiper(state) {
-      state.template.map((res: any) => {
+      let i=0,leng=state.template.length;
+      for(i=0;i<leng;i++){
+        let res:any=state.template[i];
         if (res.activityId == state.activeTemplate) {
           res.option.item.pop()
+          break;
         }
-      })
+      }
     },
     // 更新文本框文字
     updateText(state, { id, text }) {
-      state.template.map((res: any) => {
+      let i=0,leng=state.template.length;
+      for(i=0;i<leng;i++){
+        let res:any=state.template[i];
         if (res.activityId == id) {
           res.option.text = text
+          break;
         }
-      })
+      }
     },
     // vuex数据初始化
     destroyedTemplate(state) {
@@ -641,21 +674,27 @@ const core: Module<CoreInter, any> = {
       })
     },
     switchTemplateShow(state,domId){//切换元素是否可见
-      state.template.map((res: any) => {
+      let i=0,leng=state.template.length;
+      for(i=0;i<leng;i++){
+        let res:any=state.template[i];
         if (res.activityId == domId) {
           res.isShow=!res.isShow;
+          break;
         }
-      })
+      }
     },
     addMaxZindex(state){//让maxZIndex永远保持最大
       state.maxZIndex++;
     },
     changeCoverName(state,{covName,id}){
-      state.template.map((res: any) => {
+      let i=0,leng=state.template.length;
+      for(i=0;i<leng;i++){
+        let res:any=state.template[i];
         if (res.activityId == id) {
           res.covName=covName;
+          break;
         }
-      })
+      }
     }
   },
   actions: {

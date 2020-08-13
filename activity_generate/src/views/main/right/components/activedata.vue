@@ -248,6 +248,11 @@ export default {
           return false;
         }
       );
+      this.core.option.refInput.forEach((e,i)=>{
+        if(!buttonFormList.includes(e)){
+          this.core.option.refInput.splice(i,1);
+        }
+      });
       return result;
     }
   },

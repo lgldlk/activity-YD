@@ -88,6 +88,9 @@ export default {
       let { refInput, inputFromUrl, urlMethod } = formList;
       let formData = {};
       refInput.map(e => {
+        if(this.$refs[e]==undefined){
+          return ;
+        }
         if(this.$refs[e][0].option.domType=="base-input"){
           formData[e] = this.$refs[e][0].$el.value;
         }else if(this.$refs[e][0].option.domType=="base-radio"){

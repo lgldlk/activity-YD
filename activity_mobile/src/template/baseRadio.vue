@@ -73,7 +73,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style  scoped>
 .base_radio {
   display: inline-block;
 }

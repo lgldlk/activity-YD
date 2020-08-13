@@ -32,6 +32,9 @@ export default {
     },
     animation: {
       type: Object
+    },
+    id:{
+      type:String,
     }
   },
   computed: {
@@ -51,7 +54,9 @@ export default {
         this.$emit("form", {
           refInput: this.option.refInput,
           inputFromUrl: this.option.inputFromUrl,
-          urlMethod: this.option.urlMethod
+          urlMethod: this.option.urlMethod,
+          domId:this.id,
+          formOne:this.option.formOne,
         });
       }else if (this.option.btnType == 3) {
         console.log("qq客服");

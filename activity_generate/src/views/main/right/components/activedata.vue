@@ -108,22 +108,30 @@
           </a-radio-group>
         </div>
       </div>
-      <div class="active_item" v-if="showButtom(core) && core.option.btnType == 2">
-        <div class="active_list_left">提交表单:</div>
-        <div class="active_list_right">
-          <a-select
-            mode="tags"
-            v-model="core.option.refInput"
-            placeholder="请选择需要提交的"
-            style="width: 200px"
-            @change="handleChange"
-          >
-            <a-select-option
-              v-for="formItem in refFormList"
-              :key="formItem.id"
-              :value="formItem.option.formName"
-            >{{ formItem.option.formName }}</a-select-option>
-          </a-select>
+      <div v-if="showButtom(core) && core.option.btnType == 2">
+        <div  class="active_item" >
+          <div class="active_list_left">提交表单:</div>
+          <div class="active_list_right">
+            <a-select
+              mode="tags"
+              v-model="core.option.refInput"
+              placeholder="请选择需要提交的"
+              style="width: 200px"
+              @change="handleChange"
+            >
+              <a-select-option
+                v-for="formItem in refFormList"
+                :key="formItem.id"
+                :value="formItem.option.formName"
+              >{{ formItem.option.formName }}</a-select-option>
+            </a-select>
+          </div>
+        </div>
+        <div  class="active_item" >
+          <div class="active_list_left">单设备只能提交一次:</div>
+          <div class="active_list_right">
+            <a-switch v-model="core.option.formOne" />
+          </div>
         </div>
       </div>
       <div class="active_item" v-if="showButtom(core) && core.option.btnType == 3">

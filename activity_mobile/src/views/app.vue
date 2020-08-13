@@ -5,7 +5,7 @@
       v-for="(item, index) in template"
       :key="index"
       :is="item.name"
-      :id="item._id.toString()"
+      :id="item.activityId.toString()"
       :css="{...item.css,...item.animation}"
       :animation="item.animation"
       :option="{...item.option,'domType':item.name}"
@@ -28,7 +28,7 @@ import baseDiv from "../template/baseDiv";
 import baseSwiper from "../template/baseSwiper";
 import baseRadio from '../template/baseRadio';
 import baseCheck from '../template/baseCheck'
-import { isSoftKeyboard } from "../utils/index";
+import { isSoftKeyboard,setLocalStore,getLocalStore } from "../utils/index";
 import app from "../store/modules/app";
 import axios from "axios";
 export default {
@@ -85,8 +85,15 @@ export default {
       return item._id;
     },
     form(formList) {
-      let { refInput, inputFromUrl, urlMethod } = formList;
+      let { refInput, inputFromUrl, urlMethod ,domId,formOne} = formList;
       let formData = {};
+      let flyResult=getLocalStore('flyOne');
+      if(flyResult==null||flyResult==undefined){
+        flyResult=[];
+      }else if(formOne&&flyResult.includes(domId)){
+        this.$Toast("您已经提交一次了");
+        return ;
+      }
       refInput.map(e => {
         if(this.$refs[e]==undefined){
           return ;
@@ -123,6 +130,10 @@ export default {
         .request(request)
         .then(e => {
             this.$Toast("发送成功");
+            if(formOne){
+              flyResult.push(domId);
+              setLocalStore('flyOne',flyResult);
+            }
         })
         .catch(err => {
           this.$Toast("网络出了小差.....");

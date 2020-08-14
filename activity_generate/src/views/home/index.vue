@@ -119,6 +119,7 @@
       </a-form>
     </a-modal>
     <auth-modal ref="authModal" @authSuccess="authSuccess"></auth-modal>
+    <robot></robot>
   </div>
 </template>
 
@@ -127,10 +128,13 @@ import { getObject, setObject, deleteObj } from "@/api/index";
 import { commHeight, mobileUrl ,imageStaticUrl} from "@/config/index";
 import { parseTime } from "@/utils/index";
 import authModal from "@/components/authModal/index.vue";
+import robot from '@/views/home/components/robot.vue';
 import Vue from "vue";
+
 export default Vue.extend({
   components: {
-    authModal
+    authModal,
+    robot
   },
   mounted() {
     this.getObject();

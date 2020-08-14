@@ -22,7 +22,7 @@ export class  actPro{
     @Column()
     password:string
     @Column('longtext')
-    defaultLeft:string
+    initSet:string
     @Column()
     time:Number
     @Column()

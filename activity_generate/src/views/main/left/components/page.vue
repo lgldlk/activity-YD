@@ -64,17 +64,29 @@
           <a-button type="primary" @click="openCodeDrawer">点击编辑</a-button>
         </div>
         <a-drawer
-          title="生命周期注入"
-          width="500"
+          title="页面内容动态定义"
+          width="1000"
           placement="left"
           :closable="true"
           :visible="codeDrawer"
           @close="closeCodeDrawer"
         >
+        <div class="initSet_intro">
+          <div>
+          <el-tag  type="info">讲请求或计算的结果放置于pageData的属性上，在手机端会自动注入。如pageData.aaa="123";则该aaa名称的文本内容会变为123
+          </el-tag>
+          <el-tag type="info">
+            若要更改单选框和多选框的内容，请用数组的形势，数组的顺序与添加组件的顺序相同 如pageData.x[0]="123",pageData.x[1]="123453"
+          </el-tag>
+          </div>
+          <a-button type="primary" @click.stop="initSetSave">
+            <a-icon type="project" />保存
+          </a-button>
+        </div>
           <monaco-editor
-            width="450"
+            width="950"
             height="1200"
-            v-model="defaultLeft"
+            v-model="initSet"
             language="javascript"
             :options="options"
           ></monaco-editor>
@@ -104,8 +116,9 @@ export default {
         glyphMargin: true, // 字形边缘
         useTabStops: false,
         fontSize: 14, // 字体大小
-        autoIndent: false // 自动布局
-      }
+        autoIndent: false, // 自动布局
+      },
+      initSetCache:"",
     };
   },
   computed: {
@@ -146,18 +159,21 @@ export default {
         this.$store.commit("core/set_parentDisp", value);
       }
     },
-    defaultLeft: {
+    initSet: {
       get() {
-        return this.$store.state.core.defaultLeft;
+        return this.$store.state.core.initSet;
       },
       set(value) {
-        this.$store.commit("core/updateDefaultLeft", value);
+        this.initSetCache=value;
       }
     }
   },
   methods: {
     formatter(value) {
       return `${value}屏`;
+    },
+    initSetSave(){
+      this.$store.commit("core/updateInitSet", this.initSetCache);
     },
     sliderChange(value) {
       console.log(value);
@@ -223,5 +239,10 @@ export default {
       width: 64px;
     }
   }
+}
+.initSet_intro{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 </style>

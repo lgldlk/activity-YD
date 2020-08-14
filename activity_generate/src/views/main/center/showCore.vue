@@ -41,7 +41,7 @@ export default Vue.extend({
     baseSwiper,
     baseDiv,
     baseRadio,
-    baseCheck
+    baseCheck,
   },
   mounted() {
     (this ).init();
@@ -62,10 +62,30 @@ export default Vue.extend({
     return{
       radioCache:{},
       checkCache:{},
+      pageData:{},
     }
   },
   methods: {
-    init() {},
+    async init() {
+      let pageData=this.pageData;
+      await eval(this.$store.state.core.initSet);
+      let resultSet=Object.keys(pageData);
+      for(let  i=0,leng=resultSet.length;i<leng;i++){
+        let res=resultSet[i];
+        if(this.$refs[res]==undefined){
+          continue ;
+        }
+        if(this.$refs[res][0].option.domType=="base-input"){
+          console.log(this.$refs[res]);
+          this.$refs[res].map((e)=>{
+            e.changePla(pageData[res]);
+          });
+        }else if(this.$refs[res][0].option.domType=="base-radio"){
+          console.log(this.$refs[res]);
+        }else if(this.$refs[res][0].option.domType=="base-check"){
+        }
+      }
+    },
     refForm(){
     },
     addFormCache(type,formName,value){

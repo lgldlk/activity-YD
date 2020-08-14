@@ -75,7 +75,7 @@ export function saveActivity(data: any) {
       template: data.template,
       background: data.background,
       parentDisp: data.parentDisp,
-      defaultLeft: data.defaultLeft,
+      initSet: data.initSet,
     },
   })
 }

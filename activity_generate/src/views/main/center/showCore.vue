@@ -68,11 +68,14 @@ export default Vue.extend({
   methods: {
     async init() {
       let pageData=this.pageData;
+      try{
       await eval(this.$store.state.core.initSet);
+      }catch(e){
+        this.$message.error("初始化语句出错");
+      }
       let resultSet=Object.keys(pageData);
       for(let  i=0,leng=resultSet.length;i<leng;i++){
         let res=resultSet[i];
-        console.log(res);
         if(this.$refs[res]==undefined){
           continue ;
         }
@@ -81,7 +84,6 @@ export default Vue.extend({
             e.changePla(pageData[res]);
           });
         }else if(this.$refs[res][0].option.domType=="base-radio"){
-          console.log(this.$refs[res]);
           this.$refs[res].forEach((e,i)=>{
             if(pageData[res][i]==undefined){
               return ;
@@ -105,12 +107,41 @@ export default Vue.extend({
                 e.setShowText(pageData[res][i]);
               });
           }else{
-            
             this.$refs[res][0].setShowText(pageData[res]);
-            
-            console.log( this.$refs[res]);
+          }
+        }else if(this.$refs[res][0].option.domType=="base-buttom"){
+          if(pageData[res] instanceof Array){
+              this.$refs[res].forEach((e,i)=>{
+                if(pageData[res][i]==undefined){
+                  return ;
+                }
+                e.setShowText(pageData[res][i]);
+              });
+          }else{
+            this.$refs[res][0].setShowText(pageData[res]);
+          }
+        }else if(this.$refs[res][0].option.domType=="base-img"){
+          if(pageData[res] instanceof Array){
+              this.$refs[res].forEach((e,i)=>{
+                if(pageData[res][i]==undefined){
+                  return ;
+                }
+                e.setShowUrl(pageData[res][i]);
+              });
+          }else{
+            this.$refs[res][0].setShowUrl(pageData[res]);
+          }
+        }else if(this.$refs[res][0].option.domType=="base-swiper"){
+          if(pageData[res] instanceof Array){
+              this.$refs[res].forEach((e,i)=>{
+                if(pageData[res][i]==undefined){
+                  return ;
+                }
+                e.setShowUrlList(pageData[res]);
+              });
           }
         }
+
       }
     },
     refForm(){
@@ -146,7 +177,7 @@ export default Vue.extend({
       if(flyResult==null||flyResult==undefined){
         flyResult=[];
       }else if(formOne&&flyResult.includes(domId)){
-        this.$Toast("您已经提交一次了");
+        this.$message.error("您已经提交一次了");
         return ;
       }
       refInput.map(e => {

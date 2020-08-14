@@ -198,7 +198,7 @@ export class Act_proService {
       template,
       background,
       parentDisp,
-      defaultLeft,
+      initSet,
     } = data
     let objectData = await this.act_ProDao.findOne({
       _id: parentId,
@@ -215,7 +215,7 @@ export class Act_proService {
           textName: parentName,
           name: parentRouterName,
           disp: parentDisp,
-          defaultLeft,
+          initSet,
         }
       )
       //遍历数据将对象转为文本

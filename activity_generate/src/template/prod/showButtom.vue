@@ -8,7 +8,7 @@
  -->
 <template>
   <div class="btn_con">
-    <button class="baseComplate" :style="style" @click="clickBtn">{{ option.text }}</button>
+    <button class="baseComplate" :style="style" @click="clickBtn">{{ showText }}</button>
   </div>
 </template>
 
@@ -30,6 +30,14 @@ export default {
       return handleStyle(this.css);
     }
   },
+  data(){
+    return{
+      showText:'',
+    }
+  },
+  mounted(){
+    this.showText=this.option.text;
+  },
   methods: {
     clickBtn() {
       if (this.option.btnType == 0) {
@@ -48,6 +56,9 @@ export default {
         console.log("电话客服");
         location.href = "tel:10086";
       }
+    },
+    setShowText(value){
+      this.showText=value;
     }
   }
 };

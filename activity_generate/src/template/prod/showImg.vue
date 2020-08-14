@@ -7,7 +7,7 @@
  * @FilePath: /activity_generate/src/template/prod/showImg.vue
  -->
 <template>
-  <img class="baseComplate" ondragstart="return false;" :src="imageStaticUrl+option.text" :style="style" />
+  <img class="baseComplate" ondragstart="return false;" :src="showImgUrl" :style="style" />
 </template>
 
 <script>
@@ -17,6 +17,7 @@ export default {
   data(){
     return{
       imageStaticUrl:imageStaticUrl,
+      showImgUrl:'',
     }
   },
   props: {
@@ -33,7 +34,15 @@ export default {
     style() {
       return handleStyle(this.css);
     }
-  }
+  },
+  methods:{
+    setShowUrl(value){
+      this.showImgUrl=value;
+    }
+  },
+  mounted(){
+    this.showImgUrl=imageStaticUrl+this.option.text;
+  },
 };
 </script>
 

@@ -59,7 +59,7 @@ export default Vue.extend({
           img: require("@/assets/buttom.png")
         },
         {
-          name: "输入框",
+          name: "文本框",
           img: require("@/assets/text.png")
         },
         {

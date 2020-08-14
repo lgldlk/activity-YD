@@ -205,7 +205,7 @@ export function baseText(store: any): baseNode {
 }
 
 /**
- * 输入框的vuex数据映射关系
+ * 文本框的vuex数据映射关系
  */
 export function baseInput(store: any): baseNode {
   let dynamic = store.template.length * 10
@@ -412,7 +412,7 @@ export function baseComplate(store: any, data: any): baseNode {
 }
 
 const domMapName = {                                                                        
-  'base-input': "输入框",
+  'base-input': "文本框",
   'base-div': "图形",
   'base-swiper': "轮播图",
   'base-text':"文本",

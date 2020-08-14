@@ -30,7 +30,7 @@ import baseSwiper from "@/template/prod/showSwiper.vue";
 import baseRadio from "@/template/prod/showRadio.vue";
 import baseCheck from "@/template/prod/showCheck.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
-
+import {getLocalStore,setLocalStore} from '@/utils/utils'
 export default Vue.extend({
   components: {
     baseButtom,
@@ -91,17 +91,42 @@ export default Vue.extend({
       return item._id;
     },
     submitForm(formList) {
-      let { refInput, inputFromUrl, urlMethod } = formList;
-      let formData = {};
+      let { refInput, inputFromUrl, urlMethod ,domId,formOne,mustInput} = formList;
+      let formData = {},flyResult=getLocalStore('flyOne'),mustOver=true;
+      if(flyResult==null||flyResult==undefined){
+        flyResult=[];
+      }else if(formOne&&flyResult.includes(domId)){
+        this.$Toast("您已经提交一次了");
+        return ;
+      }
       refInput.map(e => {
+        if(this.$refs[e]==undefined){
+          return ;
+        }
         if(this.$refs[e][0].option.domType=="base-input"){
           formData[e] = this.$refs[e][0].$el.value;
+          if(mustInput.includes(e)&&formData[e].trim()==""){
+            mustOver=false;
+            return ;
+          }
         }else if(this.$refs[e][0].option.domType=="base-radio"){
           formData[e]=this.radioCache[e]||""
+          if(mustInput.includes(e)&&formData[e].trim()==""){
+            mustOver=false;
+            return ;
+          }
         }else if(this.$refs[e][0].option.domType=="base-check"){
           formData[e]=this.checkCache[e]||[];
+          if(mustInput.includes(e)&&JSON.stringify( formData[e]).trim()=="[]"){
+            mustOver=false;
+            return ;
+          }
         }
       });
+      if(mustOver==false){
+        this.$message.error("请完善必填表单");
+        return ;
+      }
       // for (const key in formData) {
       //   if (formData[key] == "") {
       //     this.$message.warning("请完善表单");
@@ -126,6 +151,10 @@ export default Vue.extend({
         .request(request)
         .then(e => {
             this.$message.success("发送成功");
+            if(formOne){
+              flyResult.push(domId);
+              setLocalStore('flyOne',flyResult);
+            }
         })
         .catch(err => {
           this.$message.error("网络出了小差.....");

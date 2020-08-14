@@ -36,7 +36,8 @@ export class Act_proService {
         objHeight: result.height,
         background: result.background,
         textName: result.textName,
-        datas:result.doms
+        datas:result.doms,
+        initSet:result.initSet
       });
     }
     return Promise.reject('无此项目，请检查项目名');

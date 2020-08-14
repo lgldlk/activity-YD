@@ -79,26 +79,12 @@ export default Vue.extend({
         if(this.$refs[res]==undefined){
           continue ;
         }
-        if(this.$refs[res][0].option.domType=="base-input"){
+        let resDomType=this.$refs[res][0].option.domType;
+        if(resDomType=="base-input"){
           this.$refs[res].map((e)=>{
             e.changePla(pageData[res]);
           });
-        }else if(this.$refs[res][0].option.domType=="base-radio"){
-          this.$refs[res].forEach((e,i)=>{
-            if(pageData[res][i]==undefined){
-              return ;
-            }
-            e.setShowText(pageData[res][i]);
-          });
-        }else if(this.$refs[res][0].option.domType=="base-check"){
-          this.$refs[res].forEach((e,i)=>{
-            if(pageData[res][i]==undefined){
-              return ;
-            }
-            e.setShowText(pageData[res][i]);
-          });
-        }
-        else if(this.$refs[res][0].option.domType=="base-text"){
+        }else if(resDomType=="base-radio"||resDomType=="base-check"||resDomType=="base-text"||resDomType=="base-buttom"){
           if(pageData[res] instanceof Array){
               this.$refs[res].forEach((e,i)=>{
                 if(pageData[res][i]==undefined){
@@ -109,18 +95,7 @@ export default Vue.extend({
           }else{
             this.$refs[res][0].setShowText(pageData[res]);
           }
-        }else if(this.$refs[res][0].option.domType=="base-buttom"){
-          if(pageData[res] instanceof Array){
-              this.$refs[res].forEach((e,i)=>{
-                if(pageData[res][i]==undefined){
-                  return ;
-                }
-                e.setShowText(pageData[res][i]);
-              });
-          }else{
-            this.$refs[res][0].setShowText(pageData[res]);
-          }
-        }else if(this.$refs[res][0].option.domType=="base-img"){
+        }else if(resDomType=="base-img"){
           if(pageData[res] instanceof Array){
               this.$refs[res].forEach((e,i)=>{
                 if(pageData[res][i]==undefined){
@@ -131,7 +106,7 @@ export default Vue.extend({
           }else{
             this.$refs[res][0].setShowUrl(pageData[res]);
           }
-        }else if(this.$refs[res][0].option.domType=="base-swiper"){
+        }else if(resDomType=="base-swiper"){
           if(pageData[res] instanceof Array){
               this.$refs[res].forEach((e,i)=>{
                 if(pageData[res][i]==undefined){

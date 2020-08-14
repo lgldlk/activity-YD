@@ -10,7 +10,7 @@
   <input
     class="baseComplate"
     :class="animation.animationName"
-    :placeholder="option.placeholder"
+    :placeholder="placeholder"
     :ref="option.inputName"
     type="text"
     :style="style"
@@ -36,13 +36,25 @@ export default {
       type: Object
     }
   },
+  data(){
+    return{
+      placeholder:''
+    }
+  },
+  mounted(){
+    this.placeholder=this.option.placeholder;
+  },
   computed: {
     style() {
       let keyword = this.$store.state.app.isSoftKeyboard;
       return handleStyle(this.css, keyword);
     }
   },
-  methods: {}
+  methods:{
+    changePla(word){
+      this.placeholder=word;
+    }
+  }
 };
 </script>
 

@@ -59,6 +59,7 @@ export default {
       baseHeight: 6.67,
       radioCache:{},
       checkCache:{},
+      pageData:{},
     };
   },
   methods: {
@@ -79,8 +80,11 @@ export default {
       }
     },
     getRef(item){
-      if(item.name=='base-input'||item.name=='base-radio'||item.name=='base-check'){
+      if(item.name=='base-input'||item.name=='base-radio'||item.name=="base-check"){
         return item.option.formName;
+      }
+      if(item.name=="base-img"||item.name=='base-swiper'||item.name=='base-text'||item.name=='base-buttom'){
+        return item.option.httpName||item._id;
       }
       return item._id;
     },
@@ -155,17 +159,69 @@ export default {
         });
     },
     // 初始化
-    init() {
+    async init() {
       let name = this.$route.params.name;
-      getTemplate(name).then(e => {
+      let initSet="";
+      await getTemplate(name).then(e => {
         console.log(e);
         if (e.data.code == 200) {
           this.template = e.data.data.datas;
           this.height = e.data.data.objHeight;
           this.background = e.data.data.background;
           document.title = e.data.data.textName;
+          initSet=e.data.data.initSet;
         }
       });
+      let pageData=this.pageData;
+      try{
+      await eval(initSet);
+      }catch(e){
+        this.$Toast("初始化语句出错");
+      }
+      let resultSet=Object.keys(pageData);
+      for(let  i=0,leng=resultSet.length;i<leng;i++){
+        let res=resultSet[i];
+        if(this.$refs[res]==undefined){
+          continue ;
+        }
+        let resDomType=this.$refs[res][0].option.domType;
+        if(resDomType=="base-input"){
+          this.$refs[res].map((e)=>{
+            e.changePla(pageData[res]);
+          });
+        }else if(resDomType=="base-radio"||resDomType=="base-check"||resDomType=="base-text"||resDomType=="base-buttom"){
+          if(pageData[res] instanceof Array){
+              this.$refs[res].forEach((e,i)=>{
+                if(pageData[res][i]==undefined){
+                  return ;
+                }
+                e.setShowText(pageData[res][i]);
+              });
+          }else{
+            this.$refs[res][0].setShowText(pageData[res]);
+          }
+        }else if(resDomType=="base-img"){
+          if(pageData[res] instanceof Array){
+              this.$refs[res].forEach((e,i)=>{
+                if(pageData[res][i]==undefined){
+                  return ;
+                }
+                e.setShowUrl(pageData[res][i]);
+              });
+          }else{
+            this.$refs[res][0].setShowUrl(pageData[res]);
+          }
+        }else if(resDomType=="base-swiper"){
+          if(pageData[res] instanceof Array){
+              this.$refs[res].forEach((e,i)=>{
+                if(pageData[res][i]==undefined){
+                  return ;
+                }
+                e.setShowUrlList(pageData[res]);
+              });
+          }
+        }
+      }
     },
     // 监听移动端软键盘
     ListeKeyboard() {

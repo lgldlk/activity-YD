@@ -1,5 +1,7 @@
 <template>
-  <img class="baseComplate" :class="animation.animationName" :src="imageStaticUrl+option.text" alt :style="style" />
+  <img class="baseComplate" 
+  :src="showImgUrl"
+  :class="animation.animationName"  alt :style="style" />
 </template>
 
 <script>
@@ -9,6 +11,7 @@ export default {
   data(){
       return{
         imageStaticUrl:imageStaticUrl,
+        showImgUrl:'',
       }
   },
   props: {
@@ -29,7 +32,14 @@ export default {
       return handleStyle(this.css, keyword);
     }
   },
-  methods: {}
+  methods:{
+    setShowUrl(value){
+      this.showImgUrl=value;
+    }
+  },
+  mounted(){
+    this.showImgUrl=imageStaticUrl+this.option.text;
+  },
 };
 </script>
 

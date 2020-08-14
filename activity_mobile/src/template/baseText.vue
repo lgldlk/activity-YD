@@ -8,7 +8,7 @@
  -->
 <template>
   <div class="baseComplate" :style="style" :class="animation.animationName">
-    <p v-html="option.text"></p>
+    <p v-html="showText"></p>
   </div>
 </template>
 
@@ -28,13 +28,25 @@ export default {
       type: Object
     }
   },
+  data(){
+    return{
+      showText:'',
+    }
+  },
+  mounted(){
+    this.showText=this.option.text.replace(/\n|\r\n/g, '<br>');
+  },
   computed: {
     style() {
       let keyword = this.$store.state.app.isSoftKeyboard;
       return handleStyle(this.css, keyword);
     }
   },
-  methods: {}
+  methods: {
+    setShowText(value){
+      this.showText=value.replace(/\n|\r\n/g, '<br>');
+    }
+  }
 };
 </script>
 

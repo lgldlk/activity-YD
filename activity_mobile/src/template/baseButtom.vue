@@ -12,7 +12,7 @@
     :class="animation.animationName"
     :style="style"
     @click="gotoLink"
-  >{{ option.text }}</button>
+  >{{showText }}</button>
 </template>
 
 <script>
@@ -43,7 +43,18 @@ export default {
       return handleStyle(this.css, keyword);
     }
   },
+  data(){
+    return{
+      showText:'',
+    }
+  },
+  mounted(){
+    this.showText=this.option.text;
+  },
   methods: {
+    setShowText(value){
+      this.showText=value;
+    },
     gotoLink() {
       if (this.option.btnType == 0) {
       } else if (this.option.btnType == 1) {
@@ -68,7 +79,8 @@ export default {
         location.href = "tel:10086";
       }
     }
-  }
+  },
+  
 };
 </script>
 

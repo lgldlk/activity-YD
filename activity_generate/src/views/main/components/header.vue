@@ -216,10 +216,13 @@ export default {
       this.$store.commit("core/clear_template");
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          html2canvas(document.querySelector(".core"), {
+          let core=document.querySelector(".core");
+          html2canvas(core, {
             async: true,
             useCORS: true,
-            scale: 1
+            scale: 1,
+            wdith:core.clientWidth,
+            height:core.clientWidth,
           })
             .then(canvas => {
               let dataURL = canvas.toDataURL("image/jpeg");

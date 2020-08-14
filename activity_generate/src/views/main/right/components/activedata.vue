@@ -68,7 +68,7 @@
       <div class="active_item" v-if="showImg(core)">
         <div class="active_list_left">图片:</div>
         <div class="active_list_right">
-          <img class="swiper_img" :src="core.option.text" @click="toggleBaseImg(core)" alt />
+          <img class="swiper_img" :src="imageStaticUrl+core.option.text" @click="toggleBaseImg(core)" alt />
         </div>
       </div>
       <!-- 按钮独有的属性 -->

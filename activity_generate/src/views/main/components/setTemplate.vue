@@ -7,7 +7,6 @@
  * @FilePath: /activity_generate/src/views/main/components/setTemplate.vue
  -->
 <template>
-  <!-- antdv的form组件简直就是一坨屎 -->
   <a-modal
     title="保存模板"
     v-model="succModal"

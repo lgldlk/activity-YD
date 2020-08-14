@@ -5,7 +5,7 @@
         <img class="left_logo" src="@/assets/logo.png" alt />
         <span class="item_text">易动</span>
       </div>
-      <div class="header_right">
+      <!-- <div class="header_right">
         <div class="right_item">
           <a-popover placement="bottom">
             <template slot="title">
@@ -27,7 +27,7 @@
           <a-icon type="github" />
           <span class="item_text">github</span>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="main_list">
       <div class="item pointer" @click="createObject">
@@ -200,15 +200,21 @@ export default Vue.extend({
           ...this.objform,
           height: this.$store.state.core.commHeight, // 页面高度默认667
           background: "rgba(255, 255, 255, 1)", // 页面背景色默认白色
-          defaultLeft: `created(){
-          // 页面开始生命周期
-            }
-            mounted(){
-                // 页面挂载生命周期
-            }
-            destroyed(){
-                // 页面卸载生命周期
-            }` // 注入生命周期
+          initSet: `var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
+                httpRequest.open('POST', 'URL', true); //第二步：打开连接
+                httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                //设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
+                httpRequest.send('name=teswe&ee=ef');//发送请求 将情头体写在send中
+                /**
+                 * 获取数据后的处理程序
+                 */
+                httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+                    if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+                        var json = httpRequest.responseText;//获取到服务端返回的数据
+                        pageData.Buttom1="xxxx";//可单独为某个名称的组件设置值
+                        pageData.text=['xxx','xxxxx','xxxxx']//也可以用数组的方式数组的顺序与添加组件的顺序相同
+                    }
+                };` // 注入动态组件编辑
         };
         setObject(data).then(res => {
           this.$router.push({

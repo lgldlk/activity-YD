@@ -46,6 +46,12 @@
           </div>
         </div>
       </div>
+      <div class="active_item" v-if="showHttpName(core)">
+        <div class="active_list_left">名称:</div>
+        <div class="active_list_right">
+          <a-input class="active_textarea" placeholder="请输入文字" v-model="core.option.httpName" />
+        </div>
+      </div>
       <div class="active_item" v-if="showElementName(core)">
         <div class="active_list_left">名称:</div>
         <div class="active_list_right">
@@ -304,6 +310,13 @@ export default {
       } else {
         return false;
       }
+    },
+    //展示http动态请求的组件
+    showHttpName(core){
+      if(core.name=="base-img"||core.name=='base-swiper'||core.name=='base-text'||core.name=='base-buttom'){
+        return true;
+      }
+      return false;
     },
     // 监听按钮提交input选项
     btnTypeChange(item) {

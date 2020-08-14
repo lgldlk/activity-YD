@@ -72,17 +72,44 @@ export default Vue.extend({
       let resultSet=Object.keys(pageData);
       for(let  i=0,leng=resultSet.length;i<leng;i++){
         let res=resultSet[i];
+        console.log(res);
         if(this.$refs[res]==undefined){
           continue ;
         }
         if(this.$refs[res][0].option.domType=="base-input"){
-          console.log(this.$refs[res]);
           this.$refs[res].map((e)=>{
             e.changePla(pageData[res]);
           });
         }else if(this.$refs[res][0].option.domType=="base-radio"){
           console.log(this.$refs[res]);
+          this.$refs[res].forEach((e,i)=>{
+            if(pageData[res][i]==undefined){
+              return ;
+            }
+            e.setShowText(pageData[res][i]);
+          });
         }else if(this.$refs[res][0].option.domType=="base-check"){
+          this.$refs[res].forEach((e,i)=>{
+            if(pageData[res][i]==undefined){
+              return ;
+            }
+            e.setShowText(pageData[res][i]);
+          });
+        }
+        else if(this.$refs[res][0].option.domType=="base-text"){
+          if(pageData[res] instanceof Array){
+              this.$refs[res].forEach((e,i)=>{
+                if(pageData[res][i]==undefined){
+                  return ;
+                }
+                e.setShowText(pageData[res][i]);
+              });
+          }else{
+            
+            this.$refs[res][0].setShowText(pageData[res]);
+            
+            console.log( this.$refs[res]);
+          }
         }
       }
     },
@@ -107,6 +134,9 @@ export default Vue.extend({
     getRef(item){
       if(item.name=='base-input'||item.name=='base-radio'||item.name=="base-check"){
         return item.option.formName;
+      }
+      if(item.name=="base-img"||item.name=='base-swiper'||item.name=='base-text'||item.name=='base-buttom'){
+        return item.option.httpName||item._id;
       }
       return item._id;
     },

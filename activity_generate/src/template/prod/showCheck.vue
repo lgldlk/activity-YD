@@ -9,7 +9,7 @@
       @click="setRadioCache"
          :value="option.itemValue">
       <div class="in_check" :style="frameRect"></div>
-         <span>{{option.text}}</span>
+         <span>{{showText}}</span>
       </label>
 </template>
 
@@ -32,6 +32,17 @@ export default {
   methods:{
     setRadioCache(){
       this.$emit("addFormCache", 2,this.option.formName,this.option.itemValue);
+    },
+    setShowText(value){
+      this.showText=value;
+    }
+  },
+  mounted(){
+    this.showText=this.option.text;
+  },
+  data(){
+    return{
+      showText:'',
     }
   },
   computed: {

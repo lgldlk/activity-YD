@@ -83,11 +83,13 @@ import EleInput from 'element-ui/lib/input'
 import 'element-ui/lib/theme-chalk/input.css'
 import EleUpload from 'element-ui/lib/upload'
 import 'element-ui/lib/theme-chalk/upload.css'
-
+import ElTag from 'element-ui/lib/tag'
+import 'element-ui/lib/theme-chalk/tag.css'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 Vue.component('el-button', ElButton)
+Vue.component('el-tag',ElTag )
 Vue.component('el-color-picker', ColorPicker)
 Vue.component('el-input', EleInput)
 Vue.component('el-upload', EleUpload)

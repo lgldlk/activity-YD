@@ -60,7 +60,7 @@
           </div>
         </div>
         <div class="page_form_item">
-          <div class="item_left">生命周期:</div>
+          <div class="item_left">动态组件内容设定:</div>
           <a-button type="primary" @click="openCodeDrawer">点击编辑</a-button>
         </div>
         <a-drawer

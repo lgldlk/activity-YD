@@ -10,7 +10,7 @@ interface CoreInter {
   background: string // 页面背景色1
   parentName: string // 项目名
   parentRouterName: string //项目路由
-  initSet: string // 生命周期
+  initSet: string // 动态组件编辑
   parentId: number // 项目id
   parentDisp: string // 项目描述
   objectAuth: Boolean // 项目是否需要验证
@@ -50,7 +50,7 @@ const core: Module<CoreInter, any> = {
     parentRouterName: '', // 项目路由
     parentId: 0, // 项目id
     parentDisp: '', // 项目描述
-    initSet: '', // 生命周期
+    initSet: '', // 动态组件编辑
     objectAuth: false, // 项目是否验证
     template: [], // 组件
     activeTemplate: [], // 选中的数组
@@ -578,7 +578,7 @@ const core: Module<CoreInter, any> = {
     updateBackground(state, color) {
       state.background = color
     },
-    // 修改生命周期函数
+    // 修改动态组件编辑函数
     updateInitSet(state, initSet) {
       state.initSet = initSet
     },

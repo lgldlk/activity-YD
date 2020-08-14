@@ -7,7 +7,7 @@
  * @FilePath: /activity_generate/src/template/prod/showText.vue
  -->
 <template>
-  <p class="baseComplate" :style="style" v-html="option.text.replace(/\n|\r\n/g, '<br>')"></p>
+  <p class="baseComplate" :style="style" v-html="showText"></p>
 </template>
 
 <script>
@@ -21,6 +21,19 @@ export default {
     option: {
       type: Object,
       default: () => {}
+    }
+  },
+  data(){
+    return{
+      showText:'',
+    }
+  },
+  mounted(){
+    this.showText=this.option.text.replace(/\n|\r\n/g, '<br>');
+  },
+  methods:{
+    setShowText(value){
+      this.showText=value.replace(/\n|\r\n/g, '<br>');
     }
   },
   computed: {

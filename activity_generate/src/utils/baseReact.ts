@@ -108,6 +108,7 @@ export function baseButtom(store: any): baseNode {
       PhoneNum: '', // 电话客福
       link: '', // 按钮点击跳转地址
       colorType: false, // 1 普通模式 2 高级模式
+      httpName:''//用于内容动态自定义的标识
     },
     css: {
       top: 10 + dynamic,
@@ -145,6 +146,7 @@ export function baseImg(store: any, img: string): baseNode {
     covName:'',
     option: {
       text: img,
+      httpName:''//用于内容动态自定义的标识
     },
     isShow:true,
     css: {
@@ -177,6 +179,7 @@ export function baseText(store: any): baseNode {
     option: {
       text: '请修改此处的文字',
       colorType: false, // 1 普通模式 2 高级模式
+      httpName:''//用于内容动态自定义的标识
     },
     isShow:true,
     css: {
@@ -275,6 +278,7 @@ export function baseSwiper(store: any): baseNode {
           link: '',
         },
       ],
+      httpName:''//用于内容动态自定义的标识
     },
     animation: {
       animationName: '',
@@ -411,7 +415,7 @@ export function baseComplate(store: any, data: any): baseNode {
   return compData
 }
 
-const domMapName = {                                                                        
+const domMapName = {
   'base-input': "文本框",
   'base-div': "图形",
   'base-swiper': "轮播图",

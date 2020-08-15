@@ -25,7 +25,7 @@ export class Act_proService {
   async getMobileData(name) {
     let proList=await this.act_ProDao.find({ where: { proType: "1",name:name} ,relations:['doms']});
     proList=modJson(proList);
-    if(proList.length>.0){
+    if(proList.length>0){
       let result:any=proList[0];
       result.doms.map((temp)=>{
         temp.css=JSON.parse(temp.css);
@@ -56,7 +56,7 @@ export class Act_proService {
     })
 
     if (ActivityList.length > 0) {
-      return Promise.reject('当前项目已经存在')
+      return Promise.reject('当前模板已经存在')
     }
       let tmp= await this.act_ProDao.insert({
           ...data,
@@ -86,6 +86,14 @@ export class Act_proService {
     })
 
     if (ActivityList.length > 0) {
+      return Promise.reject('当前项目已经存在')
+    }
+    const ActivityList3 = await this.act_ProDao.find({
+      name: data.name,
+      proType:"3",
+    })
+
+    if (ActivityList3.length > 0) {
       return Promise.reject('当前项目已经存在')
     }
       let tmp= await this.act_ProDao.insert({
@@ -125,20 +133,20 @@ export class Act_proService {
       return Promise.reject('密码错误')
     }
   }
-          /**
-         * 项目效验
-         * @param {String}} pass
-         */
-      async objectAuth(data) {
-          let objectData = await this.act_ProDao.findOne({
-              _id: data.id,
-          })
-          if (objectData.password == data.password) {
-              return Promise.resolve(true);
-          } else {
-              return Promise.reject('密码错误');
-          }
-      }
+/**
+ * 项目效验
+ * @param {String}} pass
+ */
+async objectAuth(data) {
+  let objectData = await this.act_ProDao.findOne({
+      _id: data.id,
+  })
+  if (objectData.password == data.password) {
+      return Promise.resolve(true);
+  } else {
+      return Promise.reject('密码错误');
+  }
+}
   async getAct_Data(){
     let tmp=await this.act_DataDao.find();
     //tmp.content=JSON.parse(tmp.content);
@@ -172,7 +180,9 @@ export class Act_proService {
 
   async findSById(proId){//根据ID获取项目或模板
     let result=await this.act_ProDao.find({where:{_id:proId},relations:['doms']});
+    let resultBelong=await this.act_ProDao.find({where:{belongId:proId},relations:['doms']});
     result=modJson(result);
+    resultBelong=modJson(resultBelong);
     if(result.length<0){
       return Promise.reject('无此项目');
     }
@@ -186,7 +196,21 @@ export class Act_proService {
     } else {
       result[0].password = "0"
     }
-    return Promise.resolve(result[0]);
+    let resultList=[result[0]];
+    resultBelong.map((item)=>{
+      item.doms.map((temp)=>{
+        temp.css=JSON.parse(temp.css);
+        temp.option=JSON.parse(temp.option);
+        temp.animation=JSON.parse(temp.animation);
+      });
+      if (item.password.trim()!="") {
+        item.password = "1"
+      } else {
+        item.password = "0"
+      }
+      resultList.push(item);
+    })
+    return Promise.resolve(resultList);
   }
   async setActivityData(data) {
     const {
@@ -206,6 +230,11 @@ export class Act_proService {
     })
     // 效验密码
     if (objectData.password.trim()=='' || objectData.password == password) {
+      let proList=await this.act_ProDao.find({ where: { proType: "1",name:parentRouterName} ,relations:['doms']});
+      proList=modJson(proList);
+      if(proList.length>1){
+        return Promise.reject('更改的项目路由已存在');
+      }
       // 更新项目数据
       await this.act_ProDao.update(
         {_id:parentId },
@@ -225,7 +254,6 @@ export class Act_proService {
       tmp=modJson(tmp);
       await this.act_DataDao.remove(tmp[0].doms);
       await template.map(async (temp) => {
-        
         temp.css=JSON.stringify(temp.css);
         temp.option=JSON.stringify(temp.option);
         temp.animation=JSON.stringify(temp.animation);

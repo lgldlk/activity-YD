@@ -57,6 +57,14 @@
         </div>
       </div>
       </div>
+      <div class="attr_item" >
+        <div class="attr_list_left">透明度:</div>
+        <div class="attr_list_right">
+          <a-input-number class="attr_mintextarea" :min="0"
+            :step="0.1"
+            :max="1" placeholder="请输入宽度" v-model="core.css.opacity" />
+        </div>
+      </div>
       <div v-if="showFrameSet(core)">
         <div class="attr_item">
           <div class="attr_list_left">框宽:</div>
@@ -90,7 +98,10 @@
             ></a-input>
           </div>
         </div>
+
       </div>
+
+      
 
       <!-- 文本框 按钮 文本框 可以使用的属性 -->
       <div class="attr_item" v-if="showBackground(core)">

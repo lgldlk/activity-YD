@@ -37,6 +37,7 @@ export function baseDiv(store: any): baseNode {
       borderStyle: 'solid',
       borderWidth: 0,
       borderRadius: 0,
+      opacity:1,
     },
     animation: {
       animationName: '',
@@ -75,6 +76,7 @@ export function baseCircle(store: any): baseNode {
       borderStyle: 'solid',
       borderWidth: 0,
       borderRadius: 50,
+      opacity:1,
     },
     animation: {
       animationName: '',
@@ -108,7 +110,8 @@ export function baseButtom(store: any): baseNode {
       PhoneNum: '', // 电话客福
       link: '', // 按钮点击跳转地址
       colorType: false, // 1 普通模式 2 高级模式
-      httpName:''//用于内容动态自定义的标识
+      httpName:'',//用于内容动态自定义的标识
+      opacity:1,
     },
     css: {
       top: 10 + dynamic,
@@ -155,6 +158,7 @@ export function baseImg(store: any, img: string): baseNode {
       width: 100,
       height: 50,
       zIndex: store.maxZIndex,
+      opacity:1,
     },
     animation: {
       animationName: '',
@@ -196,6 +200,7 @@ export function baseText(store: any): baseNode {
       fontStyle: 'normal', // italic
       textAlign: 'center',
       textDecoration: 'none', //underline
+      opacity:1,
     },
     animation: {
       animationName: '',
@@ -239,6 +244,7 @@ export function baseInput(store: any): baseNode {
       borderRadius: 1,
       paddingLeft: 5,
       paddingRight: 5,
+      opacity:1,
       fontSize: 12,
     },
     animation: {
@@ -269,6 +275,7 @@ export function baseSwiper(store: any): baseNode {
       width: 350,
       height: 100,
       zIndex: store.maxZIndex,
+      opacity:1,
     },
     option: {
       autoplay: '2000', // 轮播间隔
@@ -310,6 +317,7 @@ export function baseRadio(store: any): baseNode {
       width:0,
       height:0,
       frameWidth:17,
+      opacity:1,
     },
     option: {
       text:'内容',
@@ -345,6 +353,7 @@ export function baseCheck(store: any): baseNode {
       height:0,
       frameWidth:17,
       frameBackGround:'rgba(230, 230, 230, 1)',
+      opacity:1,
       frameChooseGround:'rgba(0,191,255,1)',
     },
     option: {
@@ -409,6 +418,7 @@ export function baseComplate(store: any, data: any): baseNode {
     isShow:data.isShow,
     css: data.css,
     covName:'',
+    opacity:1,
     animation: data.animation,
     option: data.option,
   }

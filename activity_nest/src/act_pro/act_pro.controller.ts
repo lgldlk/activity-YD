@@ -80,6 +80,22 @@ export class Act_proController {
     })
     return result;
   }
+  @Post('saveAllPage')
+  async saveAllPage(@Body() data){
+    let result={}
+    await this.actProSer.saveAllPage(data).then(e=>{
+      result={
+        data:e,
+        code:200
+      }
+    }).catch(err=>{
+      result={
+        data:err,
+        code:500
+      }
+    });
+    return result
+  }
   @Post('deleteObj')//删除项目
   async  deleteObj(@Body() data){
     let result={}

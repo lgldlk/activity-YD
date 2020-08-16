@@ -1,4 +1,4 @@
-import { saveActivity, getActivity, updateObj, setTemplate } from '@/api/index'
+import { saveActivity, getActivity, updateObj, setTemplate ,saveAllPage} from '@/api/index'
 import { commHeight, commWidth } from '../../config/index'
 import { Module } from 'vuex'
 import { message } from 'ant-design-vue'
@@ -764,14 +764,23 @@ const core: Module<CoreInter, any> = {
   },
   actions: {
     // 保存当前项目数据
-    saveObject({ state }, { titlePage, pass }) {
+    saveObject({ state ,commit}, { titlePage, pass }) {
       if (state.template.length == 0) {
         return Promise.reject('请不要保存空页面')
       }
       if(state.allPageList.length==1){
         return saveActivity({ ...state, titlePage, pass })
       }
-      
+      if(state.allPageList.length>=1){
+        let i=0,leng=state.allPageList.length;
+          for(i=0;i<leng;i++){
+            if(state.allPageList[i].name==state.nowPageName){
+              commit('savePage', i);
+              break;
+            }
+          }
+        return saveAllPage({ allPage:state.allPageList, titlePage, pass })
+      }
     },
     // 获取当前配置
     getActivity({ commit,state }, data) {

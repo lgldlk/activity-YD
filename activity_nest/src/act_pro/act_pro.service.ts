@@ -304,6 +304,50 @@ async objectAuth(data) {
       return Promise.reject('密码错误不允许修改')
     }
   }
+
+  //保存所有页面
+  async saveAllPage(data){
+    let {allPgae,password,titlePage}=data
+    let objectData = await this.act_ProDao.findOne({
+      _id:allPgae[0]._id,
+    })
+    // 效验密码
+    if (objectData.password.trim()=='' || objectData.password == password) {
+      allPgae.map(async (item)=>{
+        //遍历数据将对象转为文本
+        const newData = []
+        let tmp=await this.act_ProDao.find({where:{_id:item._id},relations:['doms']});
+        
+        tmp=modJson(tmp);
+        await this.act_DataDao.remove(tmp[0].doms);
+        await item.doms.map(async (temp) => {
+          temp.css=JSON.stringify(temp.css);
+          temp.option=JSON.stringify(temp.option);
+          temp.animation=JSON.stringify(temp.animation);
+          temp.pro=tmp[0];
+          newData.push({
+            ...temp,
+          })
+          return true
+        })
+        // console.log(newData);
+        // 更新项目组件数据
+        this.act_DataDao.save(newData);
+        await this.act_ProDao.update({_id:item._id},
+          {height: item.height,
+            background:item.background,
+            titlePage,
+            textName: item.textName,
+            name: item.name,
+            disp: item.disp,
+            initSet:item.initSet,
+          }
+        );
+      });
+    }else {
+      return Promise.reject('密码错误不允许修改')
+    }
+  }
   async saveSingleComplate(data){
     if (data.compName == '') {
       return Promise.reject('请填写组件保存名')

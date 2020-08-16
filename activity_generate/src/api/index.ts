@@ -99,6 +99,22 @@ export function saveActivity(data: any) {
 }
 
 /**
+ * 保存所有页面
+ * @param {string} parentRouterName 项目路由名
+ * 
+ */
+export function saveAllPage(data: any) {
+  return request({
+    url: `/saveAllPage`,
+    method: 'post',
+    data: {
+      allPgae:data.allPage,
+      password:data.pass,
+      titlePage: data.titlePage,
+    },
+  })
+}
+/**
  * 获取项目配置
  * @param {number} id 项目名称
  */

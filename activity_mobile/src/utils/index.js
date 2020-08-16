@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2020-02-22 12:51:37
- * @LastEditTime: 2020-03-18 10:02:51
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /activity_mobileb/src/utils/index.js
- */
 /**
  * 对css进行格式化处理
  * @param {object} css 未经处理的css

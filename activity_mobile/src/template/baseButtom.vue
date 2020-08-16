@@ -39,16 +39,25 @@ export default {
   data(){
     return{
       showText:'',
+      clickEvent:undefined,
     }
   },
   mounted(){
     this.showText=this.option.text;
+    
   },
   methods: {
     setShowText(value){
       this.showText=value;
     },
+    setClickEvent(event){
+      this.clickEvent=event;
+    },
     gotoLink() {
+      if(this.clickEvent!=undefined){
+        this.clickEvent();
+        return ;
+      }
       if (this.option.btnType == 0) {
       } else if (this.option.btnType == 1) {
         if (this.option.link) {

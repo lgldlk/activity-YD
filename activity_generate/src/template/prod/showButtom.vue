@@ -33,6 +33,7 @@ export default {
   data(){
     return{
       showText:'',
+      clickEvent:undefined,
     }
   },
   mounted(){
@@ -40,6 +41,10 @@ export default {
   },
   methods: {
     clickBtn() {
+      if(this.clickEvent!=undefined){
+        this.clickEvent();
+        return ;
+      }
       if (this.option.btnType == 0) {
         console.log("无事件");
       } else if (this.option.btnType == 1) {
@@ -59,6 +64,9 @@ export default {
     },
     setShowText(value){
       this.showText=value;
+    },
+    setClickEvent(event){
+      this.clickEvent=event;
     }
   }
 };

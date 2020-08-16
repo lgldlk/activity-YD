@@ -84,7 +84,7 @@ export default Vue.extend({
           this.$refs[res].map((e)=>{
             e.changePla(pageData[res]);
           });
-        }else if(resDomType=="base-radio"||resDomType=="base-check"||resDomType=="base-text"||resDomType=="base-buttom"){
+        }else if(resDomType=="base-radio"||resDomType=="base-check"||resDomType=="base-text"){
           if(pageData[res] instanceof Array){
               this.$refs[res].forEach((e,i)=>{
                 if(pageData[res][i]==undefined){
@@ -114,6 +114,27 @@ export default Vue.extend({
                 }
                 e.setShowUrlList(pageData[res]);
               });
+          }
+        }else if(resDomType=="base-buttom"){
+          if(pageData[res] instanceof Array){
+              this.$refs[res].forEach((e,i)=>{
+                if(pageData[res][i]==undefined){
+                  return ;
+                }
+                if(pageData[res][i].click==undefined){
+                  e.setShowText(pageData[res][i].text||pageData[res][i]);
+                }else{
+                  e.setShowText(pageData[res][i].text);
+                  e.setClickEvent(pageData[res][i].click);
+                }
+              });
+          }else{
+            if(pageData[res].click==undefined){
+                  this.$refs[res][0].setShowText(pageData[res].text||pageData[res]);
+            }else{
+              this.$refs[res][0].setShowText(pageData[res].text);
+              this.$refs[res][0].setClickEvent(pageData[res].click);
+            }
           }
         }
 

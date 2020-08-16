@@ -76,11 +76,13 @@ export default Vue.extend({
 .set_template {
   // display: flex;
   // align-items: center;
+  
   .template_img {
     background-color: #EEEEEE;
     // border: 1px solid rgb(185, 185, 185);
     text-align:center;
     padding-top:20px;
+    overflow: hidden;
     padding-bottom: 20px; 
     img {
       

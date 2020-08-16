@@ -1,11 +1,4 @@
-<!--
- * @Author: your name
- * @Date: 2020-03-01 15:17:44
- * @LastEditTime: 2020-03-13 17:34:31
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /activity_mobile/src/template/baseSwiper.vue
- -->
+
 <template>
   <van-swipe
     class="baseComplate"

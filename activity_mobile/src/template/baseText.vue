@@ -1,11 +1,4 @@
-<!--
- * @Author: your name
- * @Date: 2020-02-22 12:51:37
- * @LastEditTime: 2020-04-05 22:18:50
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /activity_mobile/src/template/baseText.vue
- -->
+
 <template>
   <div class="baseComplate" :style="style" :class="animation.animationName">
     <p v-html="showText"></p>

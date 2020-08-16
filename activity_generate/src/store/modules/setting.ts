@@ -62,16 +62,6 @@ const Setting: Module<setting, any> = {
         click: true
       },
       {
-        icon: require('@/assets/upZindex.png'),
-        text: '加层级',
-        click: false
-      },
-      {
-        icon: require('@/assets/downZindex.png'),
-        text: '减层级',
-        click: false
-      },
-      {
         icon: require('@/assets/zoom.png'),
         text: '放大',
         click: true

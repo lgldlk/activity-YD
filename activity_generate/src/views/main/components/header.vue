@@ -198,13 +198,9 @@ export default {
         this.$store.commit("core/deleteActiveComplate");
       } else if (index == 5) {
         this.$store.commit("setting/toggle_backgroundLine");
-      } else if (index == 6) {
-        this.$store.commit("core/update_CompZindex", 1);
-      } else if (index == 7) {
-        this.$store.commit("core/update_CompZindex", -1);
-      } else if (index == 8) {
+      }  else if (index == 6) {
         this.$store.commit("setting/set_scale", 0.1);
-      } else if (index == 9) {
+      } else if (index == 7) {
         this.$store.commit("setting/set_scale", -0.1);
       }
     },

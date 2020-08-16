@@ -1,11 +1,4 @@
-<!--
- * @Author: your name
- * @Date: 2020-02-22 12:51:37
- * @LastEditTime: 2020-04-10 10:27:42
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /activity_mobile/src/template/baseButtom.vue
- -->
+
 <template>
   <button
     class="baseComplate"

@@ -1,11 +1,4 @@
-<!--
- * @Author: your name
- * @Date: 2020-02-22 12:51:37
- * @LastEditTime: 2020-04-11 20:09:45
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /activity_mobile/src/App.vue
- -->
+
 <template>
   <div id="app">
     <router-view />

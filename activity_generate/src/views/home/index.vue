@@ -455,10 +455,6 @@ export default Vue.extend({
         .name_con {
           font-size: 16px;
         }
-        .disp_con {
-        }
-        .time_con {
-        }
       }
     }
     .item_img {
@@ -507,10 +503,6 @@ export default Vue.extend({
         line-height: 2em;
         .name_con {
           font-size: 16px;
-        }
-        .disp_con {
-        }
-        .time_con {
         }
       }
     }

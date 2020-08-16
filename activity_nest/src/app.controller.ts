@@ -9,6 +9,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class AppController {
   constructor(private readonly appService: AppService,
     private readonly imageSer: ImageService) { }
+    @Post('try')
+    async try(@Body() body){
+      console.log(body);
+    }
   @Post('upimage')
   @UseInterceptors(FileInterceptor('image')) // file对应HTML表单的name属性
   async UploadedFile(
@@ -28,7 +32,7 @@ export class AppController {
   async uptitleimage(
     @UploadedFile() file,
     @Body() body) {
-    let fileName = 'i' + this.ran(13) + `${file.originalname}`;
+    let fileName = 'aintro' + this.ran(13) + `${file.originalname}`;
     const writeImage = createWriteStream(join(__dirname, '..', '/public/image', fileName))
     await writeImage.write(file.buffer)
     this.imageSer.addImage(fileName, 2);

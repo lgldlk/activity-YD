@@ -63,6 +63,39 @@
           <div class="item_left">动态组件内容设定:</div>
           <a-button type="primary" @click="openCodeDrawer">点击编辑</a-button>
         </div>
+        <div class="page_form_item">
+          <div class="item_left">页面管理:</div>
+            <a-select  :default-value="allPageList[0].name" 
+            @select="choosePage"
+            style="width: 150px">
+                <div slot="dropdownRender" slot-scope="menu">
+                  <v-nodes :vnodes="menu" />
+                  <a-divider style="margin: 4px 0;" />
+                  <div
+                    style="padding: 4px 8px; cursor: pointer;"
+                    @mousedown="e => e.preventDefault()"
+                    @click="openAddPage"
+                  >
+                    <a-icon type="plus" /> 添加页面
+                  </div>
+                </div>
+                <a-select-option v-for="(item,i) in allPageList" :key="'selOPage'+i" :value="item.name">
+                  {{ item.name }}
+                  <span >
+                    <a-popconfirm
+                      title="页面删除后不可恢复,确认删除吗?"
+                      style="z-index:99;"
+                      okText="删除"
+                      cancelText="取消"
+                      placement="right"
+                      @confirm="deletePage(item)"
+                    >
+                      <a-icon v-if="nowPageName!=item.name" class="delete_icon" @click.stop =""  type="close-circle" />
+                    </a-popconfirm>
+                  </span>
+                </a-select-option>
+              </a-select>
+        </div>
         <a-drawer
           title="页面内容动态定义"
           width="1000"
@@ -93,16 +126,62 @@
         </a-drawer>
       </div>
     </div>
+    <a-modal
+      title="增加页面"
+      :visible="Objectvisible"
+      okText="确认"
+      cancelText="取消"
+      @ok="objSuccess"
+      :confirmLoading="confirmLoading"
+      @cancel="obFall"
+    >
+      <a-form :form="objform">
+        <a-form-item
+          label="网页名称"
+          :label-col="formTailLayout.labelCol"
+          :wrapper-col="formTailLayout.wrapperCol"
+          :validate-status="textNameStatus ? '' : 'error'"
+          help="必填 浏览器头部显示的名字"
+        >
+          <a-input placeholder="请填写网页名称" v-model="objform.textName" />
+        </a-form-item>
+        <a-form-item
+          label="路由名称"
+          :label-col="formTailLayout.labelCol"
+          :wrapper-col="formTailLayout.wrapperCol"
+          :validate-status="nameStatus ? '' : 'error'"
+          help="路由为数字和字母组成"
+        >
+          <a-input placeholder="请填写路由" v-model="objform.name" />
+        </a-form-item>
+        <a-form-item
+          label="项目描述"
+          :label-col="formTailLayout.labelCol"
+          :wrapper-col="formTailLayout.wrapperCol"
+          help="非必填"
+        >
+          <a-input placeholder="项目的一些描述信息" type="textarea" v-model="objform.disp" />
+        </a-form-item>
+      </a-form>
+    </a-modal>
+    <auth-modal ref="authModal" @authSuccess="authSuccess"></auth-modal>
   </div>
 </template>
 
 <script>
 import { commHeight } from "@/config";
+import {addPage,deleteObj} from '@/api/index'
 import MonacoEditor from "monaco-editor-vue";
 import "monaco-editor/esm/vs/editor/contrib/find/findController.js";
+import authModal from "@/components/authModal/index.vue";
 export default {
   components: {
-    MonacoEditor
+    MonacoEditor,
+    authModal,
+     VNodes: {
+      functional: true,
+      render: (h, ctx) => ctx.props.vnodes,
+    },
   },
   data() {
     return {
@@ -119,9 +198,31 @@ export default {
         autoIndent: false, // 自动布局
       },
       initSetCache:"",
+      formTailLayout: {
+        labelCol: { span: 5 },
+        wrapperCol: { span: 12 }
+      },
+      Objectvisible: false,
+      confirmLoading: false,
+      objform: {
+        textName: "", // 中文名称
+        name: "", // 路由名称
+        disp: "", // 描述
+      },
+      textNameStatus: true,
+      nameStatus: true,
+      
     };
   },
   computed: {
+    nowPageName(){
+      return this.$store.state.core.nowPageName;
+    },
+    allPageList:{
+      get(){
+        return this.$store.state.core.allPageList;
+      }
+    },
     sliderHight:{
       get(){
       return Number(this.$store.state.core.commHeight / commHeight);
@@ -172,11 +273,16 @@ export default {
     formatter(value) {
       return `${value}屏`;
     },
+    openAddPage(){
+      this.Objectvisible=true;
+    },
+    choosePage(value){
+      this.$store.commit("core/changeNowPage",value);
+    },
     initSetSave(){
       this.$store.commit("core/updateInitSet", this.initSetCache);
     },
     sliderChange(value) {
-      console.log(value);
       // if(value<1){
       //   return;
       // }
@@ -193,7 +299,75 @@ export default {
     },
     codeChange(value) {
       console.log(value);
-    }
+    },
+    obFall() {
+      this.Objectvisible = false;
+      this.textNameStatus = true;
+      this.nameStatus = true;
+    },
+    authSuccess(data) {
+      deleteObj(data._id, data.password).then(result => {
+        this.$message.success(result.data.data);
+        this.$store.commit('core/deletePage',data._id);
+      });
+    },
+    deletePage(item){
+      if(item._id==this.$store.state.core.parentId){
+        this.$message.error("不能删除主页面");
+        return ;
+      }
+      if (this.$store.state.core.objectAuth==true) {
+        this.$refs.authModal.open(item);
+      } else {
+        deleteObj(item._id, "").then(result => {
+          this.$message.success(result.data.data);
+          this.$store.commit('core/deletePage',item._id);
+        });
+      }
+    },
+    objSuccess() {
+      // 创建项目基类
+      let { textName, name } = this.objform;
+      if (textName == "") {
+        this.textNameStatus = false;
+      } else {
+        this.textNameStatus = true;
+      }
+      if (!/^[A-Za-z0-9]+$/.test(name)) {
+        this.nameStatus = false;
+      } else {
+        this.nameStatus = true;
+      }
+      if (this.textNameStatus && this.nameStatus) {
+        let data = {
+          ...this.objform,
+          height: this.$store.state.core.commHeight, // 页面高度默认667
+          background: "rgba(255, 255, 255, 1)", // 页面背景色默认白色
+          initSet: `var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
+                httpRequest.open('POST', 'URL', true); //第二步：打开连接
+                httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                //设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
+                httpRequest.send('name=teswe&ee=ef');//发送请求 将情头体写在send中
+                /**
+                 * 获取数据后的处理程序
+                 */
+                httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+                    if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+                        var json = httpRequest.responseText;//获取到服务端返回的数据
+                        pageData.Buttom1="xxxx";//可单独为某个名称的组件设置值
+                        pageData.text=['xxx','xxxxx','xxxxx']//也可以用数组的方式数组的顺序与添加组件的顺序相同
+                    }
+                };`, // 注入动态组件编辑
+          belongId:this.$store.state.core.parentId,
+        };
+        addPage(data).then(res => {
+          this.$store.commit('core/addPage',res.data.data);
+          this.Objectvisible = false;
+          this.textNameStatus = true;
+          this.nameStatus = true;
+        });
+      }
+    },
   }
 };
 </script>
@@ -244,5 +418,9 @@ export default {
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
+}
+.delete_icon{
+  float:right;
+  color:red;
 }
 </style>

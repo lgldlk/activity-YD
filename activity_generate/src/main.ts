@@ -41,6 +41,7 @@ import {
   Drawer,
   Switch,
   Card,
+  Divider
 } from 'ant-design-vue'
 Vue.use(Button)
 Vue.use(Card)
@@ -63,6 +64,7 @@ Vue.use(Pagination)
 Vue.use(Tooltip)
 Vue.use(Drawer)
 Vue.use(Switch)
+Vue.use(Divider)
 Vue.prototype.$message = message
 
 import swipe from 'vant/lib/swipe'

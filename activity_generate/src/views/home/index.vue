@@ -167,6 +167,7 @@ export default Vue.extend({
         window.open("https://github.com/vkcyan/activity_generate", "_blank");
       }
     },
+    
     getObject() {
       getObject()
         .then(e => {

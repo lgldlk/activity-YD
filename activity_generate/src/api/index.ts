@@ -45,7 +45,17 @@ export function setObject(form: object) {
     data: form,
   })
 }
-
+/**
+ * 新建页面
+ * @param {object} form 新建项目配置
+ */
+export function addPage(form: object) {
+  return request({
+    url: `/addPage`,
+    method: 'post',
+    data: form,
+  })
+}
 /**
  * 删除项目
  * @export

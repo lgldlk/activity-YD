@@ -86,7 +86,7 @@ export class Act_proService {
     })
 
     if (ActivityList.length > 0) {
-      return Promise.reject('当前项目已经存在')
+      return Promise.reject('当前路由已经存在')
     }
     const ActivityList3 = await this.act_ProDao.find({
       name: data.name,
@@ -94,7 +94,7 @@ export class Act_proService {
     })
 
     if (ActivityList3.length > 0) {
-      return Promise.reject('当前项目已经存在')
+      return Promise.reject('当前路由已经存在')
     }
       let tmp= await this.act_ProDao.insert({
           ...data,
@@ -105,7 +105,39 @@ export class Act_proService {
       })
       return tmp;
   }
+  async addProPage(data){
+    const ActivityList = await this.act_ProDao.find({
+      name: data.name,
+      proType:"1",
+    })
 
+    if (ActivityList.length > 0) {
+      return Promise.reject('当前项目已经存在')
+    }
+    const ActivityList3 = await this.act_ProDao.find({
+      name: data.name,
+      proType:"3",
+    })
+
+    if (ActivityList3.length > 0) {
+      return Promise.reject('该路由已经存在')
+    }
+    const belongPro = await this.act_ProDao.find({
+      _id: data.belongId,
+      proType:"1",
+    })
+       await this.act_ProDao.insert({
+          ...data,
+          proType:"3",
+          height: 667,
+          background: 'rgba(255, 255, 255, 1)',
+          time: new Date().getTime(),
+          password:belongPro[0].password
+      })
+      return (await this.act_ProDao.find({
+        where: { name: data.name,
+          proType:"3",} ,relations:['doms']}))[0];
+  }
   
   async delTemplate(data){//删除模板
     let {id}=data;
@@ -310,4 +342,5 @@ async objectAuth(data) {
       _id: id
     })
   }
+
 }

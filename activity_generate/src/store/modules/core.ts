@@ -4,7 +4,10 @@ import { Module } from 'vuex'
 import { message } from 'ant-design-vue'
 import { guid } from '@/utils/utils'
 import { getBaseCovName} from '@/utils/baseReact'
+import store from '..'
 interface CoreInter {
+  allPageList:Array<any>//所有页面
+  nowPageName:string//当前页面ID
   commWidth: number // 页面宽度
   commHeight: number // 页面高度
   background: string // 页面背景色1
@@ -43,6 +46,8 @@ interface CoreInter {
 const core: Module<CoreInter, any> = {
   namespaced: true,
   state: {
+    allPageList:[],//所有页面
+    nowPageName:'',//当前页面索引
     commWidth: commWidth, // 页面宽度
     commHeight: commHeight, // 页面高度
     background: 'rgba(255, 255, 255, 1)', // 页面背景色
@@ -78,6 +83,66 @@ const core: Module<CoreInter, any> = {
     maxZIndex:0
   },
   mutations: {
+    //设置所有界面
+    setAllPageList(state,allPage){
+      state.allPageList=allPage;
+    },
+    //设置当前页面索引
+    setNowPageName(state,name){
+      state.nowPageName=name;
+    },
+    //添加页面
+    addPage(state,pageData:any){
+      state.allPageList.push(pageData);
+    },
+    //保存页面
+    savePage(state,index){
+      state.allPageList[index].doms=state.template;
+          state.allPageList[index].height=state.commHeight;
+          state.allPageList[index].textName=state.parentName;
+          state.allPageList[index].name=state.parentRouterName;
+          state.allPageList[index].disp=state.parentDisp;
+          state.allPageList[index].initSet=state.initSet;
+    },
+    deletePage(state,id){
+      let i=0,leng=state.allPageList.length;
+      for(i=0;i<leng;i++){
+        if(id==state.allPageList[i]._id){
+          state.allPageList.splice(i,1);
+          break;
+        }
+      }
+    },
+    //改变当前项目的编辑的页面
+    changeNowPage(state,name){
+      let i=0,leng=state.allPageList.length;
+      for(i=0;i<leng;i++){
+        if(state.allPageList[i].name==state.nowPageName){
+          store.commit('core/savePage', i);
+          
+          break;
+        }
+      }
+      for(i=0;i<leng;i++){
+        if(state.allPageList[i].name==name){
+          let template: any[] = [];
+          let nowPage=state.allPageList[i];
+          state.activeTemplate=[];
+          store.commit('core/setNowPageName',name);
+          nowPage.doms.map((e) => {
+            template.push({ ...e, editStatus: false })
+          })
+          store.commit('core/update_template', template)
+          store.commit('core/updateCommHeigth', nowPage.height)
+          store.commit('core/updateBackground', nowPage.background)
+          store.commit('core/set_objectName',nowPage.textName)
+          store.commit('core/set_parentRouterName',nowPage.name)
+          store.commit('core/set_parentDisp', nowPage.disp)
+          store.commit('core/updateInitSet', nowPage.initSet)
+          break;
+        }
+      }
+    },
     // 保存当前项目名
     set_objectName(state, name) {
       state.parentName = name
@@ -703,29 +768,34 @@ const core: Module<CoreInter, any> = {
       if (state.template.length == 0) {
         return Promise.reject('请不要保存空页面')
       }
-      return saveActivity({ ...state, titlePage, pass })
+      if(state.allPageList.length==1){
+        return saveActivity({ ...state, titlePage, pass })
+      }
+      
     },
     // 获取当前配置
-    getActivity({ commit }, data) {
+    getActivity({ commit,state }, data) {
       return new Promise((resolve, reject) => {
         getActivity(data.id).then((e) => {
-          console.log(e);
           if (e.data.code !== 200) {
             reject(e.data.data)
           } else {
+            commit('setAllPageList',e.data.data);
             let template: any[] = [];
+            let mainPage=state.allPageList[0];
+            commit('setNowPageName',mainPage.name);
             console.log(e);
-            e.data.data.doms.map((e) => {
+            mainPage.doms.map((e) => {
               template.push({ ...e, editStatus: false })
             })
             commit('update_template', template)
-            commit('updateCommHeigth', e.data.data.height)
-            commit('updateBackground', e.data.data.background)
-            commit('set_objectName', e.data.data.textName)
-            commit('set_parentRouterName', e.data.data.name)
-            commit('set_parentDisp', e.data.data.disp)
-            commit('set_objectAuth', e.data.data.password)
-            commit('updateInitSet', e.data.data.initSet)
+            commit('updateCommHeigth', mainPage.height)
+            commit('updateBackground', mainPage.background)
+            commit('set_objectName',mainPage.textName)
+            commit('set_parentRouterName',mainPage.name)
+            commit('set_parentDisp', mainPage.disp)
+            commit('set_objectAuth',mainPage.password)
+            commit('updateInitSet', mainPage.initSet)
             resolve('数据查询完成')
           }
         })

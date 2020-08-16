@@ -22,13 +22,15 @@ export class  actPro{
     @Column()
     password:string
     @Column('longtext')
-    initSet:string
+    initSet:string//动态组件内容设定
     @Column()
     time:Number
     @Column()
     proType:string
     @OneToMany(type => Act_Data, doms => doms.pro)
     doms: Act_Data[];
+    @Column()
+    belongId:number
 }
 /*
     textName: { type: String }, // 项目中文名

@@ -29,6 +29,23 @@ export class Act_proController {
     return result;
   }
 
+  @Post('addPage')
+  async addPage(@Body() body){
+    let result={};
+  await  this.actProSer.addProPage(body).then((e)=>{
+    result= {
+      data:e,
+      code:200
+    };
+   }
+  ).catch((err)=>{
+    result= result= {
+      data:err,
+      code:500
+    };
+  });
+    return result;
+  }
   @Post('setObject')//新建项目
  async addActObject(@Body() body){
     let result={};

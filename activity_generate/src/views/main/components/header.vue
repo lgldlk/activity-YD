@@ -283,7 +283,7 @@ export default {
                 this.objUrl = mobileUrl + data.data.data;
                 this.$refs["uploadModal"].openModal();
               } else {
-                this.$message.success("发布成功");
+                this.$message.success("保存成功");
               }
             } else {
               this.$message.error(data.data.data);

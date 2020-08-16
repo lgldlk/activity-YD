@@ -267,7 +267,6 @@ export default {
       }
     },
     uploadObject(type, pass = "") {
-      console.log(pass);
       this.getThumbnail().then(res => {
         // 保存当前页面的配置
         return this.$store

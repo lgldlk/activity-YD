@@ -96,13 +96,19 @@ const core: Module<CoreInter, any> = {
       state.allPageList.push(pageData);
     },
     //保存页面
-    savePage(state,index){
-      state.allPageList[index].doms=state.template;
+    saveNowPage(state){
+      let index=0,leng=state.allPageList.length;
+      for(index=0;index<leng;index++){
+        if(state.allPageList[index].name==state.nowPageName){
+          state.allPageList[index].doms=state.template;
           state.allPageList[index].height=state.commHeight;
           state.allPageList[index].textName=state.parentName;
           state.allPageList[index].name=state.parentRouterName;
           state.allPageList[index].disp=state.parentDisp;
           state.allPageList[index].initSet=state.initSet;
+          break;
+        }
+      }
     },
     deletePage(state,id){
       let i=0,leng=state.allPageList.length;
@@ -116,13 +122,7 @@ const core: Module<CoreInter, any> = {
     //改变当前项目的编辑的页面
     changeNowPage(state,name){
       let i=0,leng=state.allPageList.length;
-      for(i=0;i<leng;i++){
-        if(state.allPageList[i].name==state.nowPageName){
-          store.commit('core/savePage', i);
-          
-          break;
-        }
-      }
+          store.commit('core/saveNowPage');
       for(i=0;i<leng;i++){
         if(state.allPageList[i].name==name){
           let template: any[] = [];
@@ -772,13 +772,7 @@ const core: Module<CoreInter, any> = {
         return saveActivity({ ...state, titlePage, pass })
       }
       if(state.allPageList.length>=1){
-        let i=0,leng=state.allPageList.length;
-          for(i=0;i<leng;i++){
-            if(state.allPageList[i].name==state.nowPageName){
-              commit('savePage', i);
-              break;
-            }
-          }
+              commit('saveNowPage');
         return saveAllPage({ allPage:state.allPageList, titlePage, pass })
       }
     },

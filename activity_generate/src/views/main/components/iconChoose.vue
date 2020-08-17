@@ -9,33 +9,33 @@
           @click="toggleMenu"
         >
           <a-menu-item key="1">
-            <a-icon type="pie-chart" />
-            <span>充满</span>
+            <a-icon type="tool" theme='filled' />
+            <span>填充</span>
           </a-menu-item>
           <a-menu-item key="2">
-            <a-icon type="desktop" />
+            <a-icon type="tool" theme='outlined' />
             <span>线条</span>
           </a-menu-item>
           <a-menu-item key="3">
-            <a-icon type="desktop" />
-            <span>半充满</span>
+            <a-icon type="tool" theme='twoTone' />
+            <span>半填充</span>
           </a-menu-item>
         </a-menu>
       </div>
       <div class="icon_con">
         <div class="icon_list" v-if="Menukey.includes('1')">
-          <div class="aIcon" v-for="item in iconList.fill" :key="item" @click="addIcon(item)">
-            <a-icon :type="item" />
+          <div class="aIcon" v-for="item in iconList.fill" :key="item" @click="addIcon(item,'filled')">
+            <a-icon :type="item" theme='filled' />
           </div>
         </div>
         <div class="icon_list" v-if="Menukey.includes('2')" >
-          <div class="aIcon" v-for="item in iconList.outline" :key="item" @click="addIcon(item)">
-            <a-icon :type="item" />
+          <div class="aIcon" v-for="item in iconList.outline" :key="item" @click="addIcon(item,'outlined')">
+            <a-icon :type="item" theme='outlined' />
           </div>
         </div>
         <div class="icon_list" v-if="Menukey.includes('3')">
-           <div class="aIcon" v-for="item in iconList.twotone" :key="item" @click="addIcon(item)">
-            <a-icon :type="item" />
+           <div class="aIcon" v-for="item in iconList.twotone" :key="item" @click="addIcon(item,'twoTone')">
+            <a-icon :type="item"  theme='twoTone'/>
           </div>
         </div>
       </div>
@@ -775,16 +775,16 @@ export default Vue.extend({
     toggleMenu(value) {
       this.Menukey = value.keyPath;
     },
-    addIcon(item) {
+    addIcon(iconType,theme) {
       if(this.type==1){
       this.$store.commit(
           "core/set_tempLate",
-          baseIcon(this.$store.state.core,item)
+          baseIcon(this.$store.state.core,{iconType,theme})
         );
       }else if(this.type==2){
         this.$store.commit(
           "core/update_icon",
-          item
+          {iconType,theme}
         );
       }
 

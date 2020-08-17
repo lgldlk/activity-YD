@@ -2,7 +2,7 @@
   <div
   :class="['aIcon',animation.animationName,option.isFixed?'fixedComplate':'baseComplate']"
   :style="constyle">
-            <a-icon :type="option.iconType" />
+            <a-icon :type="option.iconType" :theme="option.theme"/>
   </div>
 </template>
 

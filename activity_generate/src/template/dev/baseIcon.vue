@@ -3,7 +3,7 @@
     <edit v-show="editStatus" :id="id" :styles="constyle">
       
         <div class="aIcon"  :style="constyle">
-              <a-icon :type="option.iconType" />
+              <a-icon :type="option.iconType" :theme="option.theme"/>
         </div>
     </edit>
     <!-- 鼠标进入状态 -->
@@ -13,12 +13,12 @@
       :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
     <div class="aIcon"  :style="constyle">
-            <a-icon :type="option.iconType" />
+            <a-icon :type="option.iconType" :theme="option.theme"/>
     </div>
     </div>
     <!-- 未选中状态 -->
     <div class="aIcon"  :class="absolute ? 'baseComplate' : ''"  v-show="!editStatus & !hoverStatus" :style="constyle">
-            <a-icon :type="option.iconType" />
+            <a-icon :type="option.iconType" :theme="option.theme" />
     </div>
   </div>
 </template>

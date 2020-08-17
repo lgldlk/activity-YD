@@ -122,6 +122,7 @@ export default Vue.extend({
         data = ImgData(this.$store.state.core, 'pleStatic.png');
       }else if(index==3){
         this.$store.commit("setting/showIconChoose",1);
+        return ;
       }
        else if (index == 4) {
         data = TextData(this.$store.state.core);

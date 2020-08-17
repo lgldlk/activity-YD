@@ -187,7 +187,7 @@ export function baseImg(store: any, img: string): baseNode {
 /**
  * 图标的vuex数据映射关系
  */
-export function baseIcon(store: any,iconType:string): baseNode {
+export function baseIcon(store: any,{iconType,theme}): baseNode {
   let dynamic = store.template.length * 10
   return {
     activityId: guid(),
@@ -195,7 +195,8 @@ export function baseIcon(store: any,iconType:string): baseNode {
     name: 'base-icon',
     covName:'',
     option: {
-      iconType
+      iconType,
+      theme
     },
     isShow:true,
     css: {

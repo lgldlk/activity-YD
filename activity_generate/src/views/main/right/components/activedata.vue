@@ -77,6 +77,20 @@
           <a-icon :type="core.option.iconType" style="font-size:30px;"  @click="changeIcon"/>
         </div>
       </div>
+      <div class="active_item" v-if="isIcon(core)">
+        <div class="active_list_left">填充选项:</div>
+        <div class="active_list_right">
+          <a-select
+            defaultValue="lucy"
+            style="width: 120px"
+            v-model="core.option.theme"
+          >
+            <a-select-option :value="'filled'">填充</a-select-option>
+            <a-select-option :value="'outlined'">线条</a-select-option>
+            <a-select-option :value="'twoTone'">半填充</a-select-option>
+          </a-select>
+        </div>
+      </div>
       <!-- 按钮独有的属性 -->
       <div class="active_item" v-if="showButtom(core)">
         <div class="active_list_left">按钮事件:</div>

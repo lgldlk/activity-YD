@@ -106,11 +106,35 @@
         >
         <div class="initSet_intro">
           <div>
-          <el-tag  type="info">讲请求或计算的结果放置于pageData的属性上，在手机端会自动注入。如pageData.aaa="123";则该aaa名称的文本内容会变为123
-          </el-tag>
-          <el-tag type="info">
-            若要更改单选框和多选框的内容，请用数组的形势，数组的顺序与添加组件的顺序相同 如pageData.x[0]="123",pageData.x[1]="123453"
-          </el-tag>
+          <a-popover placement="bottomLeft">
+              <template slot="content">
+                <div  class="intro_text">
+                  <a-divider>直接赋值至文本,图片变化</a-divider>
+                  <p>如pageData.组件名="图片地址||文本"
+                    对输入框（提示语），单选框，多选框，文本框，按钮的文本，
+                    图片组件的图片地址，
+                  </p>
+                  <a-divider>赋值数组至文本,图片变化</a-divider>
+                  <p>如pageData.组件名=[];pageData.组件名[0]="图片地址文本"
+                    对输入框（提示语），单选框，多选框，文本框，按钮的文本，
+                    图片,轮播图组件的图片地址，会进行更改
+                  </p>
+                  <a-divider>按钮自定义点击事件</a-divider>
+                  <p>pageData.按钮名=
+                    {text:"显示的文本",click:function(){//自定义的函数}}
+                    注：动态设置点击事件会注销原来设置的点击事件
+                  </p>
+                  <a-divider>轮播图自定义链接和图片数组</a-divider>
+                  <p>pageData.轮播图名=[图片地址数组]设置轮播图展示的图片
+                    pageData.轮播图名=[{img://图片地址,link://点击跳转的地址}]//设置跳转和点击的链接
+                  </p>
+                </div>
+              </template>
+              <template slot="title">
+                <span>说明文档</span>
+              </template>
+              <el-tag>说明文档</el-tag>
+            </a-popover>
           </div>
           <a-button type="primary" @click.stop="initSetSave">
             <a-icon type="project" />保存
@@ -424,5 +448,8 @@ export default {
 .delete_icon{
   float:right;
   color:red;
+}
+.intro_text{
+  width:300px;
 }
 </style>

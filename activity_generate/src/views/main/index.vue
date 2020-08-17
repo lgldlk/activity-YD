@@ -10,11 +10,11 @@
         <core
           v-if="coreMode == 'dev'"
           :style="{ transform: `scale(${scale},${scale})` }"
-          class="core"
+          class="core mobile"
           ref="core"
         />
         <!-- 测试查看模式 -->
-        <show-core v-if="coreMode == 'prod'"></show-core>
+        <show-core v-if="coreMode == 'prod'" class="mobile"></show-core>
       </div>
       
       <!-- 右侧菜单栏 -->
@@ -170,6 +170,20 @@ export default {
           border-bottom-right-radius: 5px;
         }
       }
+    }
+  }
+  .mobile{
+    position: relative;
+    &::after{
+      position: absolute;
+      top:0;
+      height:667px;
+      border-top: 2px solid rgb(24, 144, 255);
+      border-bottom: 2px solid rgb(24, 144, 255);
+      width:50px;
+      left:-52px;
+      box-sizing: border-box;
+      content: '';
     }
   }
 }

@@ -29,6 +29,7 @@ import baseDiv from "@/template/prod/showDiv.vue";
 import baseSwiper from "@/template/prod/showSwiper.vue";
 import baseRadio from "@/template/prod/showRadio.vue";
 import baseCheck from "@/template/prod/showCheck.vue";
+import baseIcon from "@/template/prod/showIcon.vue"
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
 import {getLocalStore,setLocalStore} from '@/utils/utils'
 export default Vue.extend({
@@ -42,6 +43,7 @@ export default Vue.extend({
     baseDiv,
     baseRadio,
     baseCheck,
+    baseIcon
   },
   mounted() {
     (this ).init();

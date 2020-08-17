@@ -416,7 +416,6 @@ export default {
     },
     //判断是否为图标
     isIcon(core){
-      console.log(core);
       if(core.name=="base-icon"){
         return true;
       }

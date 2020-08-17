@@ -47,9 +47,6 @@ export default {
     }
   },
   computed: {
-    style() {
-      return handleStyle(this.css);
-    },
     constyle() {
       let style = handleStyle(this.css);
       return {

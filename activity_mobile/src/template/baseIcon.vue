@@ -32,6 +32,10 @@ export default {
         color:style.color,
         'font-weight':style.fontSize+'px',
         'z-index':style.zIndex,
+        animationDuration: style.animationDuration,
+        animationDelay: style.animationDelay,
+        animationIterationCount: style.animationIterationCount,
+        animationFillMode: style.animationFillMode,
       };
     },
   },

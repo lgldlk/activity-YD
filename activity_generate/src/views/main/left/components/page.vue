@@ -65,7 +65,7 @@
         </div>
         <div class="page_form_item">
           <div class="item_left">页面管理:</div>
-            <a-select  :default-value="allPageList[0].name" 
+            <a-select  :value="nowPageName" 
             @select="choosePage"
             style="width: 150px">
                 <div slot="dropdownRender" slot-scope="menu">
@@ -215,8 +215,10 @@ export default {
     };
   },
   computed: {
-    nowPageName(){
-      return this.$store.state.core.nowPageName;
+    nowPageName:{
+      get(){
+        return this.$store.state.core.nowPageName;
+      }
     },
     allPageList:{
       get(){

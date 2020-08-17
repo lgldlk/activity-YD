@@ -259,7 +259,7 @@ export default {
             this.$hideLoading();
             if (data.data.code == 200) {
               if (type == 1) {
-                this.objUrl = mobileUrl + data.data.data;
+                this.objUrl = mobileUrl + this.$store.state.core.nowPageName;
                 this.$refs["uploadModal"].openModal();
               } else {
                 this.$message.success("保存成功");

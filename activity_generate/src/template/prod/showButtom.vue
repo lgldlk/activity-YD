@@ -60,6 +60,8 @@ export default {
       } else if (this.option.btnType == 4) {
         console.log("电话客服");
         location.href = "tel:10086";
+      }else if(this.option.btnType==5){
+        this.$store.commit('core/changeNowPage',this.option.link);
       }
     },
     setShowText(value){

@@ -86,6 +86,7 @@
             <a-select-option :value="2">提交表单</a-select-option>
             <a-select-option :value="3">QQ客服</a-select-option>
             <a-select-option :value="4">电话客服</a-select-option>
+            <a-select-option :value="5">跳转项目页</a-select-option>
           </a-select>
         </div>
       </div>
@@ -139,7 +140,7 @@
             <a-select
               mode="tags"
               v-model="core.option.mustInput"
-              placeholder="请选择需要提交的"
+              placeholder="请选择必填表单"
               style="width: 200px"
               @change="handleChange"
             >
@@ -168,6 +169,24 @@
         <div class="active_list_left">电话客服:</div>
         <div class="active_list_right">
           <a-input class="active_textarea" placeholder="请输入客服电话号码" v-model="core.option.PhoneNum" />
+        </div>
+      </div>
+      <div class="active_item" v-if="showButtom(core) && core.option.btnType == 5">
+        <div class="active_list_left">跳转页面:</div>
+        <div class="active_list_right">
+                <a-select
+                    v-model="core.option.link"
+                    placeholder="请选择必填表单"
+                    style="width: 200px"
+                    @change="handleChange"
+                  >
+                    <a-select-option
+                      v-if="item.name!=nowPageName"
+                      v-for="item in allPageList"
+                      :key="item.name+'selPage'"
+                      :value="item.name"
+                    >{{ item.name}}</a-select-option>
+                  </a-select>
         </div>
       </div>
       <!-- 高阶组件 轮播图配置 -->
@@ -286,6 +305,13 @@ export default {
         }
       });
       return result;
+    },
+    nowPageName(){
+      return this.$store.state.core.nowPageName;
+    }
+    ,
+    allPageList(){
+      return this.$store.state.core.allPageList;
     }
   },
   methods: {

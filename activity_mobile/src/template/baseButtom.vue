@@ -10,6 +10,7 @@
 
 <script>
 import { handleStyle } from "../utils/index";
+import {mobileUrl} from '../utils/request'
 export default {
   props: {
     link: {
@@ -79,6 +80,8 @@ export default {
       } else if (this.option.btnType == 4) {
         console.log("电话客服");
         location.href = "tel:10086";
+      }else if(this.option.btnType==5){
+        window.open(mobileUrl+this.option.link);
       }
     }
   },

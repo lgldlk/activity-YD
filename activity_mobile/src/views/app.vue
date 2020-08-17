@@ -28,6 +28,7 @@ import baseDiv from "../template/baseDiv";
 import baseSwiper from "../template/baseSwiper";
 import baseRadio from '../template/baseRadio';
 import baseCheck from '../template/baseCheck'
+import baseIcon from '../template/baseIcon'
 import { isSoftKeyboard,setLocalStore,getLocalStore } from "../utils/index";
 import app from "../store/modules/app";
 import axios from "axios";
@@ -40,7 +41,8 @@ export default {
     baseDiv,
     baseSwiper,
     baseRadio,
-    baseCheck
+    baseCheck,
+    baseIcon
   },
   mounted() {
     this.init();

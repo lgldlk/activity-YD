@@ -1,6 +1,8 @@
 
 <template>
-  <div class="baseComplate" :class="animation.animationName" :style="style"></div>
+  <div
+  :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']"
+  :style="style"></div>
 </template>
 
 <script>
@@ -8,6 +10,9 @@ import { handleStyle } from "../utils/index";
 export default {
   props: {
     css: {
+      type: Object
+    },
+    option: {
       type: Object
     },
     animation: {

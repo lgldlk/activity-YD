@@ -1,8 +1,7 @@
 
 <template>
   <input
-    class="baseComplate"
-    :class="animation.animationName"
+    :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']"
     :placeholder="placeholder"
     :ref="option.inputName"
     type="text"

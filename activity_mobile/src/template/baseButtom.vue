@@ -1,8 +1,7 @@
 
 <template>
   <button
-    class="baseComplate"
-    :class="animation.animationName"
+    :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']"
     :style="style"
     @click="gotoLink"
   >{{showText }}</button>

@@ -1,7 +1,7 @@
 <template>
     <label :style="{...style,...chooseColoe}"
-     class="baseComplate base_check"
-     :class="animation.animationName"
+     class=" base_check"
+     :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']"
       >
     <input
       type="checkbox"

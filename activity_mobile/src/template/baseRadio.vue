@@ -1,7 +1,7 @@
 <template>
     <label :style="{...style,...chooseColoe}"
-     class="baseComplate base_radio"
-     :class="animation.animationName"
+     class=" base_radio"
+     :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']"
       >
     <input
       type="radio"

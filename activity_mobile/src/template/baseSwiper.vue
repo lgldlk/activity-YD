@@ -1,8 +1,7 @@
 
 <template>
   <van-swipe
-    class="baseComplate"
-    :class="animation.animationName"
+    :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']"
     :style="style"
     :autoplay="Number(option.autoplay)"
   >

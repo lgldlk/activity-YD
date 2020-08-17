@@ -45,6 +45,10 @@ img {
   position: absolute;
   animation-fill-mode: forwards;
 }
+.fixedComplate{
+  position: fixed;
+  animation-fill-mode: forwards;
+}
 .van-fade-enter-active {
   animation: none;
 }

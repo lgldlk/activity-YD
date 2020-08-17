@@ -1,6 +1,6 @@
 
 <template>
-  <div class="baseComplate" :style="style" :class="animation.animationName">
+  <div :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']" :style="style" >
     <p v-html="showText"></p>
   </div>
 </template>

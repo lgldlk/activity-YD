@@ -1,7 +1,8 @@
 <template>
-  <img class="baseComplate" 
+  <img
   :src="showImgUrl"
-  :class="animation.animationName"  alt :style="style" />
+  :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']"
+   alt :style="style" />
 </template>
 
 <script>

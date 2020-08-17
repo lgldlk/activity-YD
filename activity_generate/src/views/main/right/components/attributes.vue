@@ -32,6 +32,17 @@
           </a-tooltip>
         </div>
       </div>
+      <div class="attr_item" >
+        <div class="attr_list_left">固定定位:</div>
+        <div class="attr_list_right">
+          <a-popover title="提示" trigger="hover">
+            <template slot="content">
+              <p>固定于手机屏幕的定位</p>
+            </template>
+            <a-switch default-checked  v-model="core.option.isFixed" />
+          </a-popover>
+        </div>
+      </div>
       <div class="attr_item" v-if="showColorType(core)">
         <div class="attr_list_left">高级模式:</div>
         <div class="attr_list_right">

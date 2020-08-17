@@ -24,6 +24,7 @@ export function baseDiv(store: any): baseNode {
     isShow:true,
     option: {
       colorType: false, // 1 普通模式 2 高级模式
+      isFixed:false,
     },
     covName:'',
     css: {
@@ -63,6 +64,7 @@ export function baseCircle(store: any): baseNode {
     isShow:true,
     option: {
       colorType: false, // 1 普通模式 2 高级模式
+      isFixed:false,
     },
     covName:'',
     css: {
@@ -100,6 +102,7 @@ export function baseButtom(store: any): baseNode {
     isShow:true,
     option: {
       text: '按钮',
+      isFixed:false,
       btnType: 0, // 0 无事件 1 外部链接 2 提交表单 3
       refInput: [], // 提交的input表单
       mustInput:[],//必填表单
@@ -149,7 +152,9 @@ export function baseImg(store: any, img: string): baseNode {
     covName:'',
     option: {
       text: img,
-      httpName:''//用于内容动态自定义的标识
+      link:'',//点击跳转的链接
+      httpName:'',//用于内容动态自定义的标识
+      isFixed:false,
     },
     isShow:true,
     css: {
@@ -183,7 +188,8 @@ export function baseText(store: any): baseNode {
     option: {
       text: '请修改此处的文字',
       colorType: false, // 1 普通模式 2 高级模式
-      httpName:''//用于内容动态自定义的标识
+      httpName:'',//用于内容动态自定义的标识
+      isFixed:false,
     },
     isShow:true,
     css: {
@@ -226,6 +232,7 @@ export function baseInput(store: any): baseNode {
     option: {
       text: '',
       formName: `input名称${store.template.length}`,
+      isFixed:false,
       placeholder: '',
       colorType: false, // 1 普通模式 2 高级模式
     },
@@ -285,7 +292,8 @@ export function baseSwiper(store: any): baseNode {
           link: '',
         },
       ],
-      httpName:''//用于内容动态自定义的标识
+      httpName:'',//用于内容动态自定义的标识
+      isFixed:false,
     },
     animation: {
       animationName: '',
@@ -323,6 +331,7 @@ export function baseRadio(store: any): baseNode {
       text:'内容',
       formName:'radio名称相同的即为一组',
       itemValue:'选中对应值',
+      isFixed:false,
     },
     animation: {
       animationName: '',
@@ -360,6 +369,7 @@ export function baseCheck(store: any): baseNode {
       text:'内容',
       formName:'check名称相同的即为一组',
       itemValue:'选中对应值',
+      isFixed:false,
     },
     animation: {
       animationName: '',

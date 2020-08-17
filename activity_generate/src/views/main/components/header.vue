@@ -125,15 +125,6 @@ export default {
           index: 4,
           status: true
         });
-
-        this.$store.commit("setting/set_coreinfoItem", {
-          index: 6,
-          status: true
-        });
-        this.$store.commit("setting/set_coreinfoItem", {
-          index: 7,
-          status: true
-        });
       } else {
         this.$store.commit("setting/set_coreinfoItem", {
           index: 2,
@@ -141,14 +132,6 @@ export default {
         });
         this.$store.commit("setting/set_coreinfoItem", {
           index: 4,
-          status: false
-        });
-        this.$store.commit("setting/set_coreinfoItem", {
-          index: 6,
-          status: false
-        });
-        this.$store.commit("setting/set_coreinfoItem", {
-          index: 7,
           status: false
         });
       }

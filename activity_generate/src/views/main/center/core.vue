@@ -153,7 +153,8 @@ export default Vue.extend({
   width: 375px;
   position: relative;
   background-color: white;
-  margin-top: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   transform-origin: top;
   #canvas {
     position: absolute;

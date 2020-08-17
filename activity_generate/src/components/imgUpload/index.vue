@@ -12,10 +12,6 @@
             <a-icon type="pie-chart" />
             <span>用户上传</span>
           </a-menu-item>
-          <a-menu-item key="2">
-            <a-icon type="desktop" />
-            <span>基础图库</span>
-          </a-menu-item>
         </a-menu>
         <a-upload
           class="item_file"
@@ -43,16 +39,6 @@
             alt
           />
         </div>
-        <div class="img_list" v-if="Menukey.includes('2')">
-          <img
-            @click="addBaseImg(item.imageName)"
-            class
-            v-for="(item,index) in baseImage"
-            :key="'defu'+index"
-            :src="imageStaticUrl+item.imageName"
-            alt
-          />
-        </div>
       </div>
     </div>
   </a-modal>
@@ -71,7 +57,6 @@ export default Vue.extend({
       visible: false,
       Menukey: ["1"],
       userImage: [],
-      baseImage: [],
       imageUpUrl: imageUpUrl,
       headers: {
         authorization: "authorization-text"
@@ -87,9 +72,6 @@ export default Vue.extend({
     init() {
       getUPloadImage().then(res => {
         this.userImage = res.data.data;
-      });
-      getDefaultImg().then(res => {
-        this.baseImage = res.data.data;
       });
     },
     handleOk() {

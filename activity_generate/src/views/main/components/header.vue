@@ -167,6 +167,7 @@ export default {
       this.$router.push({ name: "home" });
     },
     coreModeChange(value) {
+      this.$store.commit("setting/clear_template",value);
       this.$store.commit("setting/changeCoreMode",value);
     },
     userSetting(index) {

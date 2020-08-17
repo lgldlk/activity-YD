@@ -71,6 +71,12 @@
           <img class="swiper_img" :src="imageStaticUrl+core.option.text" @click="toggleBaseImg(core)" alt />
         </div>
       </div>
+      <div class="active_item" v-if="isIcon(core)">
+        <div class="active_list_left">图标:</div>
+        <div class="active_list_right">
+          <a-icon :type="core.option.iconType" style="font-size:30px;"  @click="changeIcon"/>
+        </div>
+      </div>
       <!-- 按钮独有的属性 -->
       <div class="active_item" v-if="showButtom(core)">
         <div class="active_list_left">按钮事件:</div>
@@ -322,7 +328,8 @@ export default {
         core.name == "base-div" ||
         core.name == "base-swiper" ||
         core.name == "base-editor" ||
-        core.name == "base-img"
+        core.name == "base-img"||
+        core.name=="base-icon"
       ) {
         return false;
       } else {
@@ -333,9 +340,14 @@ export default {
     showImg(core) {
       if (core.name == "base-img") {
         return true;
-      } else {
+      } 
         return false;
+    },
+    isIcon(core){
+      if(core.name=="base-icon"){
+        return true;
       }
+      return false;
     },
     //展示http动态请求的组件
     showHttpName(core){
@@ -440,6 +452,9 @@ export default {
         type: "img",
         activityId: core.activityId
       });
+    },
+    changeIcon(){
+      this.$store.commit("setting/showIconChoose",2);
     }
   }
 };

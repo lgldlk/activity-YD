@@ -111,9 +111,36 @@
         </div>
 
       </div>
-
-      
-
+      <!-- 图标的属性 -->
+      <div  v-if="isIcon(core)">
+        <div class="attr_item" >
+          <div class="attr_list_left">图标颜色:</div>
+          <div class="attr_list_right">
+            <el-color-picker v-if="!core.option.colorType" v-model="core.css.color" show-alpha></el-color-picker>
+            <a-input
+              class="attr_list_right_input"
+              placeholder="请输入颜色代码值"
+              size="small"
+              v-else
+              v-model="core.css.color"
+            ></a-input>
+          </div>
+        </div>
+        <div class="attr_item" >
+                <div class="attr_list_left">图标大小:</div>
+            <div class="attr_list_right">
+              <a-slider
+                class="attr_slider"
+                v-model="core.css.fontSize"
+                :tipFormatter="formatter"
+                :min="0"
+                :max="100"
+              ></a-slider>
+              <a-input-number class="attr_mintextarea" placeholder="请输入文字" v-model="core.css.fontSize" />
+            </div>
+        </div>
+      </div>
+        
       <!-- 文本框 按钮 文本框 可以使用的属性 -->
       <div class="attr_item" v-if="showBackground(core)">
         <div class="attr_list_left">背景颜色:</div>
@@ -341,7 +368,8 @@ export default {
         core.name == "base-swiper" ||
         core.name == "base-editor"||
         core.name=="base-radio"||
-        core.name=="base-check"
+        core.name=="base-check"||
+        core.name=="base-icon"
       ) {
         return false;
       } else {
@@ -378,12 +406,21 @@ export default {
         core.name == "base-img" ||
         core.name == "base-div" ||
         core.name == "base-swiper" ||
-        core.name == "base-editor"
+        core.name == "base-editor"||
+        core.name=="base-icon"
       ) {
         return false;
       } else {
         return true;
       }
+    },
+    //判断是否为图标
+    isIcon(core){
+      console.log(core);
+      if(core.name=="base-icon"){
+        return true;
+      }
+      return false;
     },
     // 是否显示文字大小
     showFontsize(core) {
@@ -391,7 +428,8 @@ export default {
         core.name == "base-img" ||
         core.name == "base-div" ||
         core.name == "base-swiper" ||
-        core.name == "base-editor"
+        core.name == "base-editor"||
+        core.name=="base-icon"
       ) {
         return false;
       } else {
@@ -424,7 +462,7 @@ export default {
     },
     //是否显示宽高
     showWidth(core){
-      if(core.name=='base-radio'||core.name=="base-check"){
+      if(core.name=='base-radio'||core.name=="base-check"||core.name=="base-icon"){
         return false;
       }
       return true;

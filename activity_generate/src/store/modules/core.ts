@@ -279,7 +279,7 @@ const core: Module<CoreInter, any> = {
       state.template = list
     },
     // 修改图标
-    update_icon(state, { iconType }) {
+    update_icon(state,  iconType ) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
       let i=0,leng=list.length;
       for(i=0;i<leng;i++){

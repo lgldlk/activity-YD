@@ -114,7 +114,6 @@ export function baseButtom(store: any): baseNode {
       link: '', // 按钮点击跳转地址
       colorType: false, // 1 普通模式 2 高级模式
       httpName:'',//用于内容动态自定义的标识
-      opacity:1,
     },
     css: {
       top: 10 + dynamic,
@@ -129,6 +128,7 @@ export function baseButtom(store: any): baseNode {
       borderStyle: 'solid',
       borderWidth: 0,
       borderRadius: 0,
+      opacity:1,
     },
     animation: {
       animationName: '',
@@ -139,7 +139,17 @@ export function baseButtom(store: any): baseNode {
     },
   }
 }
-
+/**
+ * 虚拟按钮的vuex数据映射关系
+ */
+export function baseVirButtom(store: any): baseNode {
+  let tmp:any = baseButtom (store);
+  tmp.option.text="";
+  tmp.css.opacity=0;
+  tmp.css.width=50;
+  tmp.css.height=50;
+  return tmp;
+}
 /**
  * 图片的vuex数据映射关系
  */

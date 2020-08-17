@@ -27,7 +27,8 @@ import {
   baseSwiper,
   baseRadio,
   baseCheck,
-  baseCircle
+  baseCircle,
+  baseVirButtom
 } from "@/utils/baseReact";
 import imgUpload from "@/components/imgUpload/index.vue";
 import Vue from "vue";
@@ -57,6 +58,10 @@ export default Vue.extend({
         {
           name: "按钮",
           img: require("@/assets/buttom.png")
+        },
+        {
+          name: "虚拟按钮",
+          img: require("@/assets/buttom1.png")
         },
         {
           name: "文本框",
@@ -106,22 +111,28 @@ export default Vue.extend({
           "core/set_tempLate",
           baseButtom(this.$store.state.core)
         );
-      } else if (index == 5) {
+      }else if (index == 5) {
+        this.$store.commit(
+          "core/set_tempLate",
+          baseVirButtom(this.$store.state.core)
+        );
+      } 
+       else if (index == 6) {
         this.$store.commit(
           "core/set_tempLate",
           baseInput(this.$store.state.core)
         );
-      } else if (index == 6) {
+      } else if (index == 7) {
         this.$store.commit(
           "core/set_tempLate",
           baseSwiper(this.$store.state.core)
         );
-      } else if (index == 7) {
+      } else if (index == 8) {
         this.$store.commit(
           "core/set_tempLate",
           baseRadio(this.$store.state.core)
         );
-      } else if (index == 8) {
+      } else if (index == 9) {
         this.$store.commit(
           "core/set_tempLate",
           baseCheck(this.$store.state.core)

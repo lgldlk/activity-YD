@@ -32,7 +32,6 @@ import showCore from "./center/showCore.vue";
 import left from "./left/index.vue";
 import right from "./right/index.vue";
 import { initMouse, uninitMouse, initKeyDown } from "@/utils/index";
-
 export default {
   components: {
     baseHeader,

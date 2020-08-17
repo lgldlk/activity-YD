@@ -23,6 +23,10 @@ interface setting {
     x:number,
     y:number
   }
+  iconWin:{
+    show:boolean,
+    type:number
+  }
 }
 
 const Setting: Module<setting, any> = {
@@ -85,9 +89,20 @@ const Setting: Module<setting, any> = {
     coreCanvas:{
       x:0,
       y:0
+    },
+    iconWin:{
+      show:false,
+      type:1
     }
   },
   mutations: {
+    showIconChoose(state,type){
+      state.iconWin.show=true;
+      state.iconWin.type=type;
+    },
+    closeIconChoose(state){
+      state.iconWin.show=false;
+    },
     set_copy(state, data) {
       console.log(data);
       state.copyTemplate = data

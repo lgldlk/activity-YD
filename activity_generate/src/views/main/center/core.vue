@@ -31,6 +31,7 @@ import baseDiv from "@/template/dev/baseDiv.vue";
 import baseRadio from '@/template/dev/baseRadio.vue';
 import baseCheck from '@/template/dev/baseCheck.vue';
 import baseSwiper from "@/template/dev/baseSwiper.vue";
+import baseIcon from "@/template/dev/baseIcon.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
 import rightMenu from '@/components/rightMenu/index.vue';
 
@@ -58,6 +59,7 @@ export default Vue.extend({
     rightMenu,
     baseRadio,
     baseCheck,
+    baseIcon,
   },
   mounted() {
     (this ).init();
@@ -118,20 +120,23 @@ export default Vue.extend({
       }
       else if (index == 2) {
         data = ImgData(this.$store.state.core, 'pleStatic.png');
-      } else if (index == 3) {
+      }else if(index==3){
+        this.$store.commit("setting/showIconChoose",1);
+      }
+       else if (index == 4) {
         data = TextData(this.$store.state.core);
-      } else if (index == 4) {
+      } else if (index == 5) {
         data = ButtomData(this.$store.state.core);
-      }else if (index == 5) {
+      }else if (index == 6) {
         data = baseBirData(this.$store.state.core);
       }
-      else if (index == 6) {
+      else if (index == 7) {
         data = InputData(this.$store.state.core);
-      } else if (index == 7) {
-        data = SwiperData(this.$store.state.core);
       } else if (index == 8) {
-        data = RadioData(this.$store.state.core);
+        data = SwiperData(this.$store.state.core);
       } else if (index == 9) {
+        data = RadioData(this.$store.state.core);
+      } else if (index == 10) {
         data = CheckData(this.$store.state.core);
       }
       if (e.target.getAttribute("id") == "canvas") {

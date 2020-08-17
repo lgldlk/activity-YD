@@ -39,6 +39,7 @@ interface CoreInter {
     'base-buttom':number,
     'base-radio':number,
     'base-check':number,
+    'base-icon':number
   },
   maxZIndex:number,
 }
@@ -76,6 +77,7 @@ const core: Module<CoreInter, any> = {
        "base-swiper" :0,
        "base-text" :0,
       "base-img":0,
+      'base-icon':0,
       'base-buttom':0,
       'base-radio':0,
       'base-check':0,
@@ -271,6 +273,19 @@ const core: Module<CoreInter, any> = {
         let item=list[i];
         if (state.activeTemplate.includes(item.activityId)) {
           item.option.text = imgurl
+          break;
+        }
+      }
+      state.template = list
+    },
+    // 修改图标
+    update_icon(state, { iconType }) {
+      let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
+      let i=0,leng=list.length;
+      for(i=0;i<leng;i++){
+        let item=list[i];
+        if (state.activeTemplate.includes(item.activityId)) {
+          item.option.iconType = iconType;
           break;
         }
       }
@@ -721,6 +736,7 @@ const core: Module<CoreInter, any> = {
         'base-buttom':0,
         'base-radio':0,
         'base-check':0,
+        'base-icon':0,
       }
     },
     initCovName(state){//初始化图层信息

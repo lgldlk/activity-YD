@@ -14,6 +14,7 @@
       </div>
     </div>
     <img-upload ref="imgUpload"></img-upload>
+    <icon-choose ref="iconChoose"></icon-choose>
   </div>
 </template>
 
@@ -28,13 +29,16 @@ import {
   baseRadio,
   baseCheck,
   baseCircle,
-  baseVirButtom
+  baseVirButtom,
+  baseIcon
 } from "@/utils/baseReact";
 import imgUpload from "@/components/imgUpload/index.vue";
+import iconChoose from '@/views/main/components/iconChoose.vue';
 import Vue from "vue";
 export default Vue.extend({
   components: {
-    imgUpload
+    imgUpload,
+    iconChoose
   },
   data() {
     return {
@@ -50,6 +54,9 @@ export default Vue.extend({
         {
           name: "图片",
           img: require("@/assets/img.png")
+        },{
+          name:'图标',
+          img:require('@/assets/aicon.png')
         },
         {
           name: "文本",
@@ -101,38 +108,41 @@ export default Vue.extend({
           type: "default",
           index: 0
         });
-      } else if (index == 3) {
+      }else if (index == 3) {
+        (this.$refs.iconChoose as any).open(1);
+      }  
+      else if (index == 4) {
         this.$store.commit(
           "core/set_tempLate",
           baseText(this.$store.state.core)
         );
-      } else if (index == 4) {
+      } else if (index == 5) {
         this.$store.commit(
           "core/set_tempLate",
           baseButtom(this.$store.state.core)
         );
-      }else if (index == 5) {
+      }else if (index == 6) {
         this.$store.commit(
           "core/set_tempLate",
           baseVirButtom(this.$store.state.core)
         );
       } 
-       else if (index == 6) {
+       else if (index == 7) {
         this.$store.commit(
           "core/set_tempLate",
           baseInput(this.$store.state.core)
         );
-      } else if (index == 7) {
+      } else if (index ==8) {
         this.$store.commit(
           "core/set_tempLate",
           baseSwiper(this.$store.state.core)
         );
-      } else if (index == 8) {
+      } else if (index == 9) {
         this.$store.commit(
           "core/set_tempLate",
           baseRadio(this.$store.state.core)
         );
-      } else if (index == 9) {
+      } else if (index ==10) {
         this.$store.commit(
           "core/set_tempLate",
           baseCheck(this.$store.state.core)

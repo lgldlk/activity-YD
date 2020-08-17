@@ -184,7 +184,39 @@ export function baseImg(store: any, img: string): baseNode {
     },
   }
 }
-
+/**
+ * 图标的vuex数据映射关系
+ */
+export function baseIcon(store: any,iconType:string): baseNode {
+  let dynamic = store.template.length * 10
+  return {
+    activityId: guid(),
+    editStatus: false,
+    name: 'base-icon',
+    covName:'',
+    option: {
+      iconType
+    },
+    isShow:true,
+    css: {
+      top: 10 + dynamic,
+      left: 10 + dynamic,
+      width: 0,
+      height: 0,
+      fontSize:20,
+      zIndex: store.maxZIndex,
+      opacity:1,
+      color: 'rgba(0, 0, 0, 1)',
+    },
+    animation: {
+      animationName: '',
+      animationDuration: 1000, // 动画时间
+      animationDelay: 0, // 延迟时间
+      animationIterationCount: 1, // 动画执行次数
+      animationFillMode: 'both', // 动画停留最后一帧
+    },
+  }
+}
 /**
  * 文本的vuex数据映射关系
  */
@@ -453,7 +485,8 @@ const domMapName = {
   'base-img':"图片",
   'base-buttom':"按钮",
   'base-radio':'单选框',
-  'base-check':'复选框'
+  'base-check':'复选框',
+  'base-icon':'图标'
 }
 export function getBaseCovName(baseName:string):string{
    return domMapName[baseName] ||'元素';

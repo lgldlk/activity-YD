@@ -11,7 +11,7 @@
     <!-- 侧边快捷操作栏 -->
 
     <!-- 组件设置 -->
-    <a-tabs defaultActiveKey="1" type="card" size="large">
+    <a-tabs defaultActiveKey="1"  size="large">
       <a-tab-pane tab="属性" key="1">
         <attributes-page />
       </a-tab-pane>
@@ -24,9 +24,9 @@
       <a-tab-pane tab="动画" key="4">
         <animation-page />
       </a-tab-pane>
-      <a-tab-pane tab="脚本" key="5">
+      <!-- <a-tab-pane tab="脚本" key="5">
         <runscript-page />
-      </a-tab-pane>
+      </a-tab-pane> -->
 
     </a-tabs>
   </div>

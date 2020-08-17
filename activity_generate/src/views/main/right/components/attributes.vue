@@ -58,13 +58,13 @@
       <div class="attr_item">
         <div class="attr_list_left">长度:</div>
         <div class="attr_list_right">
-          <a-input-number class="attr_mintextarea" placeholder="请输入高度" v-model="core.css.height" />
+          <a-input-number :min="0" class="attr_mintextarea" placeholder="请输入高度" v-model="core.css.height" />
         </div>
       </div>
       <div class="attr_item">
         <div class="attr_list_left">宽度:</div>
         <div class="attr_list_right">
-          <a-input-number class="attr_mintextarea" placeholder="请输入宽度" v-model="core.css.width" />
+          <a-input-number  :min="0" class="attr_mintextarea"  placeholder="请输入宽度" v-model="core.css.width" />
         </div>
       </div>
       </div>
@@ -80,7 +80,7 @@
         <div class="attr_item">
           <div class="attr_list_left">框宽:</div>
               <div class="attr_list_right">
-                <a-input-number class="attr_mintextarea" placeholder="请输入高度" v-model="core.css.frameWidth" />
+                <a-input-number class="attr_mintextarea" :min="0" placeholder="请输入高度" v-model="core.css.frameWidth" />
           </div>
         </div>
         <div class="attr_item" >
@@ -134,9 +134,9 @@
                 v-model="core.css.fontSize"
                 :tipFormatter="formatter"
                 :min="0"
-                :max="100"
+                :max="200"
               ></a-slider>
-              <a-input-number class="attr_mintextarea" placeholder="请输入文字" v-model="core.css.fontSize" />
+              <a-input-number class="attr_mintextarea" :min="0" placeholder="请输入文字" v-model="core.css.fontSize" />
             </div>
         </div>
       </div>
@@ -178,7 +178,7 @@
             :min="0"
             :max="100"
           ></a-slider>
-          <a-input-number class="attr_mintextarea" placeholder="请输入文字" v-model="core.css.fontSize" />
+          <a-input-number class="attr_mintextarea" :min="0" placeholder="请输入文字" v-model="core.css.fontSize" />
         </div>
       </div>
       <div class="attr_item" v-if="showFontsize(core)">
@@ -234,6 +234,7 @@
           <a-input-number
             class="attr_mintextarea"
             placeholder="请输入文字"
+            :min="0"
             v-model="core.css.borderWidth"
           />
         </div>
@@ -251,6 +252,7 @@
           <a-input-number
             class="attr_mintextarea"
             placeholder="请输入文字"
+            :min="0"
             v-model="core.css.borderRadius"
           />
         </div>

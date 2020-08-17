@@ -1,7 +1,7 @@
 <template>
-  <!-- <div class="base_img" @mouseover="toggleEdit" > -->
     <label :style="{...style,...chooseColoe}"
      class="baseComplate base_check"
+     :class="animation.animationName"
       >
     <input
       type="checkbox"
@@ -15,6 +15,7 @@
 
 <script>
 import { handleStyle } from "@/utils/index";
+import { constants } from 'zlib';
 export default {
   props: {
     id: {
@@ -28,6 +29,9 @@ export default {
       type: Object,
       default: () => {}
     },
+    animation: {
+      type: Object
+    }
   },
   data(){
     return{
@@ -53,7 +57,11 @@ export default {
         left: style.left,
         zIndex: style.zIndex,
         color:style.color,
-        'fontSize':style['fontSize']
+        'fontSize':style['fontSize'],
+        animationDuration: style.animationDuration,
+        animationDelay: style.animationDelay,
+        animationIterationCount: style.animationIterationCount,
+        animationFillMode: style.animationFillMode,
       };
     },
     frameRect(){

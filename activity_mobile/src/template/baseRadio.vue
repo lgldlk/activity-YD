@@ -1,7 +1,7 @@
 <template>
-  <!-- <div class="base_img" @mouseover="toggleEdit" > -->
     <label :style="{...style,...chooseColoe}"
      class="baseComplate base_radio"
+     :class="animation.animationName"
       >
     <input
       type="radio"
@@ -29,6 +29,9 @@ export default {
       type: Object,
       default: () => {}
     },
+    animation: {
+      type: Object
+    }
   },
   data(){
     return{
@@ -54,7 +57,11 @@ export default {
         left: style.left,
         zIndex: style.zIndex,
         color:style.color,
-        'fontSize':style['fontSize']
+        'fontSize':style['fontSize'],
+        animationDuration: style.animationDuration,
+        animationDelay: style.animationDelay,
+        animationIterationCount: style.animationIterationCount,
+        animationFillMode: style.animationFillMode,
       };
     },
     chooseColoe(){

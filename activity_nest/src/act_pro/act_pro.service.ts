@@ -40,6 +40,23 @@ export class Act_proService {
         initSet:result.initSet
       });
     }
+     proList=await this.act_ProDao.find({ where: { proType: "3",name:name} ,relations:['doms']});
+    proList=modJson(proList);
+    if(proList.length>0){
+      let result:any=proList[0];
+      result.doms.map((temp)=>{
+        temp.css=JSON.parse(temp.css);
+        temp.option=JSON.parse(temp.option);
+        temp.animation=JSON.parse(temp.animation);
+      });
+      return Promise.resolve({
+        objHeight: result.height,
+        background: result.background,
+        textName: result.textName,
+        datas:result.doms,
+        initSet:result.initSet
+      });
+    }
     return Promise.reject('无此项目，请检查项目名');
   }
 

@@ -53,7 +53,12 @@ export default {
         left: style.left,
         zIndex: style.zIndex,
         color:style.color,
-        'fontSize':style['fontSize']
+        'fontSize':style['fontSize'],
+         animationName: style.animationName,
+        animationDuration: style.animationDuration,
+        animationDelay: style.animationDelay,
+        animationIterationCount: style.animationIterationCount,
+        animationFillMode: style.animationFillMode,
       };
     },
     frameRect(){

@@ -171,9 +171,9 @@ export default Vue.extend({
     getObject() {
       getObject()
         .then(e => {
-          e.data.data.map((e: any) => {
-            e.time = parseTime(e.time);
-          });
+          // e.data.data.map((e: any) => {
+          //   e.time = parseTime(e.time);
+          // });
           this.mainList = e.data.data;
           this.mainList.map((item:any)=>{
             item.titlePage=imageStaticUrl+item.titlePage;
@@ -205,7 +205,7 @@ export default Vue.extend({
           ...this.objform,
           height: this.$store.state.core.commHeight, // 页面高度默认667
           background: "rgba(255, 255, 255, 1)", // 页面背景色默认白色
-          initSet: `var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
+          initSet: `/*var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
                 httpRequest.open('POST', 'URL', true); //第二步：打开连接
                 httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 //设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
@@ -219,7 +219,7 @@ export default Vue.extend({
                         pageData.Buttom1="xxxx";//可单独为某个名称的组件设置值
                         pageData.text=['xxx','xxxxx','xxxxx']//也可以用数组的方式数组的顺序与添加组件的顺序相同
                     }
-                };` // 注入动态组件编辑
+                };*/` // 注入动态组件编辑
         };
         setObject(data).then(res => {
           this.$router.push({

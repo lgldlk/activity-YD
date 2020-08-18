@@ -113,12 +113,13 @@ export class Act_proService {
     if (ActivityList3.length > 0) {
       return Promise.reject('当前路由已经存在')
     }
+    let time=this.dateFormat();
       let tmp= await this.act_ProDao.insert({
           ...data,
           proType:"1",
           height: 667,
           background: 'rgba(255, 255, 255, 1)',
-          time: new Date().getTime(),
+          time,
       })
       return tmp;
   }
@@ -143,19 +144,103 @@ export class Act_proService {
       _id: data.belongId,
       proType:"1",
     })
+    let time=this.dateFormat();
        await this.act_ProDao.insert({
           ...data,
           proType:"3",
           height: 667,
           background: 'rgba(255, 255, 255, 1)',
-          time: new Date().getTime(),
+          time,
           password:belongPro[0].password
       })
       return (await this.act_ProDao.find({
         where: { name: data.name,
           proType:"3",} ,relations:['doms']}))[0];
   }
-  
+  public dateFormat(date?: any, format?: string): string {
+    //无参数
+    if (date == undefined && format == undefined) {
+        date = new Date();
+        format = "yyyy-MM-dd HH:mm:ss";
+    }
+    //无日期
+    else if (typeof (date) == "string") {
+        format = date;
+        date = new Date();
+    }
+    //无格式化参数
+    else if (format === undefined) {
+        format = "yyyy-MM-dd HH:mm:ss";
+    }
+    else { }
+    //没有分隔符的特殊处理
+
+    var map = {
+        "y": date.getFullYear() + "",//年份
+        "M": date.getMonth() + 1 + "", //月份 
+        "d": date.getDate() + "", //日 
+        "H": date.getHours(), //小时 24
+        "m": date.getMinutes() + "", //分 
+        "s": date.getSeconds() + "", //秒 
+        "q": Math.floor((date.getMonth() + 3) / 3) + "", //季度 
+        "f": date.getMilliseconds() + "" //毫秒 
+    };
+    //小时 12
+    if (map["H"] > 12) { map["h"] = map["H"] - 12 + ""; }
+    else { map["h"] = map["H"] + ""; }
+    map["H"] += "";
+
+    var reg = "yMdHhmsqf";
+    var all = "", str = "";
+    for (var i = 0, n = 0; i < reg.length; i++) {
+        n = format.indexOf(reg[i]);
+        if (n < 0) { continue; }
+        all = "";
+        for (; n < format.length; n++) {
+            if (format[n] != reg[i]) {
+                break;
+            }
+            all += reg[i];
+        }
+        if (all.length > 0) {
+            if (all.length == map[reg[i]].length) {
+                str = map[reg[i]];
+            }
+            else if (all.length > map[reg[i]].length) {
+                if (reg[i] == "f") {
+                    str = map[reg[i]] + this.charString("0", all.length - map[reg[i]].length);
+                }
+                else {
+                    str = this.charString("0", all.length - map[reg[i]].length) + map[reg[i]];
+                }
+            }
+            else {
+                switch (reg[i]) {
+                    case "y": str = map[reg[i]].substr(map[reg[i]].length - all.length); break;
+                    case "f": str = map[reg[i]].substr(0, all.length); break;
+                    default: str = map[reg[i]]; break;
+                }
+            }
+            format = format.replace(all, str);
+        }
+    }
+    return format;
+}
+
+/**
+    * 返回字符串 为n个char构成
+    * @param char 重复的字符
+    * @param count 次数
+    * @return String
+    * @author adswads@gmail.com
+    */
+public charString(char: string, count: number): string {
+    var str: string = "";
+    while (count--) {
+        str += char;
+    }
+    return str;
+}
   async delTemplate(data){//删除模板
     let {id}=data;
     let objectData=await this.act_ProDao.findOne({_id:id});
@@ -198,33 +283,8 @@ async objectAuth(data) {
 }
   async getAct_Data(){
     let tmp=await this.act_DataDao.find();
-    //tmp.content=JSON.parse(tmp.content);
     return tmp;
   }
-  // async trya(){
-  //   // const try1=new Act_Data();
-  //   // try1.css="asdff"
-  //   // try1.activityId='';
-  //   let result:any=await this.act_ProDao.find({where:{_id:6},relations:['doms']});
-  //   result=modJson(result)[0];
-  //   const try2=new Act_Data();
-  //   try2.css="asdff"
-  //   // await this.act_DataDao.save(try1);
-  //   try2.pro=result;
-  //   await this.act_DataDao.save(try2);
-    
-  //   // const tryP=new actPro();
-  //   // tryP.background="0000"
-  //   // tryP.doms=[try1,try2];
-  //   // await this.act_ProDao.save(tryP);
-  //   // return await this.act_ProDao.find({relations:['doms']});
-
-  //   // return (result[0].doms);
-  //  // result.doms.push(try2);
-  //  // await this.act_DataDao.save(result);
-  //   return await this.act_ProDao.find({where:{_id:6},relations:['doms']});
-  // }
-
 
 
   async findSById(proId){//根据ID获取项目或模板

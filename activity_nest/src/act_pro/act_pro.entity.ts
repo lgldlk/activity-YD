@@ -24,7 +24,7 @@ export class  actPro{
     @Column('longtext')
     initSet:string//动态组件内容设定
     @Column()
-    time:Number
+    time:string
     @Column()
     proType:string
     @OneToMany(type => Act_Data, doms => doms.pro)

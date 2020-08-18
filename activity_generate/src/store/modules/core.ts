@@ -474,7 +474,9 @@ const core: Module<CoreInter, any> = {
         y: [], // y轴上面该出现标线的
       }
       let offset: any[] = [1] // 拓展值
-      state.template.map((res: any) => {
+      let i=0,leng= state.template.length;
+        for(i=0;i<leng;i++){
+          let res:any= state.template[i];
         if (!state.activeTemplate.includes(res.activityId)) {
           // 偏移绝对值
           let left_x: any[] = [] // 单个元素x轴
@@ -537,8 +539,9 @@ const core: Module<CoreInter, any> = {
             state.commHeight,
             state.commHeight + 1,
           ])
+          break;
         }
-      })
+      }
       state.marking = {
         x: Array.from(new Set(marking.y)),
         y: Array.from(new Set(marking.x)),

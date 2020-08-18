@@ -220,6 +220,7 @@ export default Vue.extend({
                         var json = httpRequest.responseText;//获取到服务端返回的数据
                         pageData.Buttom1="xxxx";//可单独为某个名称的组件设置值
                         pageData.text=['xxx','xxxxx','xxxxx']//也可以用数组的方式数组的顺序与添加组件的顺序相同
+                        pageData.ajaxOver();//ajax结束后调用该方法
                     }
                 };*/` // 注入动态组件编辑
         };

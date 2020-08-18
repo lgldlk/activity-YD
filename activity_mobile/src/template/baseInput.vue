@@ -1,7 +1,9 @@
-
 <template>
   <input
-    :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']"
+    :class="[
+      animation.animationName,
+      option.isFixed ? 'fixedComplate' : 'baseComplate'
+    ]"
     :placeholder="placeholder"
     :ref="option.inputName"
     type="text"
@@ -28,13 +30,13 @@ export default {
       type: Object
     }
   },
-  data(){
-    return{
-      placeholder:''
-    }
+  data() {
+    return {
+      placeholder: ""
+    };
   },
-  mounted(){
-    this.placeholder=this.option.placeholder;
+  mounted() {
+    this.placeholder = this.option.placeholder;
   },
   computed: {
     style() {
@@ -42,13 +44,12 @@ export default {
       return handleStyle(this.css, keyword);
     }
   },
-  methods:{
-    changePla(word){
-      this.placeholder=word;
+  methods: {
+    changePla(word) {
+      this.placeholder = word;
     }
   }
 };
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

@@ -18,6 +18,7 @@
 </template>
 
 <script >
+let pageData={};
 // 组件源
 import Vue from "vue";
 import axios from "axios";
@@ -69,11 +70,22 @@ export default Vue.extend({
   },
   methods: {
     async init() {
-      let pageData=this.pageData;
+       pageData=this.pageData;
+      pageData.ajaxOver=  ()=>{
+          return this.initRef(pageData);
+        };
       try{
       await eval(this.$store.state.core.initSet);
       }catch(e){
+        console.log(e);
         this.$message.error("初始化语句出错");
+      }
+      this.initRef(pageData);
+    },
+    initRef(pageData){
+      console.log(JSON.stringify( pageData));
+      if(pageData==null||  undefined ){
+        return ;
       }
       let resultSet=Object.keys(pageData);
       for(let  i=0,leng=resultSet.length;i<leng;i++){

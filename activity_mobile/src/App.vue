@@ -1,10 +1,8 @@
-
 <template>
   <div id="app">
     <router-view />
   </div>
 </template>
-
 
 <script>
 export default {
@@ -15,7 +13,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="less">
 * {
@@ -45,7 +42,7 @@ img {
   position: absolute;
   animation-fill-mode: forwards;
 }
-.fixedComplate{
+.fixedComplate {
   position: fixed;
   animation-fill-mode: forwards;
 }

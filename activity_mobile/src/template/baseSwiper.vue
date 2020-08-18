@@ -1,30 +1,32 @@
-
 <template>
   <van-swipe
-    :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']"
+    :class="[
+      animation.animationName,
+      option.isFixed ? 'fixedComplate' : 'baseComplate'
+    ]"
     :style="style"
     :autoplay="Number(option.autoplay)"
   >
-    <van-swipe-item v-for="(item,index) in showUrlList" :key="index">
-        <img
-          :style="{'width':style.width,'height': style.height}"
-          :src="item.img"
-          alt
-          @click="link(item.link)"
-        />
-      </van-swipe-item>
+    <van-swipe-item v-for="(item, index) in showUrlList" :key="index">
+      <img
+        :style="{ width: style.width, height: style.height }"
+        :src="item.img"
+        alt
+        @click="link(item.link)"
+      />
+    </van-swipe-item>
   </van-swipe>
 </template>
 
 <script>
 import { handleStyle } from "../utils/index";
-import {imageStaticUrl} from '@/utils/request'
+import { imageStaticUrl } from "@/utils/request";
 export default {
-  data(){
-    return{
-      imageStaticUrl:imageStaticUrl,
-      showUrlList:[],
-    }
+  data() {
+    return {
+      imageStaticUrl: imageStaticUrl,
+      showUrlList: []
+    };
   },
   props: {
     css: {
@@ -39,12 +41,12 @@ export default {
       type: Object
     }
   },
-  mounted(){
-    this.showUrlList=this.option.item.map(e=>{
+  mounted() {
+    this.showUrlList = this.option.item.map(e => {
       return {
-        img:imageStaticUrl+e.img,
-        link:e.link,
-      }
+        img: imageStaticUrl + e.img,
+        link: e.link
+      };
     });
   },
   computed: {
@@ -59,21 +61,21 @@ export default {
         location.href = link;
       }
     },
-     setShowUrlList(list){
-      let result=[];
-      list.map(e=>{
-        if(e.img==undefined){
-          e={
-            img:e,
-            link:''
+    setShowUrlList(list) {
+      let result = [];
+      list.map(e => {
+        if (e.img == undefined) {
+          e = {
+            img: e,
+            link: ""
           };
         }
-        if(e.link==undefined){
-          e.link=""
+        if (e.link == undefined) {
+          e.link = "";
         }
         result.push(e);
       });
-      this.showUrlList=result;
+      this.showUrlList = result;
     },
     // 图片无法加载
     errorImg(index) {

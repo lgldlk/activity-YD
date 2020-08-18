@@ -109,6 +109,9 @@
           <a-popover placement="bottomLeft">
               <template slot="content">
                 <div  class="intro_text">
+                  <a-divider>！！！！</a-divider>
+                  <p>若发送ajax请求请在结束赋值后调用pageData.ajaxOver();
+                  </p>
                   <a-divider>直接赋值至文本,图片变化</a-divider>
                   <p>如pageData.组件名="图片地址||文本"
                     对输入框（提示语），单选框，多选框，文本框，按钮的文本，
@@ -382,6 +385,7 @@ export default {
                         var json = httpRequest.responseText;//获取到服务端返回的数据
                         pageData.Buttom1="xxxx";//可单独为某个名称的组件设置值
                         pageData.text=['xxx','xxxxx','xxxxx']//也可以用数组的方式数组的顺序与添加组件的顺序相同
+                        pageData.ajaxOver();//ajax结束后调用该方法
                     }
                 };`, // 注入动态组件编辑
           belongId:this.$store.state.core.parentId,

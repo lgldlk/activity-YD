@@ -1,6 +1,11 @@
-
 <template>
-  <div :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']" :style="style" >
+  <div
+    :class="[
+      animation.animationName,'text',
+      option.isFixed ? 'fixedComplate' : 'baseComplate'
+    ]"
+    :style="style"
+  >
     <p v-html="showText"></p>
   </div>
 </template>
@@ -21,13 +26,13 @@ export default {
       type: Object
     }
   },
-  data(){
-    return{
-      showText:'',
-    }
+  data() {
+    return {
+      showText: ""
+    };
   },
-  mounted(){
-    this.showText=this.option.text.replace(/\n|\r\n/g, '<br>');
+  mounted() {
+    this.showText = this.option.text.replace(/\n|\r\n/g, "<br>");
   },
   computed: {
     style() {
@@ -36,8 +41,8 @@ export default {
     }
   },
   methods: {
-    setShowText(value){
-      this.showText=value.replace(/\n|\r\n/g, '<br>');
+    setShowText(value) {
+      this.showText = value.replace(/\n|\r\n/g, "<br>");
     }
   }
 };
@@ -46,5 +51,8 @@ export default {
 <style lang="less" scoped>
 .btn_con {
   user-select: none;
+}
+.text{
+  overflow: hidden;
 }
 </style>

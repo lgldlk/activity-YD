@@ -1,10 +1,14 @@
-
 <template>
   <button
-    :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']"
+    :class="[
+      animation.animationName,
+      option.isFixed ? 'fixedComplate' : 'baseComplate'
+    ]"
     :style="style"
     @click="gotoLink"
-  >{{showText }}</button>
+  >
+    {{ showText }}
+  </button>
 </template>
 
 <script>
@@ -25,8 +29,8 @@ export default {
     animation: {
       type: Object
     },
-    id:{
-      type:String,
+    id: {
+      type: String
     }
   },
   computed: {
@@ -35,27 +39,26 @@ export default {
       return handleStyle(this.css, keyword);
     }
   },
-  data(){
-    return{
-      showText:'',
-      clickEvent:undefined,
-    }
+  data() {
+    return {
+      showText: "",
+      clickEvent: undefined
+    };
   },
-  mounted(){
-    this.showText=this.option.text;
-    
+  mounted() {
+    this.showText = this.option.text;
   },
   methods: {
-    setShowText(value){
-      this.showText=value;
+    setShowText(value) {
+      this.showText = value;
     },
-    setClickEvent(event){
-      this.clickEvent=event;
+    setClickEvent(event) {
+      this.clickEvent = event;
     },
     gotoLink() {
-      if(this.clickEvent!=undefined){
+      if (this.clickEvent != undefined) {
         this.clickEvent();
-        return ;
+        return;
       }
       if (this.option.btnType == 0) {
       } else if (this.option.btnType == 1) {
@@ -65,13 +68,13 @@ export default {
       } else if (this.option.btnType == 2) {
         this.$emit("form", {
           refInput: this.option.refInput,
-          mustInput:this.option.mustInput,
+          mustInput: this.option.mustInput,
           inputFromUrl: this.option.inputFromUrl,
           urlMethod: this.option.urlMethod,
-          domId:this.id,
-          formOne:this.option.formOne,
+          domId: this.id,
+          formOne: this.option.formOne
         });
-      }else if (this.option.btnType == 3) {
+      } else if (this.option.btnType == 3) {
         console.log("qq客服");
         window.location.href =
           "http://wpa.qq.com/msgrd?v=3&uin=2467230789&site=qq&menu=yes";
@@ -80,8 +83,7 @@ export default {
         location.href = "tel:10086";
       }
     }
-  },
-  
+  }
 };
 </script>
 

@@ -1,19 +1,24 @@
 <template>
   <img
-  :src="showImgUrl"
-  :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']"
-   alt :style="style" />
+    :src="showImgUrl"
+    :class="[
+      animation.animationName,
+      option.isFixed ? 'fixedComplate' : 'baseComplate'
+    ]"
+    alt
+    :style="style"
+  />
 </template>
 
 <script>
 import { handleStyle } from "../utils/index";
-import {imageStaticUrl} from '@/utils/request'
+import { imageStaticUrl } from "@/utils/request";
 export default {
-  data(){
-      return{
-        imageStaticUrl:imageStaticUrl,
-        showImgUrl:'',
-      }
+  data() {
+    return {
+      imageStaticUrl: imageStaticUrl,
+      showImgUrl: ""
+    };
   },
   props: {
     option: {
@@ -33,14 +38,14 @@ export default {
       return handleStyle(this.css, keyword);
     }
   },
-  methods:{
-    setShowUrl(value){
-      this.showImgUrl=value;
+  methods: {
+    setShowUrl(value) {
+      this.showImgUrl = value;
     }
   },
-  mounted(){
-    this.showImgUrl=imageStaticUrl+this.option.text;
-  },
+  mounted() {
+    this.showImgUrl = imageStaticUrl + this.option.text;
+  }
 };
 </script>
 

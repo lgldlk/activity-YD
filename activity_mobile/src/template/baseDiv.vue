@@ -1,8 +1,11 @@
-
 <template>
   <div
-  :class="[animation.animationName,option.isFixed?'fixedComplate':'baseComplate']"
-  :style="style"></div>
+    :class="[
+      animation.animationName,
+      option.isFixed ? 'fixedComplate' : 'baseComplate'
+    ]"
+    :style="style"
+  ></div>
 </template>
 
 <script>

@@ -176,7 +176,9 @@ export default Vue.extend({
           // });
           this.mainList = e.data.data;
           this.mainList.map((item:any)=>{
+            if(item.titlePage.trim()!=""){
             item.titlePage=imageStaticUrl+item.titlePage;
+            }
           });
           this.mainList.reverse();
         })

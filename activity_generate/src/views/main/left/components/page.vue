@@ -278,6 +278,7 @@ export default {
         return this.$store.state.core.parentRouterName;
       },
       set(value) {
+        this.$store.commit("core/setNowPageName", value);
         this.$store.commit("core/set_parentRouterName", value);
       }
     },

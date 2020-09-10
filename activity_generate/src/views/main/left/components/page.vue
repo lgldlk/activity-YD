@@ -196,7 +196,7 @@
 </template>
 
 <script>
-import { commHeight } from "@/config";
+import { commHeight,initPage } from "@/config";
 import {addPage,deleteObj} from '@/api/index'
 import MonacoEditor from "monaco-editor-vue";
 import "monaco-editor/esm/vs/editor/contrib/find/findController.js";
@@ -373,22 +373,7 @@ export default {
           ...this.objform,
           height: this.$store.state.core.commHeight, // 页面高度默认667
           background: "rgba(255, 255, 255, 1)", // 页面背景色默认白色
-          initSet: `var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
-                httpRequest.open('POST', 'URL', true); //第二步：打开连接
-                httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                //设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
-                httpRequest.send('name=teswe&ee=ef');//发送请求 将情头体写在send中
-                /**
-                 * 获取数据后的处理程序
-                 */
-                httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
-                    if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-                        var json = httpRequest.responseText;//获取到服务端返回的数据
-                        pageData.Buttom1="xxxx";//可单独为某个名称的组件设置值
-                        pageData.text=['xxx','xxxxx','xxxxx']//也可以用数组的方式数组的顺序与添加组件的顺序相同
-                        pageData.ajaxOver();//ajax结束后调用该方法
-                    }
-                };`, // 注入动态组件编辑
+          initSet: initPage, // 注入动态组件编辑
           belongId:this.$store.state.core.parentId,
         };
         addPage(data).then(res => {

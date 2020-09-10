@@ -45,6 +45,10 @@ import baseImg from "@/template/dev/baseImg.vue";
 import baseText from "@/template/dev/baseText.vue";
 import baseInput from "@/template/dev/baseInput.vue";
 import baseDiv from "@/template/dev/baseDiv.vue";
+import baseRadio from '@/template/dev/baseRadio.vue';
+import baseCheck from '@/template/dev/baseCheck.vue';
+import baseSwiper from "@/template/dev/baseSwiper.vue";
+import baseIcon from "@/template/dev/baseIcon.vue";
 import { baseComplate } from "@/utils/baseReact";
 import { cloneDeep } from "lodash";
 export default {
@@ -54,6 +58,10 @@ export default {
     baseText,
     baseInput,
     baseDiv,
+    baseRadio,
+    baseCheck,
+    baseSwiper,
+    baseIcon
   },
   mounted() {
     this.$store.dispatch("complate/getSingList");

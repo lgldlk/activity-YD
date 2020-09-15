@@ -7,16 +7,25 @@
  * @FilePath: /activity_generate/src/views/main/center/core.vue
  -->
 <template>
-  <div class="core" @drop="drop" @dragover="dragover" :style="{
+  <div class="core"
+       @drop="drop"
+       @dragover="dragover"
+       :style="{
       height: `${commHeight}px`,
       background: background
     }">
-    <canvas id="canvas" v-show="backgroundLine"></canvas>
+    <canvas id="canvas"
+            v-show="backgroundLine"></canvas>
     <auxiliary-line></auxiliary-line>
     <rightMenu></rightMenu>
-    <component v-for="(item, index) in template" :key="'comp'+index" :is="item.name" :id="item.activityId" :css="item.css" :option="item.option" 
-      v-show="item.isShow"
-    :absolute="true"></component>
+    <component v-for="(item, index) in template"
+               :key="'comp'+index"
+               :is="item.name"
+               :id="item.activityId"
+               :css="item.css"
+               :option="item.option"
+               v-show="item.isShow"
+               :absolute="true"></component>
   </div>
 </template>
 
@@ -61,34 +70,34 @@ export default Vue.extend({
     baseCheck,
     baseIcon,
   },
-  mounted() {
-    (this ).init();
+  mounted () {
+    (this).init();
   },
   computed: {
-    backgroundLine() {
+    backgroundLine () {
       return this.$store.state.setting.backgroundLine;
     },
-    template() {
+    template () {
       return this.$store.state.core.template;
     },
-    commHeight() {
+    commHeight () {
       (this).init();
       return this.$store.state.core.commHeight;
     },
-    background() {
+    background () {
       return this.$store.state.core.background;
     }
   },
   methods: {
-    init() {
+    init () {
       this.$nextTick(() => {
-        let back= document.querySelector("#canvas");
+        let back = document.querySelector("#canvas");
         let core = document.querySelector(".core");
         back.width = core.clientWidth;
         back.height = core.clientHeight;
         var context = back.getContext("2d");
         let height = 1;
-        while (height <= (this ).commHeight) {
+        while (height <= (this).commHeight) {
           context.moveTo(0, height);
           context.lineTo(back.width, height);
           context.strokeStyle = "rgb(168, 168, 168)";
@@ -98,37 +107,37 @@ export default Vue.extend({
           context.beginPath();
           height = height + 20;
         }
-        this.$store.commit("setting/setCoreCanvasXY",{
-          x:back.getBoundingClientRect().x,
-          y:back.getBoundingClientRect().y
+        this.$store.commit("setting/setCoreCanvasXY", {
+          x: back.getBoundingClientRect().x,
+          y: back.getBoundingClientRect().y
         });
       });
     },
     //
-   // dragenter(e) {},
+    // dragenter(e) {},
     // 拖拽放下事件
-    drop(e) {
+    drop (e) {
       const index = e.dataTransfer.getData("compIndex");
-      if(index.trim()==''){return;}
+      if (index.trim() == '') { return; }
       let data;
       this.$store.commit(
-            "core/addMaxZindex");
+        "core/addMaxZindex");
       if (index == 0) {
         data = DivData(this.$store.state.core);
-      }else if (index == 1) {
+      } else if (index == 1) {
         data = CircleData(this.$store.state.core);
       }
       else if (index == 2) {
         data = ImgData(this.$store.state.core, 'pleStatic.png');
-      }else if(index==3){
-        this.$store.commit("setting/showIconChoose",1);
-        return ;
+      } else if (index == 3) {
+        this.$store.commit("setting/showIconChoose", 1);
+        return;
       }
-       else if (index == 4) {
+      else if (index == 4) {
         data = TextData(this.$store.state.core);
       } else if (index == 5) {
         data = ButtomData(this.$store.state.core);
-      }else if (index == 6) {
+      } else if (index == 6) {
         data = baseBirData(this.$store.state.core);
       }
       else if (index == 7) {
@@ -151,7 +160,7 @@ export default Vue.extend({
       e.preventDefault();
     },
     // 区域内拖拽监听
-    dragover(e) {
+    dragover (e) {
       e.preventDefault();
     }
   }

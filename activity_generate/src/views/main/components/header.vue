@@ -10,25 +10,36 @@
   <div class="header_con">
     <div class="header_back"></div>
     <div class="header">
-      <div @click="gotoHome" class="left_header">
-        <img class="left_logo" src="@/assets/logo.png" alt />
+      <div @click="gotoHome"
+           class="left_header">
+        <img class="left_logo"
+             src="@/assets/logo.png"
+             alt />
         <span>易动</span>
       </div>
       <div class="right_setting">
-        <div
-          class="setting_item"
-          v-for="(item, index) in coreInfo"
-          :key="index"
-          @click="userSetting(index)"
-        >
-          <div v-if="item.text != '背景线'" :class="item.click ? 'item' : 'test item'">
-            <img class="settion_item_icon" :src="item.icon" alt />
+        <div class="setting_item"
+             v-for="(item, index) in coreInfo"
+             :key="index"
+             @click="userSetting(index)">
+          <div v-if="item.text != '背景线'"
+               :class="item.click ? 'item' : 'test item'">
+            <img class="settion_item_icon"
+                 :src="item.icon"
+                 alt />
             <span class="settion_item_text">{{ item.text }}</span>
           </div>
 
-          <div v-if="item.text == '背景线'" :class="item.click ? 'item' : 'test item'">
-            <img v-if="backgroundLine" class="settion_item_icon" :src="item.openIcon" alt />
-            <img v-if="!backgroundLine" class="settion_item_icon" :src="item.icon" alt />
+          <div v-if="item.text == '背景线'"
+               :class="item.click ? 'item' : 'test item'">
+            <img v-if="backgroundLine"
+                 class="settion_item_icon"
+                 :src="item.openIcon"
+                 alt />
+            <img v-if="!backgroundLine"
+                 class="settion_item_icon"
+                 :src="item.icon"
+                 alt />
             <span class="settion_item_text">{{ item.text }}</span>
           </div>
         </div>
@@ -37,30 +48,36 @@
 
       <!-- 左侧为操作栏 -->
       <div class="right_header">
-        <a-select default-value="dev" style="width: 120px" @change="coreModeChange" class="right_header_item">
-            <a-select-option value="dev">
-              开发模式
-            </a-select-option>
-            <a-select-option value="prod">
-              预览模式
-            </a-select-option>
-          </a-select>
-        <a-button @click="saveObject(3)" type="primary" icon="book" class="right_header_item">保存为模板</a-button>
+        <a-select default-value="dev"
+                  style="width: 120px"
+                  @change="coreModeChange"
+                  class="right_header_item">
+          <a-select-option value="dev">
+            开发模式
+          </a-select-option>
+          <a-select-option value="prod">
+            预览模式
+          </a-select-option>
+        </a-select>
+        <a-button @click="saveObject(3)"
+                  type="primary"
+                  icon="book"
+                  class="right_header_item">保存为模板</a-button>
         <!-- <a-button @click="saveObject(2)" type="primary" icon="cloud" class="right_header_item">发布</a-button> -->
-        <a-button
-          @click="saveObject(1)"
-          type="primary"
-          icon="qrcode"
-          class="right_header_item"
-        >保存并预览</a-button>
+        <a-button @click="saveObject(1)"
+                  type="primary"
+                  icon="qrcode"
+                  class="right_header_item">保存并预览</a-button>
       </div>
     </div>
     <!-- 发布预览框 -->
-    <upload-modal ref="uploadModal" :objUrl="objUrl" />
+    <upload-modal ref="uploadModal"
+                  :objUrl="objUrl" />
     <!-- 发布模板 -->
     <set-template ref="setTemplate"></set-template>
     <!-- 权限校验 -->
-    <auth-modal ref="authModal" @authSuccess="authSuccess"></auth-modal>
+    <auth-modal ref="authModal"
+                @authSuccess="authSuccess"></auth-modal>
   </div>
 </template>
 
@@ -82,40 +99,40 @@ export default {
     setTemplate,
     authModal
   },
-  data() {
+  data () {
     return {
       objUrl: "" // 当前项目的url: value
     };
   },
   computed: {
-    objectAuth() {
+    objectAuth () {
       return this.$store.state.core.objectAuth;
     },
-    parentId() {
+    parentId () {
       return this.$store.state.core.parentId;
     },
-    coreScale() {
+    coreScale () {
       return Number((this.$store.state.setting.scale * 100).toFixed(1)) + "%";
     },
-    backgroundLine() {
+    backgroundLine () {
       return this.$store.state.setting.backgroundLine;
     },
-    coreInfo() {
+    coreInfo () {
       return this.$store.state.setting.coreinfo;
     },
-    activeTemplate() {
+    activeTemplate () {
       return this.$store.state.core.activeTemplate;
     },
-    template() {
+    template () {
       return this.$store.state.core.template;
     },
-    copyTemplate() {
+    copyTemplate () {
       return this.$store.state.setting.copyTemplate;
     },
 
   },
   watch: {
-    activeTemplate() {
+    activeTemplate () {
       if (this.activeTemplate.length > 0) {
         this.$store.commit("setting/set_coreinfoItem", {
           index: 2,
@@ -136,7 +153,7 @@ export default {
         });
       }
     },
-    copyTemplate() {
+    copyTemplate () {
       if (this.copyTemplate.length) {
         this.$store.commit("setting/set_coreinfoItem", {
           index: 3,
@@ -146,13 +163,13 @@ export default {
     }
   },
   methods: {
-    gotoHome() {
+    gotoHome () {
       this.$router.push({ name: "home" });
     },
-    coreModeChange(value) {
-      this.$store.commit("setting/changeCoreMode",value);
+    coreModeChange (value) {
+      this.$store.commit("setting/changeCoreMode", value);
     },
-    userSetting(index) {
+    userSetting (index) {
       if (index == 0) {
         // 撤销
         this.$emit("coreSetting", "cancel");
@@ -181,27 +198,27 @@ export default {
         this.$store.commit("core/deleteActiveComplate");
       } else if (index == 5) {
         this.$store.commit("setting/toggle_backgroundLine");
-      }  else if (index == 6) {
+      } else if (index == 6) {
         this.$store.commit("setting/set_scale", 0.1);
       } else if (index == 7) {
         this.$store.commit("setting/set_scale", -0.1);
       }
     },
     // 获取缩略图
-    getThumbnail() {
+    getThumbnail () {
       this.$showLoading();
       // 保存之前取消选中 取消背景线的显示
       this.$store.commit("setting/toggle_backgroundLine");
       this.$store.commit("core/clear_template");
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          let core=document.querySelector(".core");
+          let core = document.querySelector(".core");
           html2canvas(core, {
             async: true,
             useCORS: true,
             scale: 1,
-            wdith:core.clientWidth,
-            height:core.clientWidth,
+            wdith: core.clientWidth,
+            height: core.clientWidth,
           })
             .then(canvas => {
               let dataURL = canvas.toDataURL("image/jpeg");
@@ -223,17 +240,18 @@ export default {
       });
     },
     // 通过效验
-    authSuccess(data) {
+    authSuccess (data) {
       this.uploadObject(data.type, data.password);
     },
     // 保存项目
-    saveObject(type) {
+    saveObject (type) {
       if (type == 3) {
         // 保存模板
         this.getThumbnail().then(res => {
           this.$refs.setTemplate.openModal(res.data.data);
         });
       } else {
+        this.$store.commit('core/saveNowPage');
         if (this.objectAuth) {
           this.$refs.authModal.open({
             _id: this.parentId,
@@ -245,7 +263,7 @@ export default {
         }
       }
     },
-    uploadObject(type, pass = "") {
+    uploadObject (type, pass = "") {
       this.getThumbnail().then(res => {
         // 保存当前页面的配置
         return this.$store

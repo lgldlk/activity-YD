@@ -1,13 +1,13 @@
-import { saveActivity, getActivity, updateObj, setTemplate ,saveAllPage} from '@/api/index'
+import { saveActivity, getActivity, updateObj, setTemplate, saveAllPage } from '@/api/index'
 import { commHeight, commWidth } from '../../config/index'
 import { Module } from 'vuex'
 import { message } from 'ant-design-vue'
 import { guid } from '@/utils/utils'
-import { getBaseCovName} from '@/utils/baseReact'
+import { getBaseCovName } from '@/utils/baseReact'
 import store from '..'
 interface CoreInter {
-  allPageList:Array<any>//所有页面
-  nowPageName:string//当前页面ID
+  allPageList: Array<any>//所有页面
+  nowPageName: string//当前页面ID
   commWidth: number // 页面宽度
   commHeight: number // 页面高度
   background: string // 页面背景色1
@@ -29,26 +29,26 @@ interface CoreInter {
     x: any[] // x对齐标线
     y: any[] // y对齐标线
   },
-  coverageCache:{
-    includeCache:string[],
-    'base-input':number,
-     "base-div" :number,
-     "base-swiper" :number,
-     "base-text" :number,
-    "base-img":number,
-    'base-buttom':number,
-    'base-radio':number,
-    'base-check':number,
-    'base-icon':number
+  coverageCache: {
+    includeCache: string[],
+    'base-input': number,
+    "base-div": number,
+    "base-swiper": number,
+    "base-text": number,
+    "base-img": number,
+    'base-buttom': number,
+    'base-radio': number,
+    'base-check': number,
+    'base-icon': number
   },
-  maxZIndex:number,
+  maxZIndex: number,
 }
 
 const core: Module<CoreInter, any> = {
   namespaced: true,
   state: {
-    allPageList:[],//所有页面
-    nowPageName:'',//当前页面索引
+    allPageList: [],//所有页面
+    nowPageName: '',//当前页面索引
     commWidth: commWidth, // 页面宽度
     commHeight: commHeight, // 页面高度
     background: 'rgba(255, 255, 255, 1)', // 页面背景色
@@ -70,75 +70,76 @@ const core: Module<CoreInter, any> = {
       x: [], // x对齐标线
       y: [], // y对齐标线
     },
-    coverageCache:{
-      includeCache:[],
-      'base-input':0,
-       "base-div" :0,
-       "base-swiper" :0,
-       "base-text" :0,
-      "base-img":0,
-      'base-icon':0,
-      'base-buttom':0,
-      'base-radio':0,
-      'base-check':0,
+    coverageCache: {
+      includeCache: [],
+      'base-input': 0,
+      "base-div": 0,
+      "base-swiper": 0,
+      "base-text": 0,
+      "base-img": 0,
+      'base-icon': 0,
+      'base-buttom': 0,
+      'base-radio': 0,
+      'base-check': 0,
     },
-    maxZIndex:0
+    maxZIndex: 0
   },
   mutations: {
     //设置所有界面
-    setAllPageList(state,allPage){
-      state.allPageList=allPage;
+    setAllPageList(state, allPage) {
+      state.allPageList = allPage;
     },
     //设置当前页面索引
-    setNowPageName(state,name){
-      state.nowPageName=name;
+    setNowPageName(state, name) {
+      state.nowPageName = name;
     },
     //添加页面
-    addPage(state,pageData:any){
+    addPage(state, pageData: any) {
       state.allPageList.push(pageData);
     },
     //保存页面
-    saveNowPage(state){
-      let index=0,leng=state.allPageList.length;
-      for(index=0;index<leng;index++){
-        if(state.allPageList[index].name==state.nowPageName){
-          state.allPageList[index].doms=state.template;
-          state.allPageList[index].height=state.commHeight;
-          state.allPageList[index].textName=state.parentName;
-          state.allPageList[index].name=state.parentRouterName;
-          state.allPageList[index].disp=state.parentDisp;
-          state.allPageList[index].initSet=state.initSet;
+    saveNowPage(state) {
+      let index = 0, leng = state.allPageList.length;
+      for (index = 0; index < leng; index++) {
+        if (state.allPageList[index].name == state.nowPageName) {
+          state.allPageList[index].doms = state.template;
+          state.allPageList[index].height = state.commHeight;
+          state.allPageList[index].textName = state.parentName;
+          state.allPageList[index].name = state.parentRouterName;
+          state.allPageList[index].disp = state.parentDisp;
+          state.allPageList[index].background = state.background;
+          state.allPageList[index].initSet = state.initSet;
           break;
         }
       }
     },
-    deletePage(state,id){
-      let i=0,leng=state.allPageList.length;
-      for(i=0;i<leng;i++){
-        if(id==state.allPageList[i]._id){
-          state.allPageList.splice(i,1);
+    deletePage(state, id) {
+      let i = 0, leng = state.allPageList.length;
+      for (i = 0; i < leng; i++) {
+        if (id == state.allPageList[i]._id) {
+          state.allPageList.splice(i, 1);
           break;
         }
       }
     },
     //改变当前项目的编辑的页面
-    changeNowPage(state,name){
-      let i=0,leng=state.allPageList.length;
-          store.commit('core/saveNowPage');
-      for(i=0;i<leng;i++){
-        if(state.allPageList[i].name==name){
+    changeNowPage(state, name) {
+      let i = 0, leng = state.allPageList.length;
+      store.commit('core/saveNowPage');
+      for (i = 0; i < leng; i++) {
+        if (state.allPageList[i].name == name) {
           let template: any[] = [];
-          let nowPage=state.allPageList[i];
-          state.activeTemplate=[];
-          store.commit('core/setNowPageName',name);
+          let nowPage = state.allPageList[i];
+          state.activeTemplate = [];
+          store.commit('core/setNowPageName', name);
           nowPage.doms.map((e) => {
             template.push({ ...e, editStatus: false })
           })
           store.commit('core/update_template', template)
           store.commit('core/updateCommHeigth', nowPage.height)
           store.commit('core/updateBackground', nowPage.background)
-          store.commit('core/set_objectName',nowPage.textName)
-          store.commit('core/set_parentRouterName',nowPage.name)
+          store.commit('core/set_objectName', nowPage.textName)
+          store.commit('core/set_parentRouterName', nowPage.name)
           store.commit('core/set_parentDisp', nowPage.disp)
           store.commit('core/updateInitSet', nowPage.initSet)
           break;
@@ -153,15 +154,16 @@ const core: Module<CoreInter, any> = {
     set_parentRouterName(state, name) {
       state.parentRouterName = name
     },
+
     //保存项目描述
     set_parentDisp(state, disp) {
       state.parentDisp = disp
     },
     // 保存项目是否需要验证
     set_objectAuth(state, type) {
-      if(type.trim()=='1'){
-        state.objectAuth=true
-      }else{
+      if (type.trim() == '1') {
+        state.objectAuth = true
+      } else {
         state.objectAuth = false
       }
     },
@@ -176,8 +178,8 @@ const core: Module<CoreInter, any> = {
     // 增加元素
     set_tempLate(state, template) {
       // 增加页面上的元素
-      if(template.covName.trim()==''){
-        template.covName=getBaseCovName(template.name)+(state.coverageCache[template.name]+1);
+      if (template.covName.trim() == '') {
+        template.covName = getBaseCovName(template.name) + (state.coverageCache[template.name] + 1);
       }
       state.coverageCache[template.name]++;
       state.coverageCache.includeCache.push(template.activityId);
@@ -191,9 +193,9 @@ const core: Module<CoreInter, any> = {
     toggle_temp_status(state, id) {
       let list = JSON.parse(JSON.stringify(state.template))
       let activeTemplate: any[] = []
-      let i=0,leng=list.length;
-      for(i=0;i<leng;i++){
-        let item=list[i];
+      let i = 0, leng = list.length;
+      for (i = 0; i < leng; i++) {
+        let item = list[i];
         if (item.activityId == id) {
           if (state.isLongDown) {
             // 多选状态
@@ -228,36 +230,36 @@ const core: Module<CoreInter, any> = {
     },
     update_CompZindex(state, num) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
-      let i=0,leng=list.length;
-      for(i=0;i<leng;i++){
-        let item=list[i];
+      let i = 0, leng = list.length;
+      for (i = 0; i < leng; i++) {
+        let item = list[i];
         if (state.activeTemplate.includes(item.activityId)) {
           item.css.zIndex = item.css.zIndex + num
           if (item.css.zIndex <= 0) {
             message.warning('元素层级不可小于0')
-            return ;
+            return;
           }
           break;
         }
       }
       state.template = list
     },
-    set_CompZindex(state,{actId,num}) {
+    set_CompZindex(state, { actId, num }) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
-      let i=0,leng=list.length;
+      let i = 0, leng = list.length;
       list.map((item) => {
-        if(item.css.zIndex>num){
+        if (item.css.zIndex > num) {
           item.css.zIndex++;
         }
-        if(item.css.zIndex>=state.maxZIndex){
-          state.maxZIndex=item.css.zIndex;
+        if (item.css.zIndex >= state.maxZIndex) {
+          state.maxZIndex = item.css.zIndex;
         }
-        if (actId==(item.activityId)) {
+        if (actId == (item.activityId)) {
           if (num <= 0) {
-            list.map((item)=>{
+            list.map((item) => {
               item.css.zIndex++;
             });
-            item.css.zIndex=0;
+            item.css.zIndex = 0;
           } else {
             item.css.zIndex = num;
           }
@@ -268,9 +270,9 @@ const core: Module<CoreInter, any> = {
     // 修改图片
     update_img(state, { imgurl }) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
-      let i=0,leng=list.length;
-      for(i=0;i<leng;i++){
-        let item=list[i];
+      let i = 0, leng = list.length;
+      for (i = 0; i < leng; i++) {
+        let item = list[i];
         if (state.activeTemplate.includes(item.activityId)) {
           item.option.text = imgurl
           break;
@@ -279,14 +281,14 @@ const core: Module<CoreInter, any> = {
       state.template = list
     },
     // 修改图标
-    update_icon(state,  {iconType,theme} ) {
+    update_icon(state, { iconType, theme }) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
-      let i=0,leng=list.length;
-      for(i=0;i<leng;i++){
-        let item=list[i];
+      let i = 0, leng = list.length;
+      for (i = 0; i < leng; i++) {
+        let item = list[i];
         if (state.activeTemplate.includes(item.activityId)) {
           item.option.iconType = iconType;
-          item.option.theme=theme;
+          item.option.theme = theme;
           break;
         }
       }
@@ -295,9 +297,9 @@ const core: Module<CoreInter, any> = {
     // 更新元素位置
     updatePos(state, data) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
-      let i=0,leng=list.length;
-      for(i=0;i<leng;i++){
-        let item=list[i];
+      let i = 0, leng = list.length;
+      for (i = 0; i < leng; i++) {
+        let item = list[i];
         if (state.activeTemplate.includes(item.activityId)) {
           item.css.left = item.css.left + data.x
           item.css.top = item.css.top + data.y
@@ -348,96 +350,96 @@ const core: Module<CoreInter, any> = {
     // 更新元素大小
     updateZoom(state, data) {
       let list = JSON.parse(JSON.stringify(state.template))
-      let i=0,leng=list.length;
+      let i = 0, leng = list.length;
       if (state.roundDown == 1) {
-        for(i=0;i<leng;i++){
-          let item=list[i];
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = Number(item.css.left) + data.x
             item.css.top = Number(item.css.top) + data.y
             item.css.width = item.css.width - data.x
             item.css.height = item.css.height - data.y
-            if(item.css.width<=0){
-              item.css.width=0;
+            if (item.css.width <= 0) {
+              item.css.width = 0;
             }
-            if(item.css.height<=0){
-              item.css.height=0;
+            if (item.css.height <= 0) {
+              item.css.height = 0;
             }
             break;
           }
         }
       } else if (state.roundDown == 2) {
-        for(i=0;i<leng;i++){
-          let item=list[i];
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = Number(item.css.top) + data.y
             item.css.height = item.css.height - data.y
-            if(item.css.width<=0){
-              item.css.width=0;
+            if (item.css.width <= 0) {
+              item.css.width = 0;
             }
-            if(item.css.height<=0){
-              item.css.height=0;
+            if (item.css.height <= 0) {
+              item.css.height = 0;
             }
             break;
           }
         }
       } else if (state.roundDown == 3) {
-        for(i=0;i<leng;i++){
-          let item=list[i];
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = Number(item.css.top) + data.y
             item.css.width = Number(item.css.width) + data.x
             item.css.height = item.css.height - data.y
-            if(item.css.width<=0){
-              item.css.width=0;
+            if (item.css.width <= 0) {
+              item.css.width = 0;
             }
-            if(item.css.height<=0){
-              item.css.height=0;
+            if (item.css.height <= 0) {
+              item.css.height = 0;
             }
             break;
           }
         }
       } else if (state.roundDown == 4) {
-        for(i=0;i<leng;i++){
-          let item=list[i];
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = Number(item.css.left) + data.x
             item.css.width = item.css.width - data.x
             item.css.height = Number(item.css.height) + data.y
-            if(item.css.width<=0){
-              item.css.width=0;
+            if (item.css.width <= 0) {
+              item.css.width = 0;
             }
-            if(item.css.height<=0){
-              item.css.height=0;
+            if (item.css.height <= 0) {
+              item.css.height = 0;
             }
             break;
           }
         }
       } else if (state.roundDown == 5) {
-        for(i=0;i<leng;i++){
-          let item=list[i];
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.height = Number(item.css.height) + data.y
-            if(item.css.width<=0){
-              item.css.width=0;
+            if (item.css.width <= 0) {
+              item.css.width = 0;
             }
-            if(item.css.height<=0){
-              item.css.height=0;
+            if (item.css.height <= 0) {
+              item.css.height = 0;
             }
             break;
           }
         }
       } else if (state.roundDown == 6) {
-        for(i=0;i<leng;i++){
-          let item=list[i];
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.width = Number(item.css.width) + data.x
             item.css.height = Number(item.css.height) + data.y
-            if(item.css.width<=0){
-              item.css.width=0;
+            if (item.css.width <= 0) {
+              item.css.width = 0;
             }
-            if(item.css.height<=0){
-              item.css.height=0;
+            if (item.css.height <= 0) {
+              item.css.height = 0;
             }
             break;
           }
@@ -474,9 +476,9 @@ const core: Module<CoreInter, any> = {
         y: [], // y轴上面该出现标线的
       }
       let offset: any[] = [1] // 拓展值
-      let i=0,leng= state.template.length;
-        for(i=0;i<leng;i++){
-          let res:any= state.template[i];
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
         if (!state.activeTemplate.includes(res.activityId)) {
           // 偏移绝对值
           let left_x: any[] = [] // 单个元素x轴
@@ -550,18 +552,18 @@ const core: Module<CoreInter, any> = {
     // 单组件快捷配置
     fastOnlySet(state, data) {
       let list = JSON.parse(JSON.stringify(state.template))
-      let i=0,leng=list.length;
+      let i = 0, leng = list.length;
       if (data.type == 1) {
-        for(i=0;i<leng;i++){
-          let item=list[i];
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = (state.commWidth - item.css.width) / 2
             break;
           }
         }
       } else if (data.type == 2) {
-        for(i=0;i<leng;i++){
-          let item=list[i];
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.width = state.commWidth
             item.css.left = 0
@@ -569,16 +571,16 @@ const core: Module<CoreInter, any> = {
           }
         }
       } else if (data.type == 3) {
-        for(i=0;i<leng;i++){
-          let item=list[i];
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = 0
             break;
           }
         }
       } else if (data.type == 4) {
-        for(i=0;i<leng;i++){
-          let item=list[i];
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = state.commHeight - item.css.height
             break;
@@ -668,9 +670,9 @@ const core: Module<CoreInter, any> = {
     },
     // 更新swiper的图片
     update_swiperimg(state, { index, imgurl }) {
-      let i=0,leng=state.template.length;
-      for(i=0;i<leng;i++){
-        let res:any=state.template[i];
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
         if (res.activityId == state.activeTemplate) {
           res.option.item[index].img = imgurl
           break;
@@ -679,9 +681,9 @@ const core: Module<CoreInter, any> = {
     },
     // 增加轮播图
     add_swiper(state) {
-      let i=0,leng=state.template.length;
-      for(i=0;i<leng;i++){
-        let res:any=state.template[i];
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
         if (res.activityId == state.activeTemplate) {
           res.option.item.push({
             img: 'pleStatic.png',
@@ -693,9 +695,9 @@ const core: Module<CoreInter, any> = {
     },
     // 减少轮播图
     less_swiper(state) {
-      let i=0,leng=state.template.length;
-      for(i=0;i<leng;i++){
-        let res:any=state.template[i];
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
         if (res.activityId == state.activeTemplate) {
           res.option.item.pop()
           break;
@@ -704,9 +706,9 @@ const core: Module<CoreInter, any> = {
     },
     // 更新文本框文字
     updateText(state, { id, text }) {
-      let i=0,leng=state.template.length;
-      for(i=0;i<leng;i++){
-        let res:any=state.template[i];
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
         if (res.activityId == id) {
           res.option.text = text
           break;
@@ -729,54 +731,54 @@ const core: Module<CoreInter, any> = {
         x: [],
         y: [],
       }
-      state.maxZIndex=0
-      state.coverageCache={
-        includeCache:[],
-        'base-input':0,
-         "base-div" :0,
-         "base-swiper" :0,
-         "base-text" :0,
-        "base-img":0,
-        'base-buttom':0,
-        'base-radio':0,
-        'base-check':0,
-        'base-icon':0,
+      state.maxZIndex = 0
+      state.coverageCache = {
+        includeCache: [],
+        'base-input': 0,
+        "base-div": 0,
+        "base-swiper": 0,
+        "base-text": 0,
+        "base-img": 0,
+        'base-buttom': 0,
+        'base-radio': 0,
+        'base-check': 0,
+        'base-icon': 0,
       }
     },
-    initCovName(state){//初始化图层信息
-      state.template.forEach((item:any,i)=>{
-        if(item.css.zIndex>=state.maxZIndex){
-          state.maxZIndex=item.css.zIndex;
+    initCovName(state) {//初始化图层信息
+      state.template.forEach((item: any, i) => {
+        if (item.css.zIndex >= state.maxZIndex) {
+          state.maxZIndex = item.css.zIndex;
         }
-        if(state.coverageCache.includeCache.includes(item.activityId)){
+        if (state.coverageCache.includeCache.includes(item.activityId)) {
           return;
         }
-        if(item.covName.trim()==''){
-          item.covName=getBaseCovName(item.name)+(state.coverageCache[item.name]+1);
+        if (item.covName.trim() == '') {
+          item.covName = getBaseCovName(item.name) + (state.coverageCache[item.name] + 1);
         }
         state.coverageCache[item.name]++;
         state.coverageCache.includeCache.push(item.activityId);
       })
     },
-    switchTemplateShow(state,domId){//切换元素是否可见
-      let i=0,leng=state.template.length;
-      for(i=0;i<leng;i++){
-        let res:any=state.template[i];
+    switchTemplateShow(state, domId) {//切换元素是否可见
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
         if (res.activityId == domId) {
-          res.isShow=!res.isShow;
+          res.isShow = !res.isShow;
           break;
         }
       }
     },
-    addMaxZindex(state){//让maxZIndex永远保持最大
+    addMaxZindex(state) {//让maxZIndex永远保持最大
       state.maxZIndex++;
     },
-    changeCoverName(state,{covName,id}){
-      let i=0,leng=state.template.length;
-      for(i=0;i<leng;i++){
-        let res:any=state.template[i];
+    changeCoverName(state, { covName, id }) {
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
         if (res.activityId == id) {
-          res.covName=covName;
+          res.covName = covName;
           break;
         }
       }
@@ -784,29 +786,29 @@ const core: Module<CoreInter, any> = {
   },
   actions: {
     // 保存当前项目数据
-    saveObject({ state ,commit}, { titlePage, pass }) {
+    saveObject({ state, commit }, { titlePage, pass }) {
       if (state.template.length == 0) {
         return Promise.reject('请不要保存空页面')
       }
-      if(state.allPageList.length==1){
+      if (state.allPageList.length == 1) {
         return saveActivity({ ...state, titlePage, pass })
       }
-      if(state.allPageList.length>=1){
-              commit('saveNowPage');
-        return saveAllPage({ allPage:state.allPageList, titlePage, pass })
+      if (state.allPageList.length >= 1) {
+        commit('saveNowPage');
+        return saveAllPage({ allPage: state.allPageList, titlePage, pass })
       }
     },
     // 获取当前配置
-    getActivity({ commit,state }, data) {
+    getActivity({ commit, state }, data) {
       return new Promise((resolve, reject) => {
         getActivity(data.id).then((e) => {
           if (e.data.code !== 200) {
             reject(e.data.data)
           } else {
-            commit('setAllPageList',e.data.data);
+            commit('setAllPageList', e.data.data);
             let template: any[] = [];
-            let mainPage=state.allPageList[0];
-            commit('setNowPageName',mainPage.name);
+            let mainPage = state.allPageList[0];
+            commit('setNowPageName', mainPage.name);
             console.log(e);
             mainPage.doms.map((e) => {
               template.push({ ...e, editStatus: false })
@@ -814,10 +816,10 @@ const core: Module<CoreInter, any> = {
             commit('update_template', template)
             commit('updateCommHeigth', mainPage.height)
             commit('updateBackground', mainPage.background)
-            commit('set_objectName',mainPage.textName)
-            commit('set_parentRouterName',mainPage.name)
+            commit('set_objectName', mainPage.textName)
+            commit('set_parentRouterName', mainPage.name)
             commit('set_parentDisp', mainPage.disp)
-            commit('set_objectAuth',mainPage.password)
+            commit('set_objectAuth', mainPage.password)
             commit('updateInitSet', mainPage.initSet)
             resolve('数据查询完成')
           }

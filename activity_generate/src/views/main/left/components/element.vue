@@ -1,15 +1,15 @@
 <template>
   <div class="component">
-    <div
-      class="item  pulse"
-      v-for="(item, index) in reactList"
-      :key="item.name"
-      @click="setComponent(index)"
-      draggable
-      @dragstart="dragstart(index,$event)"
-    >
+    <div class="item  pulse"
+         v-for="(item, index) in reactList"
+         :key="item.name"
+         @click="setComponent(index)"
+         draggable
+         @dragstart="dragstart(index,$event)">
       <div>
-        <img class="item_img" :src="item.img" alt />
+        <img class="item_img"
+             :src="item.img"
+             alt />
         <p class="item_name">{{ item.name }}</p>
       </div>
     </div>
@@ -29,7 +29,6 @@ import {
   baseRadio,
   baseCheck,
   baseCircle,
-  baseVirButtom,
   baseIcon
 } from "@/utils/baseReact";
 import imgUpload from "@/components/imgUpload/index.vue";
@@ -65,10 +64,6 @@ export default Vue.extend({
         {
           name: "按钮",
           img: require("@/assets/buttom.png")
-        },
-        {
-          name: "虚拟按钮",
-          img: require("@/assets/buttom1.png")
         },
         {
           name: "文本框",
@@ -124,25 +119,19 @@ export default Vue.extend({
       }else if (index == 6) {
         this.$store.commit(
           "core/set_tempLate",
-          baseVirButtom(this.$store.state.core)
-        );
-      } 
-       else if (index == 7) {
-        this.$store.commit(
-          "core/set_tempLate",
           baseInput(this.$store.state.core)
         );
-      } else if (index ==8) {
+      } else if (index ==7) {
         this.$store.commit(
           "core/set_tempLate",
           baseSwiper(this.$store.state.core)
         );
-      } else if (index == 9) {
+      } else if (index == 8) {
         this.$store.commit(
           "core/set_tempLate",
           baseRadio(this.$store.state.core)
         );
-      } else if (index ==10) {
+      } else if (index ==9) {
         this.$store.commit(
           "core/set_tempLate",
           baseCheck(this.$store.state.core)

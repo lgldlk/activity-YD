@@ -54,7 +54,6 @@ import {
   baseRadio as RadioData,
   baseCircle as CircleData,
   baseCheck as CheckData,
-  baseVirButtom as baseBirData
 } from "@/utils/baseReact";
 export default Vue.extend({
   components: {
@@ -138,15 +137,12 @@ export default Vue.extend({
       } else if (index == 5) {
         data = ButtomData(this.$store.state.core);
       } else if (index == 6) {
-        data = baseBirData(this.$store.state.core);
-      }
-      else if (index == 7) {
         data = InputData(this.$store.state.core);
-      } else if (index == 8) {
+      } else if (index == 7) {
         data = SwiperData(this.$store.state.core);
-      } else if (index == 9) {
+      } else if (index == 8) {
         data = RadioData(this.$store.state.core);
-      } else if (index == 10) {
+      } else if (index == 9) {
         data = CheckData(this.$store.state.core);
       }
       if (e.target.getAttribute("id") == "canvas") {

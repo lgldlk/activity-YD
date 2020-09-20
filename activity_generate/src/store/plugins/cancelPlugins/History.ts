@@ -50,12 +50,12 @@ class History {
     }
   }
   public unReplaceState() {
-    this.store.commit('core/clear_template');
     if (this.state.length - 1 > this.index) {
       // 反撤销
       this.index++
       let state = cloneDeep(this.state[this.index])
       this.store.replaceState(state)
+      this.store.commit('core/clear_template');
     } else {
       message.info('已经无法再进行操作')
     }

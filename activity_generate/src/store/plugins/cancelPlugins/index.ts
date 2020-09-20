@@ -50,7 +50,6 @@ export default function index(store) {
     }
     if (isLoadOver) {
       if (!filterMutation.includes(mutation.type)) {
-        console.log(mutation)
         history.setState(cloneDeep(state))
       }
     }

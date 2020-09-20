@@ -40,11 +40,6 @@ const Setting: Module<setting, any> = {
         click: true
       },
       {
-        icon: require('@/assets/uncancel.png'),
-        text: '反撤销',
-        click: true
-      },
-      {
         icon: require('@/assets/copy.png'),
         text: '复制',
         click: false

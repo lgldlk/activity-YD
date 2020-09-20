@@ -174,9 +174,6 @@ export default {
         // 撤销
         this.$emit("coreSetting", "cancel");
       } else if (index == 1) {
-        // 反撤销
-        this.$emit("coreSetting", "uncancel");
-      } else if (index == 2) {
         let copyList = [];
         this.activeTemplate.map(activityId => {
           copyList.push(
@@ -185,7 +182,7 @@ export default {
         });
         this.$store.commit("setting/set_copy", copyList);
         this.$message.success("已复制到粘贴板");
-      } else if (index == 3) {
+      } else if (index == 2) {
         this.copyTemplate.map(data => {
           this.$store.commit(
             "core/addMaxZindex");
@@ -194,13 +191,13 @@ export default {
             cloneDeep(baseComplate(this.$store.state.core, data))
           );
         });
-      } else if (index == 4) {
+      } else if (index == 3) {
         this.$store.commit("core/deleteActiveComplate");
-      } else if (index == 5) {
+      } else if (index == 4) {
         this.$store.commit("setting/toggle_backgroundLine");
-      } else if (index == 6) {
+      } else if (index == 5) {
         this.$store.commit("setting/set_scale", 0.1);
-      } else if (index == 7) {
+      } else if (index == 6) {
         this.$store.commit("setting/set_scale", -0.1);
       }
     },

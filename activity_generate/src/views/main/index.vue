@@ -5,18 +5,18 @@
       <!-- 左侧菜单栏 -->
       <left />
       <!-- 中控台 -->
-      <div class="index_center" @click="cancelActive">
+      <div class="index_center"
+           @click="cancelActive">
         <!-- 开发模式 -->
-        <core
-          v-if="coreMode == 'dev'"
-          :style="{ transform: `scale(${scale},${scale})` }"
-          class="core mobile"
-          ref="core"
-        />
+        <core v-if="coreMode == 'dev'"
+              :style="{ transform: `scale(${scale},${scale})` }"
+              class="core"
+              ref="core" />
         <!-- 测试查看模式 -->
-        <show-core v-if="coreMode == 'prod'" class="mobile"></show-core>
+        <show-core v-if="coreMode == 'prod'"
+                   class="mobile"></show-core>
       </div>
-      
+
       <!-- 右侧菜单栏 -->
       <right @coreSetting="coreSetting" />
     </div>
@@ -40,7 +40,7 @@ export default {
     right,
     showCore,
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
       initMouse(this.core);
       initKeyDown(this.core);
@@ -56,47 +56,47 @@ export default {
       .catch(err => {
         this.$message.error(err);
       });
-      let innerCenter=document.querySelector('.index_center');
-      innerCenter.addEventListener('scroll', this.handleScroll, true);
+    let innerCenter = document.querySelector('.index_center');
+    innerCenter.addEventListener('scroll', this.handleScroll, true);
   },
 
-  data() {
+  data () {
     return {
       mode: "dev" // dev 为开发模式 prod 为线上测试模式
     };
   },
   computed: {
-    scale() {
+    scale () {
       return this.$store.state.setting.scale;
     },
-    coreScale() {
+    coreScale () {
       return Number((this.scale * 100).toFixed(1)) + "%";
     },
-    core() {
+    core () {
       return this.$store.state.core;
     },
-    coreMode(){
+    coreMode () {
       return this.$store.state.setting.coreMode;
     }
   },
   methods: {
     // 点击屏幕外侧取消选中
-    cancelActive(e) {
+    cancelActive (e) {
       if (e.target.getAttribute("class") == "index_center") {
         this.$store.commit("core/clear_template");
         this.$store.commit("setting/closeRightMenu");
       }
     },
-     handleScroll (e) {
-      this.$store.commit("setting/setScollTop",e.target.scrollTop);
+    handleScroll (e) {
+      this.$store.commit("setting/setScollTop", e.target.scrollTop);
     },
-    init() {
+    init () {
       initMouse(this.core);
       initKeyDown(this.core);
       this.$store.commit("core/clear_template");
     },
     // 放大缩小
-    coreSetting(type) {
+    coreSetting (type) {
       if (type == "cancel") {
         // 撤销
         // cancelHistory();
@@ -109,7 +109,7 @@ export default {
       }
     }
   },
-  destroyed() {
+  destroyed () {
     // 清空vuex
     this.$store.commit("core/destroyedTemplate");
     // 写在鼠标监听
@@ -169,20 +169,6 @@ export default {
           border-bottom-right-radius: 5px;
         }
       }
-    }
-  }
-  .mobile{
-    position: relative;
-    &::after{
-      position: absolute;
-      top:0;
-      height:667px;
-      border-top: 2px solid rgb(24, 144, 255);
-      border-bottom: 2px solid rgb(24, 144, 255);
-      width:50px;
-      left:-52px;
-      box-sizing: border-box;
-      content: '';
     }
   }
 }

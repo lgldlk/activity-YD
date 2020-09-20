@@ -36,6 +36,7 @@ const filterMutation = [
   "setting/closeIconChoose",
   "setting/showIconChoose",
 ]
+let isLoadOver = false;
 /**
  *  监听vuex的行为
  * @param store vuex实例
@@ -43,12 +44,15 @@ const filterMutation = [
 export default function index(store) {
   // 保存vuex的实例
   history.init(store, 20)
-  // 保存初始状态
-  history.setState(cloneDeep(store.state))
   store.subscribe((mutation, state) => {
-    if (!filterMutation.includes(mutation.type)) {
-      console.log(mutation)
-      history.setState(cloneDeep(state))
+    if (mutation.type == "core/loadOver") {
+      isLoadOver = true;
+    }
+    if (isLoadOver) {
+      if (!filterMutation.includes(mutation.type)) {
+        console.log(mutation)
+        history.setState(cloneDeep(state))
+      }
     }
   })
 }

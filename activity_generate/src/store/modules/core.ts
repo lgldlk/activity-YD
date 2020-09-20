@@ -97,6 +97,9 @@ const core: Module<CoreInter, any> = {
     addPage(state, pageData: any) {
       state.allPageList.push(pageData);
     },
+    //用于标志初始化完毕，撤销，反撤销用
+    loadOver() {
+    },
     //保存页面
     saveNowPage(state) {
       let index = 0, leng = state.allPageList.length;
@@ -821,6 +824,7 @@ const core: Module<CoreInter, any> = {
             commit('set_parentDisp', mainPage.disp)
             commit('set_objectAuth', mainPage.password)
             commit('updateInitSet', mainPage.initSet)
+            commit('loadOver');
             resolve('数据查询完成')
           }
         })

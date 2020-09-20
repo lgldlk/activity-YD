@@ -46,7 +46,7 @@ class History {
       let state = cloneDeep(this.state[this.index])
       this.store.replaceState(state)
     } else {
-      message.error('已经无法再进行操作')
+      message.info('已经无法再进行操作')
     }
   }
   public unReplaceState() {
@@ -57,7 +57,7 @@ class History {
       let state = cloneDeep(this.state[this.index])
       this.store.replaceState(state)
     } else {
-      message.error('已经无法再进行操作')
+      message.info('已经无法再进行操作')
     }
   }
   /**

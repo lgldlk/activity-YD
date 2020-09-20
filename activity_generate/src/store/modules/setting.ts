@@ -11,21 +11,21 @@ interface setting {
   }[]
   scale: number // 放大/缩小
   backgroundLine: boolean
-  coreMode:string
-  rMenuShow:{
-    chooseId:string,
-    openX:number,
-    openY:number,
-    isShow:boolean,
-    scollTop:number
+  coreMode: string
+  rMenuShow: {
+    chooseId: string,
+    openX: number,
+    openY: number,
+    isShow: boolean,
+    scollTop: number
   },
-  coreCanvas:{
-    x:number,
-    y:number
+  coreCanvas: {
+    x: number,
+    y: number
   }
-  iconWin:{
-    show:boolean,
-    type:number
+  iconWin: {
+    show: boolean,
+    type: number
   }
 }
 
@@ -78,30 +78,30 @@ const Setting: Module<setting, any> = {
     ],
     scale: 1,
     backgroundLine: true,
-    coreMode:'dev',
-    rMenuShow:{
-      chooseId:'',
-      openX:0,
-      openY:0,
-      isShow:false,
-      scollTop:0
+    coreMode: 'dev',
+    rMenuShow: {
+      chooseId: '',
+      openX: 0,
+      openY: 0,
+      isShow: false,
+      scollTop: 0
     },
-    coreCanvas:{
-      x:0,
-      y:0
+    coreCanvas: {
+      x: 0,
+      y: 0
     },
-    iconWin:{
-      show:false,
-      type:1
+    iconWin: {
+      show: false,
+      type: 1
     }
   },
   mutations: {
-    showIconChoose(state,type){
-      state.iconWin.show=true;
-      state.iconWin.type=type;
+    showIconChoose(state, type) {
+      state.iconWin.show = true;
+      state.iconWin.type = type;
     },
-    closeIconChoose(state){
-      state.iconWin.show=false;
+    closeIconChoose(state) {
+      state.iconWin.show = false;
     },
     set_copy(state, data) {
       console.log(data);
@@ -122,35 +122,35 @@ const Setting: Module<setting, any> = {
     toggle_backgroundLine(state) {
       state.backgroundLine = !state.backgroundLine
     },
-    changeCoreMode(state,modeType){
-      if(modeType=="dev"||modeType=='prod'){
-        state.coreMode=modeType;
+    changeCoreMode(state, modeType) {
+      if (modeType == "dev" || modeType == 'prod') {
+        state.coreMode = modeType;
       }
     },
-    closeRightMenu(state){
-      state.rMenuShow.openX=0;
-      state.rMenuShow.openY=0;
-      state.rMenuShow.isShow=false;
+    closeRightMenu(state) {
+      state.rMenuShow.openX = 0;
+      state.rMenuShow.openY = 0;
+      state.rMenuShow.isShow = false;
     },
-    openRightMenu(state,{chooseId,openX,openY}){
-      state.rMenuShow.chooseId=chooseId;
-      state.rMenuShow.openX=openX-state.coreCanvas.x;
-        state.rMenuShow.openY=state.rMenuShow.scollTop+openY-state.coreCanvas.y;
-      state.rMenuShow.isShow=true;
+    openRightMenu(state, { chooseId, openX, openY }) {
+      state.rMenuShow.chooseId = chooseId;
+      state.rMenuShow.openX = openX - state.coreCanvas.x;
+      state.rMenuShow.openY = state.rMenuShow.scollTop + openY - state.coreCanvas.y;
+      state.rMenuShow.isShow = true;
     },
-    setCoreCanvasXY(state,{x,y}){
-      if(state.coreCanvas.x==0&&state.coreCanvas.y==0){//只有初始化时才会进行赋值
-        state.coreCanvas.x=x;
-        state.coreCanvas.y=y;
+    setCoreCanvasXY(state, { x, y }) {
+      if (state.coreCanvas.x == 0 && state.coreCanvas.y == 0) {//只有初始化时才会进行赋值
+        state.coreCanvas.x = x;
+        state.coreCanvas.y = y;
       }
 
     },
-    setScollTop(state,scollT){
-      state.rMenuShow.scollTop=scollT;
+    setScollTop(state, scollT) {
+      state.rMenuShow.scollTop = scollT;
     }
   },
   actions: {
-    acitveSet({ commit, state, rootState }, index) {}
+    acitveSet({ commit, state, rootState }, index) { }
   }
 }
 

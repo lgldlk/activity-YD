@@ -1,41 +1,61 @@
 <template>
-  <a-modal title="图标库" :visible="visible" @ok="handleOk" @cancel="handleCancel" :width="1000">
+  <a-modal title="图标库"
+           :visible="visible"
+           @ok="handleOk"
+           @cancel="handleCancel"
+           :width="1000">
     <div class="icon_win">
       <div class="icon_menu">
-        <a-menu
-          :defaultSelectedKeys="Menukey"
-          mode="inline"
-          :inlineCollapsed="false"
-          @click="toggleMenu"
-        >
+        <a-menu :defaultSelectedKeys="Menukey"
+                mode="inline"
+                :inlineCollapsed="false"
+                @click="toggleMenu">
           <a-menu-item key="1">
-            <a-icon type="tool" theme='filled' />
+            <a-icon type="tool"
+                    theme='filled' />
             <span>填充</span>
           </a-menu-item>
           <a-menu-item key="2">
-            <a-icon type="tool" theme='outlined' />
+            <a-icon type="tool"
+                    theme='outlined' />
             <span>线条</span>
           </a-menu-item>
           <a-menu-item key="3">
-            <a-icon type="tool" theme='twoTone' />
+            <a-icon type="tool"
+                    theme='twoTone' />
             <span>半填充</span>
           </a-menu-item>
         </a-menu>
       </div>
       <div class="icon_con">
-        <div class="icon_list" v-if="Menukey.includes('1')">
-          <div class="aIcon" v-for="item in iconList.fill" :key="item" @click="addIcon(item,'filled')">
-            <a-icon :type="item" theme='filled' />
+        <div class="icon_list"
+             v-if="Menukey.includes('1')">
+          <div class="aIcon"
+               v-for="item in iconList.fill"
+               :key="item"
+               @click="addIcon(item,'filled')">
+            <a-icon :type="item"
+                    theme='filled' />
           </div>
         </div>
-        <div class="icon_list" v-if="Menukey.includes('2')" >
-          <div class="aIcon" v-for="item in iconList.outline" :key="item" @click="addIcon(item,'outlined')">
-            <a-icon :type="item" theme='outlined' />
+        <div class="icon_list"
+             v-if="Menukey.includes('2')">
+          <div class="aIcon"
+               v-for="item in iconList.outline"
+               :key="item"
+               @click="addIcon(item,'outlined')">
+            <a-icon :type="item"
+                    theme='outlined' />
           </div>
         </div>
-        <div class="icon_list" v-if="Menukey.includes('3')">
-           <div class="aIcon" v-for="item in iconList.twotone" :key="item" @click="addIcon(item,'twoTone')">
-            <a-icon :type="item"  theme='twoTone'/>
+        <div class="icon_list"
+             v-if="Menukey.includes('3')">
+          <div class="aIcon"
+               v-for="item in iconList.twotone"
+               :key="item"
+               @click="addIcon(item,'twoTone')">
+            <a-icon :type="item"
+                    theme='twoTone' />
           </div>
         </div>
       </div>
@@ -48,13 +68,13 @@ import Vue from "vue";
 import { getUPloadImage, getDefaultImg } from "@/api/index";
 import { baseIcon } from "@/utils/baseReact";
 export default Vue.extend({
-  data() {
+  data () {
     return {
       Menukey: ["1"],
       headers: {
         authorization: "authorization-text"
       },
-      iconList:{
+      iconList: {
         fill: [
           'account-book',
           'alert',
@@ -230,8 +250,8 @@ export default Vue.extend({
           'weibo-square',
           'yuque',
           'youtube',
-      ],
-      outline: [
+        ],
+        outline: [
           'account-book',
           'alert',
           'alipay-circle',
@@ -597,8 +617,8 @@ export default Vue.extend({
           'woman',
           'zoom-out',
           'zoom-in'
-      ],
-      twotone: [
+        ],
+        twotone: [
           'account-book',
           'alert',
           'api',
@@ -743,52 +763,51 @@ export default Vue.extend({
           'dollar',
           'euro',
           'gold',
-      ],
+        ],
       }
     };
   },
-  mounted() {
+  mounted () {
     this.init();
   },
   computed: {
-    type() {
+    type () {
       return this.$store.state.setting.iconWin.type;
     },
-    visible(){
+    visible () {
       return this.$store.state.setting.iconWin.show;
     }
   },
   methods: {
-    init() {
+    init () {
 
     },
-    handleOk() {
+    handleOk () {
       this.$store.commit("setting/closeIconChoose");
-      
+
     },
-    handleCancel() {
-     this.$store.commit("setting/closeIconChoose");
+    handleCancel () {
+      this.$store.commit("setting/closeIconChoose");
     },
-    open( type) {
-      this.$store.commit("setting/showIconChoose",type);
+    open (type) {
+      this.$store.commit("setting/showIconChoose", type);
     },
-    toggleMenu(value) {
+    toggleMenu (value) {
       this.Menukey = value.keyPath;
     },
-    addIcon(iconType,theme) {
-      if(this.type==1){
-      this.$store.commit(
+    addIcon (iconType, theme) {
+      this.$store.commit("setting/closeIconChoose");
+      if (this.type == 1) {
+        this.$store.commit(
           "core/set_tempLate",
-          baseIcon(this.$store.state.core,{iconType,theme})
+          baseIcon(this.$store.state.core, { iconType, theme })
         );
-      }else if(this.type==2){
+      } else if (this.type == 2) {
         this.$store.commit(
           "core/update_icon",
-          {iconType,theme}
+          { iconType, theme }
         );
       }
-
-     this.$store.commit("setting/closeIconChoose");
     },
   }
 });

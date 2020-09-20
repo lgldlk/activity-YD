@@ -20,9 +20,21 @@ const filterMutation = [
   'core/set_isDown',
   'core/set_hoverTemplate',
   'core/toggle_roundDown',
-  'core/clear_template',
   'setting/set_coreinfoItem',
-  'core/setMarking'
+  'core/setMarking',
+  'core/updateInitSet',
+  "setting/closeRightMenu",
+  "core/set_objectAuth",
+  "core/initCovName",
+  "core/set_objectId",
+  "setting/setCoreCanvasXY",
+  "core/setAllPageList",
+  "core/update_template",
+  "core/setNowPageName",
+  "core/set_parentDisp",
+  "core/addMaxZindex",
+  "setting/closeIconChoose",
+  "setting/showIconChoose",
 ]
 /**
  *  监听vuex的行为
@@ -34,8 +46,8 @@ export default function index(store) {
   // 保存初始状态
   history.setState(cloneDeep(store.state))
   store.subscribe((mutation, state) => {
-    // console.log(mutation.type)
     if (!filterMutation.includes(mutation.type)) {
+      console.log(mutation)
       history.setState(cloneDeep(state))
     }
   })

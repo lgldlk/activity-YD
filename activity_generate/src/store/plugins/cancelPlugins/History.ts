@@ -8,6 +8,7 @@
  */
 import { Store } from 'vuex'
 import { cloneDeep } from 'lodash'
+import { message } from 'ant-design-vue'
 class History {
   private store: Store<any> | any = '' // vuex实例
   private state: any[] = [] // 历史状态
@@ -38,23 +39,25 @@ class History {
     return this.state
   }
   public replaceState() {
+    this.store.commit('core/clear_template');
     // 撤销
     if (this.index > 0) {
       this.index--
       let state = cloneDeep(this.state[this.index])
       this.store.replaceState(state)
     } else {
-      alert('已经无法再进行撤回')
+      message.error('已经无法再进行操作')
     }
   }
   public unReplaceState() {
+    this.store.commit('core/clear_template');
     if (this.state.length - 1 > this.index) {
       // 反撤销
       this.index++
       let state = cloneDeep(this.state[this.index])
       this.store.replaceState(state)
     } else {
-      alert('已经无法再进行操作')
+      message.error('已经无法再进行操作')
     }
   }
   /**
